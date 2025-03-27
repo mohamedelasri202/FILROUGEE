@@ -61,3 +61,5 @@ Route::post('/login', [UserController::class, 'login'])->name('login.post');
 // routes for the  product  routes 
 Route::post('/dashboard/vendor', [ProductController::class, 'addproduct'])->name('addproduct')->middleware('auth', 'role:vendor');
 Route::get('/dashboard/vendor/products', [ProductController::class, 'showProducts'])->name('vendor.products')->middleware('auth', 'role:vendor');
+
+Route::put('/dashboard/vendor/{id}', [ProductController::class, 'updateproduct'])->name('updateproduct')->middleware('auth', 'role:vendor');
