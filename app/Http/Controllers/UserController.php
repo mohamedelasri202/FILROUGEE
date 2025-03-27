@@ -4,16 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\UserRepositoryInterface;
+use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ServiceRepositoryInterface;
+use App\Repositories\ServicecartRepositoryInterface;
+use App\Repositories\ShoopingcartRepositoryInterface;
 
 class UserController extends Controller
 {
     protected $userRepository;
-    public function __construct(UserRepositoryInterface $userRepository)
+    protected $productRepository;
+    protected $serviceRepository;
+    protected $ServicecartRepository;
+    protected $shoopingcartRepository;
+    public function __construct(UserRepositoryInterface $userRepository, ProductRepositoryInterface $productRepository, ServiceRepositoryInterface $serviceRepository, ServicecartRepositoryInterface $ServicecartRepository, ShoopingcartRepositoryInterface $shoopingcartRepository)
     {
+
+        $this->ServicecartRepository = $ServicecartRepository;
+        $this->shoopingcartRepository = $shoopingcartRepository;
         $this->userRepository = $userRepository;
+        $this->serviceRepository = $serviceRepository;
+        $this->productRepository = $productRepository;
     }
     public function showRegistrationForm()
     {
@@ -37,10 +52,7 @@ class UserController extends Controller
     }
 
 
-    public function showUserDashboard()
-    {
-        return view('home')->with('user', Auth::user());
-    }
+
 
 
 
@@ -58,30 +70,40 @@ class UserController extends Controller
         $user = User::where('email', $validated['email'])->first();
 
         if ($user && Hash::check($validated['password'], $user->password)) {
+            if ($user->status !== 'active') {
+                // Redirect to custom status page if user is not active
+                $status = DB::table('users')
+                    ->where('id', $user->id)
+                    ->value('status');
+
+                return view('dashboard.status', compact('status'));
+            }
+
             Auth::login($user);
 
-            $role = $user->role;
-            $status = $user->status;
-
-            if ($role === 'admin' || $status !== 'suspended') {
-                return redirect()->route('dashboard.admin')->with('success', 'Admin logged in!');
-            } elseif ($role === 'user' || $status !== 'suspended') {
-                return redirect()->route('home')->with('success', 'User logged in!');
-            } elseif ($role === 'vendor' || $status !== 'suspended') {
-                return redirect()->route('dashboard.vendor')->with('success', 'Vendor logged in!');
-            } elseif ($role === 'service_provider' || $status !== 'suspended') {
-                return redirect()->route('dashboard.service_provider')->with('success', 'Service provider logged in!');
+            // Redirect based on role
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('dashboard.admin');
+                case 'vendor':
+                    return redirect()->route('dashboard.vendor');
+                case 'service_provider':
+                    return redirect()->route('dashboard.service_provider');
+                case 'user':
+                default:
+                    return redirect()->route('home');
             }
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials.']); // Handle invalid login
+        return back()->withErrors(['email' => 'Invalid credentials.']);
     }
+
 
     // Logout function
     public function logout(Request $request)
     {
         Auth::logout();
         $request->session()->invalidate();
-        return redirect()->route('welcome')->with('success', 'You have been logged out.');
+        return redirect()->route('home')->with('success', 'You have been logged out.');
     }
 }
