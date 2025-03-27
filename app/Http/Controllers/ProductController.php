@@ -43,4 +43,9 @@ class ProductController extends Controller
 
         return redirect()->route('dashboard.vendor')->with('success', 'Product added successfully!');
     }
+
+    public function showALLproducts()
+    {
+        $this->ProductRepository->showALLproducts();
+    }
 }
