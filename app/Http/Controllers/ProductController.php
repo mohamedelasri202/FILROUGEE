@@ -13,10 +13,10 @@ class ProductController extends Controller
 
 {
     protected $ProductRepository;
-
+    protected $shoopingcartRepository;
     public function __construct(ProductRepositoryInterface $ProductRepository, ShoopingcartRepositoryInterface $shoopingcartRepository)
     {
-
+        $this->shoopingcartRepository = $shoopingcartRepository;
         $this->ProductRepository = $ProductRepository;
     }
 
@@ -47,5 +47,19 @@ class ProductController extends Controller
     public function showALLproducts()
     {
         $this->ProductRepository->showALLproducts();
+    }
+
+    public function updateproduct(Request $request, $id)
+    {
+        $data = $request->validate([
+            'title' => 'string',
+            'description' => 'string',
+            'price' => 'numeric',
+            'category' => 'string'
+        ]);
+
+        $this->ProductRepository->updatproduct($data, $id);
+
+        return redirect()->route('dashboard.vendor');
     }
 }
