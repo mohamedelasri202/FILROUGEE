@@ -62,4 +62,9 @@ class ProductController extends Controller
 
         return redirect()->route('dashboard.vendor');
     }
+    public function deleteproduct($id)
+    {
+        $this->ProductRepository->deleteproduct($id);
+        return redirect()->route('dashboard.vendor');
+    }
 }
