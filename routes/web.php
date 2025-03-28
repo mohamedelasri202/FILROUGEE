@@ -41,6 +41,8 @@ Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.post');
 // showing the dashboards 
 Route::get('/dashboard/admin', [AdminController::class, 'showAdminDashboard'])->name('dashboard.admin')->middleware('auth', 'role:admin');
+Route::get('/dashboard/users', [AdminController::class, 'showUsers'])->name('users')->middleware('auth', 'role:admin');
+
 // the route for the user to get to the home page 
 Route::get('/dashboard/user', [UserController::class, 'showUserDashboard'])->name('home');
 
