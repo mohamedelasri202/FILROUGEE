@@ -47,4 +47,16 @@ class ServiceController extends Controller
 
         return redirect()->route('dashboard.service_provider')->with('success', 'Product added successfully!');
     }
+
+    public function updateservice(Request $request, $id)
+    {
+        $data = $request->validate([
+            'title' => 'string',
+            'description' => 'string',
+            'price' => 'numeric',
+            'category' => 'string'
+        ]);
+        $this->ServiceRepository->updateservice($data, $id);
+        return redirect()->route('dashboard.service_provider');
+    }
 }
