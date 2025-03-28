@@ -88,3 +88,6 @@ Route::post('/user/shoopingcart', [ProductController::class, 'addtoshoopingcart'
 
 // remove the product from the cart 
 Route::delete('cart/remove/{id}', [CartController::class, 'removefromcart'])->name('r_product_cart');
+// updating the quntity of each product in the cart 
+Route::put('update/quantity/{id}', [CartController::class, 'updat_quantity'])->name('updat_quantity')->middleware('auth', 'role:user');
+//  the view for the conifermation page 
