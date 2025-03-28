@@ -43,4 +43,12 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
             ->get();
         return $products;
     }
+
+    public function removefromcart($id)
+    {
+        $rmv = Shoopingcart::findorFail($id);
+        if ($rmv) {
+            $rmv->delete();
+        }
+    }
 }
