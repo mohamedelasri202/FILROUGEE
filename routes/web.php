@@ -54,3 +54,7 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logoutt');
 
 Route::get('/products', [UserController::class, 'showProducts'])->name('products')->middleware('auth');
 Route::get('/services', [UserController::class, 'services'])->name('services');
+
+
+// controle the user status
+Route::put('/users/status', [UserController::class, 'updateStatus'])->name('users.updateStatus')->middleware('auth', 'role:admin');
