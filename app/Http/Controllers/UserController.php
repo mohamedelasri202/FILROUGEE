@@ -106,4 +106,15 @@ class UserController extends Controller
         $request->session()->invalidate();
         return redirect()->route('home')->with('success', 'You have been logged out.');
     }
+    public function showProducts()
+    {
+        $services =  $this->ServicecartRepository->showservices();
+        $service_count = $this->ServicecartRepository->countservices();
+        //variables for products now 
+        $products = $this->shoopingcartRepository->showproducts();
+        $product_count = $this->shoopingcartRepository->countproduct();
+        $cart_count =  $service_count +  $product_count;
+        $products = $this->productRepository->showALLproducts();
+        return view('products', compact('products', 'cart_count'));
+    }
 }
