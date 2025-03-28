@@ -45,4 +45,9 @@ class CartController extends Controller
 
         return view('cart.cartservprod', compact('service_count', 'services', 'products', 'product_count', 'cart_count', 'totalproduct', 'totalservice', 'total'));
     }
+    public function removefromcart($id)
+    {
+        $this->shoopingcartRepository->removefromcart($id);
+        return redirect()->route('cart');
+    }
 }
