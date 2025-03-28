@@ -84,3 +84,7 @@ Route::put('/dashboard/service_provider/services/{id}', [ServiceController::clas
 // ****************************************addind the product to the shooping cart******************************
 
 Route::post('/user/shoopingcart', [ProductController::class, 'addtoshoopingcart'])->name('addshoopingcart')->middleware('auth', 'role:user');
+
+
+// remove the product from the cart 
+Route::delete('cart/remove/{id}', [CartController::class, 'removefromcart'])->name('r_product_cart');
