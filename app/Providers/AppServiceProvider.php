@@ -2,13 +2,20 @@
 
 namespace App\Providers;
 
-
+use App\Models\Product;
+use App\Repositories\OrderRepository;
+use App\Repositories\OrderRepositoryInterface;
 use App\Repositories\UserRepository;
-
+use App\Repositories\ProductRepository;
+use App\Repositories\ServiceRepository;
 use Illuminate\Support\ServiceProvider;
-
+use App\Repositories\ServicecartRepository;
+use App\Repositories\ShoopingcartRepository;
 use App\Repositories\UserRepositoryInterface;
-
+use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ServiceRepositoryInterface;
+use App\Repositories\ServicecartRepositoryInterface;
+use App\Repositories\ShoopingcartRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(ServiceRepositoryInterface::class, ServiceRepository::class);
     }
 
     /**
