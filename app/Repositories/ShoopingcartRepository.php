@@ -43,7 +43,12 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
             ->get();
         return $products;
     }
+    public function countproduct()
+    {
 
+        $product_count  = DB::table('shoopingcart')->where('user_id', '=', Auth::id())->count();
+        return $product_count;
+    }
     public function removefromcart($id)
     {
         $rmv = Shoopingcart::findorFail($id);
