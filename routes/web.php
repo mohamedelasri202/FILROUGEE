@@ -77,3 +77,4 @@ Route::post('/dashboard/vendor', [ProductController::class, 'addproduct'])->name
 
 // *************************************** service provider routes ********************************************
 Route::get('/dashboard/service_provider', [ServiceController::class, 'index'])->name('dashboard.service_provider')->middleware('auth', 'role:service_provider');
+Route::post('/addingservice', [ServiceController::class, 'add_service'])->name('add_service');
