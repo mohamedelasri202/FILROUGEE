@@ -128,4 +128,11 @@ class UserController extends Controller
         $products = $this->productRepository->showALLproducts();
         return view('home', compact('cart_count'));
     }
+
+
+    public function services()
+    {
+        $services = $this->serviceRepository->showALLservices();
+        return view('services', compact('services'));
+    }
 }
