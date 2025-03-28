@@ -129,7 +129,24 @@ class UserController extends Controller
         return view('home', compact('cart_count'));
     }
 
+    public function updateStatus(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'status' => 'required|string',
+        ]);
 
+        $user = User::find($request->user_id); // Make sure this returns a user
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+
+        $user->status = $request->status;
+        $user->save();
+
+        return redirect()->back()->with('success', 'User status updated successfully.');
+    }
     public function services()
     {
         $services = $this->serviceRepository->showALLservices();
