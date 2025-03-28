@@ -67,4 +67,14 @@ class ProductController extends Controller
         $this->ProductRepository->deleteproduct($id);
         return redirect()->route('dashboard.vendor');
     }
+    public function addtoshoopingcart(Request $request)
+    {
+        $data = $request->validate([
+            'product_id' => 'integer',
+            'quantity' => 'integer',
+            'type' => 'string|in:product,service',
+        ]);
+        $this->shoopingcartRepository->addtoshoopingcart($data);
+        return  back()->with('success', 'Product added successfully!');
+    }
 }
