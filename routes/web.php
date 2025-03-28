@@ -80,3 +80,7 @@ Route::get('/dashboard/service_provider', [ServiceController::class, 'index'])->
 Route::post('/addingservice', [ServiceController::class, 'add_service'])->name('add_service');
 Route::delete('/dashboard/service_provider/services/{id}', [ServiceController::class, 'deleteservice'])->name('deleteservice')->middleware('auth', 'role:service_provider');
 Route::put('/dashboard/service_provider/services/{id}', [ServiceController::class, 'updateservice'])->name('updateservice')->middleware('auth', 'role:service_provider');
+
+// ****************************************addind the product to the shooping cart******************************
+
+Route::post('/user/shoopingcart', [ProductController::class, 'addtoshoopingcart'])->name('addshoopingcart')->middleware('auth', 'role:user');
