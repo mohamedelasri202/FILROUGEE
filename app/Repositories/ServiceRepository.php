@@ -19,7 +19,11 @@ class ServiceRepository implements ServiceRepositoryInterface
         ]);
     }
 
-
+    public function deleteservice($id)
+    {
+        $service = Service::findorFail($id);
+        $service->delete();
+    }
     public function updateservice($data, $id)
     {
         $service = Service::findorFail($id);
