@@ -18,7 +18,11 @@ class ServiceRepository implements ServiceRepositoryInterface
             'vendor_id' => Auth::id(),
         ]);
     }
-
+    public function showALLservices()
+    {
+        $services = Service::all();
+        return $services;
+    }
     public function deleteservice($id)
     {
         $service = Service::findorFail($id);
