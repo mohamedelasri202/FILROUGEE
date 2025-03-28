@@ -20,4 +20,12 @@ class UserRepository implements UserRepositoryInterface
 
 
     public function login($request) {}
+
+    public function updatesatatus($id, $status)
+    {
+        $user = User::find($id);
+        $user->status->update($status);
+        $user->save();
+        return $user;
+    }
 }
