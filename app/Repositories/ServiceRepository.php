@@ -18,4 +18,20 @@ class ServiceRepository implements ServiceRepositoryInterface
             'vendor_id' => Auth::id(),
         ]);
     }
+
+
+    public function updateservice($data, $id)
+    {
+        $service = Service::findorFail($id);
+        if ($service) {
+            $service->update([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'category' => $data['category'],
+                'price' => $data['price']
+            ]);
+        } else {
+            return redirect()->back();
+        }
+    }
 }
