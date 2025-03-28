@@ -58,3 +58,16 @@ Route::get('/services', [UserController::class, 'services'])->name('services');
 
 // controle the user status
 Route::put('/users/status', [UserController::class, 'updateStatus'])->name('users.updateStatus')->middleware('auth', 'role:admin');
+
+// routes for adding a product 
+
+// routes for showing the dashboard aand sending data to the view 
+// Route::get('/dashboard/vendor', [ProductController::class, 'index'])->name('index')->middleware('auth', 'role:vendor');
+
+Route::get('/dashboard/vendor', [VendorDashboardController::class, 'index'])->name('dashboard.vendor');
+
+// update the product 
+Route::get('/dashboard/vendor/products', [ProductController::class, 'showProducts'])->name('vendor.products')->middleware('auth', 'role:vendor');
+Route::put('/dashboard/vendor/{id}', [ProductController::class, 'updateproduct'])->name('updateproduct')->middleware('auth', 'role:vendor');
+Route::delete('vendor/product/{id}', [ProductController::class, 'deleteproduct'])->name('deleteproduct')->middleware('auth', 'role:vendor');
+Route::post('/dashboard/vendor', [ProductController::class, 'addproduct'])->name('addproduct')->middleware('auth', 'role:vendor');
