@@ -117,4 +117,15 @@ class UserController extends Controller
         $products = $this->productRepository->showALLproducts();
         return view('products', compact('products', 'cart_count'));
     }
+    public function showUserDashboard()
+    {
+        $services =  $this->ServicecartRepository->showservices();
+        $service_count = $this->ServicecartRepository->countservices();
+        //variables for products now 
+        $products = $this->shoopingcartRepository->showproducts();
+        $product_count = $this->shoopingcartRepository->countproduct();
+        $cart_count =  $service_count +  $product_count;
+        $products = $this->productRepository->showALLproducts();
+        return view('home', compact('cart_count'));
+    }
 }
