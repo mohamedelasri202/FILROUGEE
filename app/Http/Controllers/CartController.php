@@ -50,4 +50,15 @@ class CartController extends Controller
         $this->shoopingcartRepository->removefromcart($id);
         return redirect()->route('cart');
     }
+    public function updat_quantity(Request $request, $id)
+    {
+        $request->validate([
+            'quantity' => 'integer|min:1', // correct spelling + prevent negatives
+            'shooping_id' => 'integer',
+            'action' => 'string'
+        ]);
+
+        $quntity = $this->shoopingcartRepository->updat_quantity($request, $id);
+        return redirect()->back();
+    }
 }
