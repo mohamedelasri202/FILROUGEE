@@ -71,3 +71,9 @@ Route::get('/dashboard/vendor/products', [ProductController::class, 'showProduct
 Route::put('/dashboard/vendor/{id}', [ProductController::class, 'updateproduct'])->name('updateproduct')->middleware('auth', 'role:vendor');
 Route::delete('vendor/product/{id}', [ProductController::class, 'deleteproduct'])->name('deleteproduct')->middleware('auth', 'role:vendor');
 Route::post('/dashboard/vendor', [ProductController::class, 'addproduct'])->name('addproduct')->middleware('auth', 'role:vendor');
+
+
+// delete the product
+
+// *************************************** service provider routes ********************************************
+Route::get('/dashboard/service_provider', [ServiceController::class, 'index'])->name('dashboard.service_provider')->middleware('auth', 'role:service_provider');
