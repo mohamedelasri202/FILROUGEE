@@ -47,7 +47,11 @@ class ServiceController extends Controller
 
         return redirect()->route('dashboard.service_provider')->with('success', 'Product added successfully!');
     }
-
+    public function deleteservice($id)
+    {
+        $this->ServiceRepository->deleteservice($id);
+        return redirect()->route('dashboard.service_provider')->with('success', 'Service deleted successfully!');
+    }
     public function updateservice(Request $request, $id)
     {
         $data = $request->validate([
