@@ -51,4 +51,22 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
             $rmv->delete();
         }
     }
+    public function updat_quantity($request, $id)
+    {
+        $product = Shoopingcart::findOrFail($id);
+
+        if ($request->action == 'down') {
+            if ($product->quantity > 1) {
+                $product->quantity -= 1;
+            }
+        } elseif ($request->action == 'up') {
+            $product->quantity += 1;
+        } else {
+            $product->quantity = $request->quantity;
+        }
+
+        // $product->shooping_id = $id; // optional, if you still need this
+        $product->user_id = Auth::id();
+        $product->save();
+    }
 }
