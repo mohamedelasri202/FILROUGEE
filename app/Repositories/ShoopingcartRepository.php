@@ -33,4 +33,14 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
             ]);
         }
     }
+
+    public function showproducts()
+    {
+        $products = DB::table('products')
+            ->join('shoopingcart', 'products.id', '=', 'shoopingcart.product_id')
+            ->where('user_id', '=', Auth::id())
+            ->select('products.*', 'shoopingcart.id as shooping_id', 'quantity')
+            ->get();
+        return $products;
+    }
 }
