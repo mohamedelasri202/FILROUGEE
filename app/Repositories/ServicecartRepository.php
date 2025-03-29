@@ -27,4 +27,11 @@ class ServicecartRepository implements ServicecartRepositoryInterface
             ->get();
         return $services;
     }
+    public function deleteservicecart($id)
+    {
+
+        $service = ServiceCart::findOrFail($id);
+        $service->delete();
+        return back()->with('success', 'Item removed from your cart.');
+    }
 }
