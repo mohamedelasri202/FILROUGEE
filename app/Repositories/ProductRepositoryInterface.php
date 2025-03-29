@@ -8,4 +8,5 @@ interface ProductRepositoryInterface
 {
     public function addproduct(Request $request, $imagePath);
     public function showALLproducts();
+    public function updatproduct($id, Request $request,);
 }
