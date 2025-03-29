@@ -18,4 +18,13 @@ class ServicecartRepository implements ServicecartRepositoryInterface
             'user_id' => Auth::id(),
         ]);
     }
+    public function showservices()
+    {
+        $services = DB::table('servicecart')
+            ->join('services', 'servicecart.service_id', '=', 'services.id')
+            ->where('servicecart.user_id', '=', Auth::id())
+            ->select('services.*', 'servicecart.id as servicecart_id')
+            ->get();
+        return $services;
+    }
 }
