@@ -34,4 +34,9 @@ class ServicecartRepository implements ServicecartRepositoryInterface
         $service->delete();
         return back()->with('success', 'Item removed from your cart.');
     }
+    public function countservices()
+    {
+        $service_count = DB::table('servicecart')->where('user_id', '=', Auth::id())->count();
+        return $service_count;
+    }
 }
