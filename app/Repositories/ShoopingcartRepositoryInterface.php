@@ -10,4 +10,5 @@ interface ShoopingcartRepositoryInterface
     public function showproducts();
     public function countproduct();
     public function removefromcart($id);
+    public function updat_quantity($request, $id);
 }
