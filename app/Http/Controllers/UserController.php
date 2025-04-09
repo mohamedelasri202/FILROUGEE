@@ -36,10 +36,13 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'User registered successfully!');
     }
 
+
     public function showUserDashboard()
     {
-        return view('home');
+        return view('home')->with('user', Auth::user());
     }
+
+
 
     public function showLoginForm()
     {
@@ -50,26 +53,29 @@ class UserController extends Controller
         $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required|string|min:8',
-
         ]);
 
         $user = User::where('email', $validated['email'])->first();
 
-        if ($validated['email'] == $user->email && Hash::check($validated['password'], $user->password)) {
+        if ($user && Hash::check($validated['password'], $user->password)) {
+            Auth::login($user);
 
-            $role = User::where('email', $validated['email'])->value('role');
+            $role = $user->role;
 
-            if ($role == 'admin') {
-                return redirect()->route('dashboard.admin')->with('success', 'Admin logged in successfully!');
-            } elseif ($role == 'user') {
-                return redirect()->route('home')->with('success', 'User logged in successfully!');
-            } elseif ($role == 'vendor') {
-                return redirect()->route('dashboard.vendor')->with('success', 'Vendor logged in successfully!');
-            } elseif ($role == 'service_provider') {
-                return redirect()->route('dashboard.service_provider')->with('success', 'Service Provider logged in successfully!');
+            if ($role === 'admin') {
+                return redirect()->route('dashboard.admin')->with('success', 'Admin logged in!');
+            } elseif ($role === 'user') {
+                return redirect()->route('home')->with('success', 'User logged in!');
+            } elseif ($role === 'vendor') {
+                return redirect()->route('dashboard.vendor')->with('success', 'Vendor logged in!');
+            } elseif ($role === 'service_provider') {
+                return redirect()->route('dashboard.service_provider')->with('success', 'Service provider logged in!');
             }
         }
+
+        return back()->withErrors(['email' => 'Invalid credentials.']); // Handle invalid login
     }
+
     // Logout function
     public function logout(Request $request)
     {

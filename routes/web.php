@@ -28,7 +28,8 @@ Route::post('/register', [UserController::class, 'register'])->name('register.po
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.post');
 // showing the dashboards 
-Route::get('/dashboard/admin', [AdminController::class, 'showAdminDashboard'])->name('dashboard.admin');
-Route::get('/dashboard/user', [UserController::class, 'showUserDashboard'])->name('dashboard.user');
+Route::get('/dashboard/admin', [AdminController::class, 'showAdminDashboard'])->name('dashboard.admin')->middleware('auth');
+Route::get('/dashboard/user', [UserController::class, 'showUserDashboard'])->name('home');
 Route::get('/dashboard/vendor', [VendorController::class, 'showVendorDashboard'])->name('dashboard.vendor');
 Route::get('/dashboard/service_provider', [ServiceProviderController::class, 'showServiceProviderDashboard'])->name('dashboard.service_provider');
+Route::post('/logout', [UserController::class, 'logout'])->name('logoutt');
