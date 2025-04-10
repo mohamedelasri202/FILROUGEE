@@ -223,7 +223,6 @@
                             <h4 class="font-semibold text-lg mb-2">Home Painting</h4>
                             <p class="text-gray-600 text-sm">Professional painters to transform your living spaces.</p>
                             <a href="#" class="mt-4 inline-block text-secondary hover:underline">Learn More →</a>
-                        </div>
                     </div>
                 </div>
                 <div class="text-center mt-8">

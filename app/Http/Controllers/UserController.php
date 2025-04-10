@@ -61,14 +61,15 @@ class UserController extends Controller
             Auth::login($user);
 
             $role = $user->role;
+            $status = $user->status;
 
-            if ($role === 'admin') {
+            if ($role === 'admin' || $status !== 'suspended') {
                 return redirect()->route('dashboard.admin')->with('success', 'Admin logged in!');
-            } elseif ($role === 'user') {
+            } elseif ($role === 'user' || $status !== 'suspended') {
                 return redirect()->route('home')->with('success', 'User logged in!');
-            } elseif ($role === 'vendor') {
+            } elseif ($role === 'vendor' || $status !== 'suspended') {
                 return redirect()->route('dashboard.vendor')->with('success', 'Vendor logged in!');
-            } elseif ($role === 'service_provider') {
+            } elseif ($role === 'service_provider' || $status !== 'suspended') {
                 return redirect()->route('dashboard.service_provider')->with('success', 'Service provider logged in!');
             }
         }
@@ -83,8 +84,4 @@ class UserController extends Controller
         $request->session()->invalidate();
         return redirect()->route('welcome')->with('success', 'You have been logged out.');
     }
-
-
-    // showing the website 
-
 }
