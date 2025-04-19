@@ -98,3 +98,8 @@ Route::put('update/quantity/{id}', [CartController::class, 'updat_quantity'])->n
 Route::get('confirmation', [OrderController::class, 'checkout'])->name('checkout')->middleware('auth', 'role:user');
 
 // checkout 
+
+
+Route::delete('/cart/{id}', [ServicecartController::class, 'deleteservicecart'])->name('deletecart')->middleware('auth', 'role:user');
+Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
+Route::post('/checkout', [OrderController::class, 'add_order'])->name('CHECK')->middleware('auth', 'role:user');
