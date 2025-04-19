@@ -41,11 +41,10 @@ Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.post');
 // showing the dashboards 
 Route::get('/dashboard/admin', [AdminController::class, 'showAdminDashboard'])->name('dashboard.admin')->middleware('auth', 'role:admin');
-Route::get('/dashboard/users', [AdminController::class, 'showUsers'])->name('users')->middleware('auth', 'role:admin');
-
 // the route for the user to get to the home page 
 Route::get('/dashboard/user', [UserController::class, 'showUserDashboard'])->name('home');
 
+Route::get('/dashboard/users', [AdminController::class, 'showUsers'])->name('users')->middleware('auth', 'role:admin');
 
 // Route::get('/dashboard/vendor', [VendorController::class, 'index'])->name('vendor');
 Route::post('/logout', [UserController::class, 'logout'])->name('logoutt');
@@ -53,13 +52,15 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logoutt');
 // show the page that shows all the products 
 
 Route::get('/products', [UserController::class, 'showProducts'])->name('products')->middleware('auth');
+
+// show the page that shows services
 Route::get('/services', [UserController::class, 'services'])->name('services');
-
-
 // controle the user status
 Route::put('/users/status', [UserController::class, 'updateStatus'])->name('users.updateStatus')->middleware('auth', 'role:admin');
 
 // routes for adding a product 
+Route::post('/dashboard/vendor', [ProductController::class, 'addproduct'])->name('addproduct')->middleware('auth', 'role:vendor');
+Route::get('/dashboard/vendor/products', [ProductController::class, 'showProducts'])->name('vendor.products')->middleware('auth', 'role:vendor');
 
 // routes for showing the dashboard aand sending data to the view 
 // Route::get('/dashboard/vendor', [ProductController::class, 'index'])->name('index')->middleware('auth', 'role:vendor');
@@ -67,13 +68,12 @@ Route::put('/users/status', [UserController::class, 'updateStatus'])->name('user
 Route::get('/dashboard/vendor', [VendorDashboardController::class, 'index'])->name('dashboard.vendor');
 
 // update the product 
-Route::get('/dashboard/vendor/products', [ProductController::class, 'showProducts'])->name('vendor.products')->middleware('auth', 'role:vendor');
+
 Route::put('/dashboard/vendor/{id}', [ProductController::class, 'updateproduct'])->name('updateproduct')->middleware('auth', 'role:vendor');
-Route::delete('vendor/product/{id}', [ProductController::class, 'deleteproduct'])->name('deleteproduct')->middleware('auth', 'role:vendor');
-Route::post('/dashboard/vendor', [ProductController::class, 'addproduct'])->name('addproduct')->middleware('auth', 'role:vendor');
 
 
 // delete the product
+Route::delete('vendor/product/{id}', [ProductController::class, 'deleteproduct'])->name('deleteproduct')->middleware('auth', 'role:vendor');
 
 // *************************************** service provider routes ********************************************
 Route::get('/dashboard/service_provider', [ServiceController::class, 'index'])->name('dashboard.service_provider')->middleware('auth', 'role:service_provider');
@@ -100,6 +100,8 @@ Route::get('confirmation', [OrderController::class, 'checkout'])->name('checkout
 // checkout 
 
 
-Route::delete('/cart/{id}', [ServicecartController::class, 'deleteservicecart'])->name('deletecart')->middleware('auth', 'role:user');
+Route::delete('/cart/{id}', [ServicecartController::class, 'deleteservicecart'])
+    ->name('deletecart')
+    ->middleware('auth', 'role:user');
 Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
 Route::post('/checkout', [OrderController::class, 'add_order'])->name('CHECK')->middleware('auth', 'role:user');
