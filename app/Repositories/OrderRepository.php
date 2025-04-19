@@ -57,4 +57,21 @@ class OrderRepository implements OrderRepositoryInterface
             }
         }
     }
+    public function countorders_user()
+    {
+
+        $orders_count = DB::table('orders')
+            ->join('shoopingcart', 'orders.shoopingcart_id', '=', 'shoopingcart.id')
+            ->join('products', 'shoopingcart.product_id', '=', 'products.id')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->where('products.vendor_id', 26)
+            ->whereNull('orders.servicecart_id')
+            ->select('users.id as user_id', 'users.name', 'users.lastname', 'users.email', DB::raw('COUNT(orders.id) as total_orders'))
+            ->groupBy('users.id', 'users.name', 'users.lastname')
+            ->get();
+
+
+
+        return $orders_count;
+    }
 }
