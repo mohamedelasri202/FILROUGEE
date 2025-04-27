@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Product;
 use App\Models\Shoopingcart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\ProductRepositoryInterface;
 
@@ -42,5 +43,10 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $product = Product::findOrFail($id);
         $product->delete();
+    }
+    public function tow_products()
+    {
+        $tow_products = DB::table('products')->limit(2)->get();
+        return $tow_products;
     }
 }

@@ -27,8 +27,10 @@ use App\Http\Controllers\VendorDashboardController;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 })->name('welcome');
+
+// Route::get('/', [UserController::class, 'home'])->name('welcome');
 
 
 
