@@ -319,7 +319,7 @@
                         </div>
                         
                         <div class="flex justify-center mt-4">
-                            <img src="/placeholder.svg?height=30&width=200" alt="Payment Methods" class="h-8">
+                            <img src="{{ asset('images/payment method.jpg') }}" alt="Payment Methods" class="h-8">
                         </div>
                     </div>
                 </div>
@@ -348,36 +348,47 @@
             <h2 class="text-xl font-light mb-6">You May Also Like</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 <!-- Suggestion 1 -->
-                @foreach ($tow_products as $tow_product )
+                @foreach ($tow_services as $tow_service)
                     
                
                 <div class="bg-white border border-gray-100 rounded overflow-hidden">
                     <div class="relative">
-                        <img src="{{ asset($tow_product->image) }}" alt="Window Cleaning" class="w-full h-40 object-cover">
+                        <img src="{{ asset($tow_service->image) }}" alt="Window Cleaning" class="w-full h-40 object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-light text-base mb-1">{{$tow_product->title}}</h3>
-                        <p class="text-primary font-medium text-sm">Starting at $79</p>
-                        <button class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
+                        <h3 class="font-light text-base mb-1">{{$tow_service->title}}</h3>
+                        <p class="text-primary font-medium text-sm">Starting at ${{$tow_service->price}}</p>
+                        <form action="{{ route('addservice') }}" method="POST">
+                            @csrf
+                          
+                            <input type="hidden" name="service_id" value="{{ $tow_service->id }}">
+                        <button type="submit" class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
                             Book Now
                         </button>
                     </div>
                 </div> 
                 @endforeach
+             
                 <!-- Suggestion 3 -->
-                @foreach ( as )
+                @foreach ($tow_products as $tow_product )
                     
                
                 <div class="bg-white border border-gray-100 rounded overflow-hidden">
                     <div class="relative">
-                        <img src="/placeholder.svg?height=150&width=300" alt="Organic Yogurt" class="w-full h-40 object-cover">
+                        <img src="{{ $tow_product->image }}" alt="Organic Yogurt" class="w-full h-40 object-cover">
                     </div>
                     <div class="p-4">
-                        <h3 class="font-light text-base mb-1">Organic Yogurt</h3>
-                        <p class="text-primary font-medium text-sm">$4.49</p>
-                        <button class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
+                        <h3 class="font-light text-base mb-1">{{$tow_product->title}}</h3>
+                        <p class="text-primary font-medium text-sm">{{$tow_product->price}}</p>
+                        <form action="{{ route('addshoopingcart') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="type" value="product">
+                            <input type="hidden" name="product_id"  value="{{ $tow_product->id }}">
+                            <input type="hidden" name="quantity" value="1" min="1">
+                        <button  type="submit" class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
                             Add to Cart
                         </button>
+                        </form>
                     </div>
                 </div>
 

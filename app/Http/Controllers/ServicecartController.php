@@ -24,6 +24,9 @@ class ServicecartController extends Controller
         $this->ServicecartRepository->addservicecart($request);
         return redirect()->route('services');
     }
-
-    public 
+    public function deleteservicecart($id)
+    {
+        $this->ServicecartRepository->deleteservicecart($id);
+        return back();
+    }
 }

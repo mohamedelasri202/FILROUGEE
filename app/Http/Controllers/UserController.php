@@ -149,7 +149,8 @@ class UserController extends Controller
     }
     public function services()
     {
+        $service_count = $this->ServicecartRepository->countservices();
         $services = $this->serviceRepository->showALLservices();
-        return view('services', compact('services'));
+        return view('services', compact('services', 'service_count'));
     }
 }

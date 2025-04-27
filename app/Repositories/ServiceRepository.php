@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Service;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class ServiceRepository implements ServiceRepositoryInterface
@@ -41,5 +42,10 @@ class ServiceRepository implements ServiceRepositoryInterface
         } else {
             return redirect()->back();
         }
+    }
+    public function tow_service()
+    {
+        $tow_services = DB::table('services')->limit(2)->get();
+        return $tow_services;
     }
 }

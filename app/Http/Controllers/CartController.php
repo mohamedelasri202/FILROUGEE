@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ProductRepositoryInterface;
-use App\Repositories\ServicecartRepositoryInterface;
-use App\Repositories\ServiceRepositoryInterface;
-use App\Repositories\ShoopingcartRepository;
-use App\Repositories\ShoopingcartRepositoryInterface;
 use Illuminate\Http\Request;
+use App\Repositories\ServiceRepository;
+use App\Repositories\ShoopingcartRepository;
+use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ServiceRepositoryInterface;
+use App\Repositories\ServicecartRepositoryInterface;
+use App\Repositories\ShoopingcartRepositoryInterface;
 
 class CartController extends Controller
 {
@@ -21,6 +22,7 @@ class CartController extends Controller
         $this->ServicecartRepository = $ServicecartRepository;
         $this->shoopingcartRepository = $shoopingcartRepository;
         $this->productRepository = $productRepository;
+        $this->serviceRepository = $serviceRepository;
     }
     public function index()
     {
@@ -49,10 +51,11 @@ class CartController extends Controller
         // get tow of the prdudcts 
 
         $tow_products = $this->productRepository->tow_products();
-        $tow_services = $this->ServicecartRepository->tow_service();
+        $tow_services = $this->serviceRepository->tow_service();
+        // dd($tow_services);
 
 
-        return view('cart.cartservprod', compact('service_count', 'services', 'products', 'product_count', 'cart_count', 'totalproduct', 'totalservice', 'total', 'tow_products'));
+        return view('cart.cartservprod', compact('service_count', 'services', 'products', 'product_count', 'cart_count', 'totalproduct', 'totalservice', 'total', 'tow_products', 'tow_services'));
     }
     public function removefromcart($id)
     {

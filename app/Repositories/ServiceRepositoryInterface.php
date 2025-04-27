@@ -9,4 +9,5 @@ interface ServiceRepositoryInterface
     public function deleteservice($id);
     public function updateservice($data, $id);
     public function showALLservices();
+    public function tow_service();
 }
