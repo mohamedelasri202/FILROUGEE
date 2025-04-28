@@ -22,11 +22,11 @@ class ServicecartController extends Controller
 
         ]);
         $this->ServicecartRepository->addservicecart($request);
-        return redirect()->route('services');
+        return redirect()->back()->with('successs', 'service was added successfylty to the service cart ');
     }
     public function deleteservicecart($id)
     {
         $this->ServicecartRepository->deleteservicecart($id);
-        return back();
+        return back()->with('success', 'the service  is removed');
     }
 }

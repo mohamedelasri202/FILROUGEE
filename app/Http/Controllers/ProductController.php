@@ -75,6 +75,6 @@ class ProductController extends Controller
             'type' => 'string|in:product,service',
         ]);
         $this->shoopingcartRepository->addtoshoopingcart($data);
-        return  back()->with('success', 'Product added successfully!');
+        return  back()->with('successs', 'Product added successfully!');
     }
 }

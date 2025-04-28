@@ -55,7 +55,7 @@
 </head>
 <body class="bg-white text-gray-800">
 
- 
+  
 <!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -155,6 +155,33 @@
         </div>
     </div>
 </header>
+
+@if (session('success'))
+<div id="successToast"
+    class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
+    <div class="flex items-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+        </svg>
+        <span>{{ session('success') }}</span>
+    </div>
+</div>
+@endif
+@if (session('successs'))
+<div id="successToast"
+    class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
+    <div class="flex items-center space-x-2">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                clip-rule="evenodd" />
+        </svg>
+        <span>{{ session('success') }}</span>
+    </div>
+</div>
+@endif
 
 <!-- Main Content -->
 <main class="py-8">
@@ -463,25 +490,24 @@
 </footer>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Quantity adjustment functionality
-        const decreaseButtons = document.querySelectorAll('.decrease-quantity');
-        const increaseButtons = document.querySelectorAll('.increase-quantity');
-        
-     
-        
-      
-        });
-        
-        // Function to update cart totals (placeholder for real functionality)
-        function updateCartTotals() {
-            console.log('Cart totals updated');
-            // In a real application, this would recalculate prices based on quantities
-        }
-        
-        // Remove item functionality
-      
     
+    const toast = document.getElementById('successToast');
+
+    if (toast) {
+        toast.classList.remove('hidden');
+        toast.classList.remove('opacity-0');
+        toast.classList.add('opacity-100', 'transition-opacity');
+
+        setTimeout(function () {
+            toast.classList.remove('opacity-100');
+            toast.classList.add('opacity-0');
+
+            setTimeout(function () {
+                toast.classList.add('hidden');
+            }, 300); // Matches your transition duration
+        }, 5000); // Show toast for 5 seconds
+    }
+
     
 </script>
 </body>

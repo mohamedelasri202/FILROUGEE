@@ -60,7 +60,7 @@ class CartController extends Controller
     public function removefromcart($id)
     {
         $this->shoopingcartRepository->removefromcart($id);
-        return redirect()->route('cart');
+        return redirect()->back()->with('success');
     }
     public function updat_quantity(Request $request, $id)
     {
