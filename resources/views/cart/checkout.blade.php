@@ -125,9 +125,9 @@
     <div class="text-red-500 text-sm">{{ $message }}</div>
 @enderror --}}
 
-    @if (session('success'))
+    @if (session('error'))
     <div id="successToast"
-        class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
+        class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
         <div class="flex items-center space-x-2">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"

@@ -153,13 +153,13 @@
                     @foreach($products as $product)
            
                     <div class="group">
-                        <a href="product-detail.html" class="block">
+                        <a href="{{ route('product',$product->id) }}" class="block">
                             <div class="overflow-hidden mb-4">
                                 <img src="{{ asset($product->image) }}" alt="Organic Apples" class="w-full h-64 object-cover transition duration-500 group-hover:scale-105">
                             </div>
                             <h4 class="font-light text-base mb-1">{{$product->title}}</h4>
                             <p class="text-gray-500 text-sm mb-2">{{$product->category}}</p>
-                            <p class="text-primary">{{$product->price}}</p>
+                            <p class="text-primary">${{$product->price}}</p>
                         </a>
                      
                         <form action="{{ route('addshoopingcart') }}" method="POST">

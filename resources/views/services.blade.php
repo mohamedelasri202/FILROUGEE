@@ -156,14 +156,12 @@
                                 <span class="ml-2 text-xs text-gray-500">4.5 (120 reviews)</span>
                             </div>
                         </a>
-                        <form action="{{ route('addservice') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="service_id" value="{{ $service->id }}">
+
                            
-                             <button type="submit" class="mt-3 w-full px-4 py-1.5 border border-gray-200 text-gray-700 text-xs hover:text-primary hover:border-primary transition duration-300">
-                            Book Service
+                             <button  class="mt-3 w-full px-4 py-1.5 border border-gray-200 text-gray-700 text-xs hover:text-primary hover:border-primary transition duration-300">
+                           <a  href="{{ route('booking',$service->id)  }}" > Book Service</a>
                         </button>
-                    </form>
+           
                     </div>
                     @endforeach
                     @endif

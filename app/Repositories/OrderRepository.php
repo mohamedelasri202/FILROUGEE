@@ -87,7 +87,7 @@ class OrderRepository implements OrderRepositoryInterface
             ->join('products', 'shoopingcart.product_id', '=', 'products.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->where('products.vendor_id', '=', Auth::id())
-            ->select('orders.*', 'products.vendor_id', 'users.name as user_name', 'users.lastname as last_name') // 👈 Add user fields
+            ->select('orders.*', 'products.vendor_id', 'users.name as user_name', 'users.lastname as last_name')->latest()
             ->get();
 
         return $orders;

@@ -19,12 +19,12 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
             ->where('user_id', Auth::id())
             ->first();
 
-        if ($existing) {
-            // If exists, just update the quantity
+        if ($existing && $existing->status == 'pending') {
+            // If exists and status is pending, just update the quantity
             $existing->quantity += 1;
             $existing->save();
         } else {
-            // If not, create new entry
+            // If not found or status is confirmed, create new entry
             Shoopingcart::create([
                 'product_id' => $productId,
                 'quantity' => $data['quantity'],
@@ -34,11 +34,13 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
         }
     }
 
+
     public function showproducts()
     {
         $products = DB::table('products')
             ->join('shoopingcart', 'products.id', '=', 'shoopingcart.product_id')
             ->where('user_id', '=', Auth::id())
+            ->where('shoopingcart.status', '=', 'pending')
             ->select('products.*', 'shoopingcart.id as shooping_id', 'quantity')
             ->get();
         return $products;
@@ -46,7 +48,7 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
     public function countproduct()
     {
 
-        $product_count  = DB::table('shoopingcart')->where('user_id', '=', Auth::id())->count();
+        $product_count  = DB::table('shoopingcart')->where('user_id', '=', Auth::id())->where('shoopingcart.status', '=', 'pending')->count();
         return $product_count;
     }
     public function removefromcart($id)

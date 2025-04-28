@@ -45,7 +45,7 @@ class CartController extends Controller
         if ($product_count == 0) {
             $total = $totalproduct + $totalservice + 5.00 + 1.95;
         } else {
-            $total = $totalproduct + $totalservice + 1.92 + 5;
+            $total = $totalproduct + $totalservice + 1.95 + 5;
         };
 
         // get tow of the prdudcts 

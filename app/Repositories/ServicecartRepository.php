@@ -25,13 +25,15 @@ class ServicecartRepository implements ServicecartRepositoryInterface
     }
     public function showservices()
     {
-        $services = DB::table('servicecart')
-            ->join('services', 'servicecart.service_id', '=', 'services.id')
+        $services = ServiceCart::join('services', 'servicecart.service_id', '=', 'services.id')
             ->where('servicecart.user_id', '=', Auth::id())
-            ->select('services.*', 'servicecart.id as servicecart_id', 'booking_date', 'booking_time')
+            ->where('servicecart.status', '=', 'pending')
+            ->select('services.*', 'servicecart.id as servicecart_id', 'servicecart.booking_date', 'servicecart.booking_time')
             ->get();
+
         return $services;
     }
+
     public function deleteservicecart($id)
     {
 
@@ -41,7 +43,7 @@ class ServicecartRepository implements ServicecartRepositoryInterface
     }
     public function countservices()
     {
-        $service_count = DB::table('servicecart')->where('user_id', '=', Auth::id())->count();
+        $service_count = DB::table('servicecart')->where('user_id', '=', Auth::id())->where('servicecart.status', '=', 'pending')->count();
         return $service_count;
     }
 }

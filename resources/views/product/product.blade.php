@@ -85,6 +85,7 @@
     </header>
 
     <!-- Breadcrumb -->
+
     <section class="py-4 bg-white border-b border-gray-100">
         <div class="container mx-auto px-6">
             <div class="flex items-center text-sm text-gray-500">
@@ -92,7 +93,7 @@
                 <span class="mx-2">/</span>
                 <a href="products.html" class="hover:text-primary">Products</a>
                 <span class="mx-2">/</span>
-                <span>Organic Apples</span>
+                <span>{{$product->title}}</span>
             </div>
         </div>
     </section>
@@ -104,20 +105,20 @@
                 <!-- Product Images -->
                 <div class="md:w-1/2 px-6 mb-8 md:mb-0">
                     <div class="mb-6">
-                        <img src="/placeholder.svg?height=600&width=600" alt="Organic Apples" class="w-full h-auto">
+                        <img src="{{ asset($product->image) }}" alt="Organic Apples" class="w-full h-auto">
                     </div>
                     <div class="grid grid-cols-4 gap-2">
                         <div class="border border-primary">
-                            <img src="/placeholder.svg?height=150&width=150" alt="Organic Apples Thumbnail 1" class="w-full h-auto">
+                            <img src="{{ asset($product->image) }}" alt="Organic Apples Thumbnail 1" class="w-full h-auto">
                         </div>
                         <div class="border border-gray-200 hover:border-primary cursor-pointer">
-                            <img src="/placeholder.svg?height=150&width=150" alt="Organic Apples Thumbnail 2" class="w-full h-auto">
+                            <img src="{{ asset($product->image) }}" alt="Organic Apples Thumbnail 2" class="w-full h-auto">
                         </div>
                         <div class="border border-gray-200 hover:border-primary cursor-pointer">
-                            <img src="/placeholder.svg?height=150&width=150" alt="Organic Apples Thumbnail 3" class="w-full h-auto">
+                            <img src="{{ asset($product->image) }}" alt="Organic Apples Thumbnail 3" class="w-full h-auto">
                         </div>
                         <div class="border border-gray-200 hover:border-primary cursor-pointer">
-                            <img src="/placeholder.svg?height=150&width=150" alt="Organic Apples Thumbnail 4" class="w-full h-auto">
+                            <img src="{{ asset($product->image) }}" alt="Organic Apples Thumbnail 4" class="w-full h-auto">
                         </div>
                     </div>
                 </div>
@@ -127,7 +128,7 @@
                     <div class="mb-2">
                         <span class="text-xs text-gray-500">Fresh Groceries</span>
                     </div>
-                    <h1 class="text-3xl font-light mb-4">Organic Apples</h1>
+                    <h1 class="text-3xl font-light mb-4">{{$product->title}}</h1>
                     <div class="flex items-center mb-4">
                         <div class="text-yellow-400 flex">
                             <i class="fas fa-star text-xs"></i>
@@ -138,8 +139,8 @@
                         </div>
                         <span class="ml-2 text-xs text-gray-500">4.5 (36 reviews)</span>
                     </div>
-                    <p class="text-xl text-primary mb-6">$4.99</p>
-                    <p class="text-gray-600 text-sm mb-6">Premium organic apples grown without pesticides or harmful chemicals. These crisp, juicy apples are perfect for snacking, baking, or adding to your favorite recipes.</p>
+                    <p class="text-xl text-primary mb-6">${{$product->price}}</p>
+                    <p class="text-gray-600 text-sm mb-6">{{$product->description }}</p>
                     
                     <div class="mb-6">
                         <h3 class="text-sm font-medium mb-2">Weight</h3>
@@ -151,14 +152,18 @@
                     </div>
                     
                     <div class="mb-8">
-                        <h3 class="text-sm font-medium mb-2">Quantity</h3>
-                        <div class="flex items-center">
-                            <button class="w-8 h-8 border border-gray-200 flex items-center justify-center text-gray-600 hover:border-primary hover:text-primary">-</button>
-                            <input type="text" value="1" class="w-12 h-8 border-t border-b border-gray-200 text-center text-sm">
-                            <button class="w-8 h-8 border border-gray-200 flex items-center justify-center text-gray-600 hover:border-primary hover:text-primary">+</button>
-                        </div>
+                        <h3 class="text-sm font-medium mb-2">{{$product->quantity}}</h3>
+                        {{-- <div class="flex items-center border border-gray-200 rounded mr-4">
+                            <form action="{{ route('updat_quantity',$product->shoopingcart_id) }}" method="POST">
+                                @csrf
+                                @method('PUT')                       
+                                <button type="submit" name="action" value="down" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity" >-</button>
+                            <input name="quantity" type="number" value="{{ $product->quantity }}" min="1" class="w-12 text-center border-x border-gray-200 py-1 focus:outline-none">
+                            <button  type="submit" name="action" value="up" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity">+</button>
+                            </form>
+                        </div> --}}
                     </div>
-                    
+                    @dd($product)
                     <div class="flex space-x-4 mb-8">
                         <button class="flex-1 px-6 py-2 bg-primary text-white text-sm hover:bg-gray-700 transition">Add to Cart</button>
                         <button class="px-3 py-2 border border-gray-200 text-gray-700 hover:border-primary hover:text-primary transition">

@@ -169,6 +169,7 @@
     </div>
 </div>
 @endif
+
 @if (session('successs'))
 <div id="successToast"
     class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
@@ -388,9 +389,9 @@
                     
                           
                            
-                        <a href="{{ route('booking',$tow_service->id) }}" class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
-                            Book Now
-                        </a>
+                        <button  class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
+                          <a href="{{ route('booking',$tow_service->id)  }}">Book Now</a>  
+                        </button>
                     </div>
                 </div> 
                 @endforeach

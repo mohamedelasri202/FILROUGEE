@@ -77,4 +77,9 @@ class ProductController extends Controller
         $this->shoopingcartRepository->addtoshoopingcart($data);
         return  back()->with('successs', 'Product added successfully!');
     }
+    public function index($id)
+    {
+        $product = $this->ProductRepository->showproduct($id);
+        return view('product.product', compact('product'));
+    }
 }

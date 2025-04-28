@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ServiceCart;
+use App\Models\Shoopingcart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\OrderRepositoryInterface;
 use App\Repositories\ServicecartRepositoryInterface;
@@ -52,33 +55,38 @@ class OrderController extends Controller
     }
     public function add_order(Request $request)
     {
+        DB::beginTransaction();
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string',
+                'last_name' => 'required|string',
+                'phone' => 'required|numeric|digits_between:10,15',
+                'email' => 'required|email',
+                'address' => 'required|string',
+                'city' => 'required|string',
+                'type' => 'required|string',
+                'shoopingcart_id' => 'nullable|array',
+                'shoopingcart_id.*' => 'nullable|numeric',
+                'servicecart_id' => 'nullable|array',
+                'servicecart_id.*' => 'nullable|numeric',
+                'payment_method' => 'required|string',
+                'quantity' => 'nullable|string',
+                'status' => 'required|string',
+                'total' => 'required|numeric',
+            ]);
 
+            ServiceCart::where('user_id', auth()->id())
+                ->where('status', 'pending')
+                ->update(['status' => 'confirmed']);
+            Shoopingcart::where('user_id', Auth()->id())->where('status', 'pending')->update(['status' => 'confirmed']);
 
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'last_name' => 'required|string',
-            'phone' => 'required|numeric|digits_between:10,15',
-            'email' => 'required|email',
-            'address' => 'required|string',
-            'city' => 'required|string',
-            'type' => 'required|string',
-            'shoopingcart_id' => 'nullable|array',
-            'shoopingcart_id.*' => 'nullable|numeric',
-            'servicecart_id' => 'nullable|array',
-            'servicecart_id.*' => 'required|nullable|numeric',
-            'payment_method' => 'required|string',
-            'quantity' => 'nullable|string',
-            'status' => 'required|string',
-            'total' => 'required|numeric'
+            $this->OrderRepository->add_order($request);
 
-
-        ]);
-
-
-
-
-        $this->OrderRepository->add_order($request);
-
-        return back()->with('success', 'Product added successfully!');
+            DB::commit(); // <-- add this
+            return back()->with('success', 'Product added successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'There was a problem placing your order.');
+        }
     }
 }

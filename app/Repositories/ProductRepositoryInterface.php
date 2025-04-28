@@ -11,4 +11,5 @@ interface ProductRepositoryInterface
     public function updatproduct($id, Request $request,);
     public function deleteproduct($id);
     public function tow_products();
+    public function showproduct($id);
 }

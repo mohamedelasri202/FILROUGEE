@@ -49,4 +49,10 @@ class ProductRepository implements ProductRepositoryInterface
         $tow_products = DB::table('products')->limit(2)->get();
         return $tow_products;
     }
+    public function showproduct($id)
+    {
+
+        $product = Product::findorFail($id);
+        return $product;
+    }
 }
