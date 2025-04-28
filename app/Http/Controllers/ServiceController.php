@@ -63,4 +63,10 @@ class ServiceController extends Controller
         $this->ServiceRepository->updateservice($data, $id);
         return redirect()->route('dashboard.service_provider');
     }
+    public function book_service($id)
+    {
+        $service = $this->ServiceRepository->service_detaills($id);
+
+        return view('cart.booking_service', compact('service'));
+    }
 }

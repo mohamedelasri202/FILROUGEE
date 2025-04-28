@@ -385,13 +385,12 @@
                     <div class="p-4">
                         <h3 class="font-light text-base mb-1">{{$tow_service->title}}</h3>
                         <p class="text-primary font-medium text-sm">Starting at ${{$tow_service->price}}</p>
-                        <form action="{{ route('addservice') }}" method="POST">
-                            @csrf
+                    
                           
-                            <input type="hidden" name="service_id" value="{{ $tow_service->id }}">
-                        <button type="submit" class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
+                           
+                        <a href="{{ route('booking',$tow_service->id) }}" class="mt-2 w-full py-1.5 bg-primary text-white text-xs hover:bg-gray-700 transition rounded">
                             Book Now
-                        </button>
+                        </a>
                     </div>
                 </div> 
                 @endforeach

@@ -10,4 +10,5 @@ interface ServiceRepositoryInterface
     public function updateservice($data, $id);
     public function showALLservices();
     public function tow_service();
+    public function  service_detaills($id);
 }

@@ -48,4 +48,9 @@ class ServiceRepository implements ServiceRepositoryInterface
         $tow_services = DB::table('services')->limit(2)->get();
         return $tow_services;
     }
+    public function service_detaills($id)
+    {
+        $service = service::findorfail($id);
+        return $service;
+    }
 }

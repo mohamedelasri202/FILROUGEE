@@ -107,3 +107,8 @@ Route::delete('/cart/{id}', [ServicecartController::class, 'deleteservicecart'])
     ->middleware('auth', 'role:user');
 Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');
 Route::post('/checkout', [OrderController::class, 'add_order'])->name('CHECK')->middleware('auth', 'role:user');
+
+
+
+// the service booking route
+Route::get('/booking-services/{id}', [ServiceController::class, 'book_service'])->name('booking')->middleware('auth', 'role:user');
