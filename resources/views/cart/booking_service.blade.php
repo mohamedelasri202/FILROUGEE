@@ -90,6 +90,8 @@
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+
+  
 <!-- Header/Navbar -->
 <header class="bg-white shadow-sm sticky top-0 z-40">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -664,12 +666,14 @@
         
         <form action="{{ route('addservice') }}" method="POST" class="p-8">
             @csrf
-            <input type="hidden" name="service_id" value="1">
-            <input type="hidden" name="service_name" value="Home Cleaning">
-            <input type="hidden" name="service_price" value="149.00">
-            
+        
+            <!-- Hidden Service ID -->
+            <input type="hidden" name="service_id" value="{{ $service->id }}">
+            <input type="hidden" name="status" value="pending">
+        
             <!-- Date and Time Selection -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                
                 <!-- Date Picker -->
                 <div>
                     <label for="booking_date" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date *</label>
@@ -679,10 +683,14 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                         </div>
-                        <input type="date" id="booking_date" name="booking_date" required min="{{ date('Y-m-d') }}" class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
+                        <input type="date" id="booking_date" name="booking_date" required min="{{ date('Y-m-d') }}"
+                        class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
                     </div>
+                    @error('booking_date')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
-                
+        
                 <!-- Time Picker -->
                 <div>
                     <label for="booking_time" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time *</label>
@@ -710,90 +718,25 @@
                             </svg>
                         </div>
                     </div>
+                    @error('booking_time')
+                        <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
+                    @enderror
                 </div>
+        
             </div>
-            
-            <!-- Personal Information -->
-            <div class="mb-6 p-6 bg-gray-50 rounded-lg border border-gray-100">
-                <h3 class="text-sm font-medium text-gray-700 mb-4">Personal Information</h3>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label for="first_name" class="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
-                        <input type="text" id="first_name" name="first_name" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                    <div>
-                        <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
-                        <input type="text" id="last_name" name="last_name" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                        <input type="email" id="email" name="email" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
-                        <input type="tel" id="phone" name="phone" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Address Information -->
-            <div class="mb-6 p-6 bg-gray-50 rounded-lg border border-gray-100">
-                <h3 class="text-sm font-medium text-gray-700 mb-4">Service Location</h3>
-                
-                <div class="mb-4">
-                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Street Address *</label>
-                    <input type="text" id="address" name="address" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                        <label for="city" class="block text-sm font-medium text-gray-700 mb-1">City *</label>
-                        <input type="text" id="city" name="city" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                    <div>
-                        <label for="state" class="block text-sm font-medium text-gray-700 mb-1">State *</label>
-                        <input type="text" id="state" name="state" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                    <div>
-                        <label for="zip" class="block text-sm font-medium text-gray-700 mb-1">ZIP Code *</label>
-                        <input type="text" id="zip" name="zip" required class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-input">
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Special Instructions -->
-            <div class="mb-6">
-                <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">Special Instructions (Optional)</label>
-                <textarea id="notes" name="notes" rows="4" class="w-full px-4 py-3 border border-gray-200 rounded-md focus:outline-none form-textarea" placeholder="Any specific requirements or details we should know about?"></textarea>
-            </div>
-            
-            <!-- Terms and Conditions -->
-            <div class="mb-6">
-                <div class="flex items-start">
-                    <div class="flex items-center h-5">
-                        <input id="terms" name="terms" type="checkbox" required class="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded">
-                    </div>
-                    <div class="ml-3 text-sm">
-                        <label for="terms" class="font-medium text-gray-700">I agree to the <a href="#" class="text-primary hover:underline">Terms and Conditions</a></label>
-                        <p class="text-gray-500">You will be charged only after service completion.</p>
-                    </div>
-                </div>
-            </div>
-            
+        
             <!-- Submit Button -->
             <div class="flex justify-end">
                 <button type="submit" class="px-6 py-3 bg-primary text-white rounded-md hover:bg-gray-700 transition-colors duration-300 flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    Confirm Booking
+                    Add to Cart
                 </button>
             </div>
+        
         </form>
+        
     </div>
 </div>
 
@@ -803,6 +746,13 @@
         <p class="text-center text-sm text-gray-500">© 2025 Supermark. All rights reserved.</p>
     </div>
 </footer>
+
+@error('booking_date')
+{{ $message }}
+@enderror
+@error('booking_time')
+{{ $message }}
+@enderror
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

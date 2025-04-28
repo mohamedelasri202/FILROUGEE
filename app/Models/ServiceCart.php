@@ -11,6 +11,9 @@ class ServiceCart extends Model
     protected $table = 'servicecart';
     protected $fillable = [
         'service_id',
-        'user_id'
+        'user_id',
+        'status',
+        'booking_time',
+        'booking_date'
     ];
 }

@@ -13,17 +13,22 @@ class ServicecartRepository implements ServicecartRepositoryInterface
     public function addservicecart($request)
     {
 
-        return ServiceCart::create([
+        $services = ServiceCart::create([
             'service_id' => $request['service_id'],
             'user_id' => Auth::id(),
+            'status' => $request['status'],
+            'booking_date' => $request['booking_date'],
+            'booking_time' => $request['booking_time'],
         ]);
+
+        return $services;
     }
     public function showservices()
     {
         $services = DB::table('servicecart')
             ->join('services', 'servicecart.service_id', '=', 'services.id')
             ->where('servicecart.user_id', '=', Auth::id())
-            ->select('services.*', 'servicecart.id as servicecart_id')
+            ->select('services.*', 'servicecart.id as servicecart_id', 'booking_date', 'booking_time')
             ->get();
         return $services;
     }

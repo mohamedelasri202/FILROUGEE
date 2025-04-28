@@ -276,7 +276,7 @@
                         <div class="flex-1">
                             <h3 class="font-medium text-gray-800">{{$service->title}}</h3>
                             <p class="text-sm text-gray-500">{{$service->description}}</p>
-                            <p class="text-xs text-gray-500 mt-1">April 25, 2025 • 2:00 PM</p>
+                            <p class="text-xs text-gray-500 mt-1">{{ $service->booking_date }} • {{$service->booking_time}} PM</p>
                         </div>
                         <div class="text-right mt-4 sm:mt-0">
                             <p class="font-medium text-gray-800">${{$service->price}}</p>

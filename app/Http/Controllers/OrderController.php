@@ -40,9 +40,9 @@ class OrderController extends Controller
         }
         // logic to count the total 
         if ($product_count == 0) {
-            $total = $totalproduct + $totalservice + 1.92 + 5.00;
+            $total = $totalproduct + $totalservice + 5.00 + 1.95;
         } else {
-            $total = $totalproduct + $totalservice + 1.95 + 5.00;
+            $total = $totalproduct + $totalservice + 1.95 + 5.00 + 5.00;
         };
 
 
@@ -53,6 +53,7 @@ class OrderController extends Controller
     public function add_order(Request $request)
     {
 
+
         $validatedData = $request->validate([
             'name' => 'required|string',
             'last_name' => 'required|string',
@@ -61,12 +62,12 @@ class OrderController extends Controller
             'address' => 'required|string',
             'city' => 'required|string',
             'type' => 'required|string',
-            'shoopingcart_id' => 'required|array',
-            'shoopingcart_id.*' => 'required|numeric',
-            'servicecart_id' => 'required|array',
-            'servicecart_id.*' => 'required|numeric',
+            'shoopingcart_id' => 'nullable|array',
+            'shoopingcart_id.*' => 'nullable|numeric',
+            'servicecart_id' => 'nullable|array',
+            'servicecart_id.*' => 'required|nullable|numeric',
             'payment_method' => 'required|string',
-            'quantity' => 'required|string',
+            'quantity' => 'nullable|string',
             'status' => 'required|string',
             'total' => 'required|numeric'
 

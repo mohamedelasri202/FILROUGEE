@@ -118,6 +118,7 @@
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
+ 
    
 {{-- 
     @error('total')
@@ -234,6 +235,7 @@
             <!-- Left Column - Customer Details & Payment -->
             <div class="w-full lg:w-2/3">
                 <div class="p-8">
+                    
                     <form action="{{ route('CHECK') }}" method="POST" class="space-y-8 bg-white p-8 rounded-lg shadow-lg border border-gray-100">
                         @csrf
                     
@@ -241,6 +243,10 @@
                         @foreach ($services as $service)
                             <input type="hidden" name="servicecart_id[]" value="{{ $service->servicecart_id }}">
                         @endforeach
+                        @error('service_id')
+                        {{ $message }}
+                            
+                        @enderror
                        
                 
                         <!-- Hidden shoppingcart IDs (products) -->
@@ -248,13 +254,17 @@
                             <input type="hidden" name="shoopingcart_id[]" value="{{ $product->shooping_id }}">
                             <input type="hidden" value="{{ $product->quantity }}" name="quantity">
                         @endforeach
+                        @error('shoopingcart_id')
+                        {{ $message }}
+                            
+                        @enderror
                     
                         <!-- Form Header -->
                         <div class="border-b border-gray-200 pb-4 mb-6">
                             <h2 class="text-2xl font-light text-gray-700">Complete Your Order</h2>
                             <p class="text-sm text-gray-500 mt-1">Please enter your details below</p>
                         </div>
-             
+                    
 
                         <!-- User info -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -263,12 +273,19 @@
                                 <input type="text" name="name" id="first_name" required 
                                     class="w-full border border-gray-200 rounded-md px-4 py-3 focus:outline-none focus:border-primary transition-colors">
                             </div>
-                            
+                            @error('first_name')
+                            {{ $message }}
+                                
+                            @enderror
                             <div class="transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20 rounded-md">
                                 <label for="last_name" class="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
                                 <input type="text" name="last_name" id="last_name" required 
                                     class="w-full border border-gray-200 rounded-md px-4 py-3 focus:outline-none focus:border-primary transition-colors">
                             </div>
+                            @error('last_name')
+                            {{ $message }}
+                                
+                            @enderror
                         </div>
                         <input type="hidden" name="status" value="confirmed" >
                         <input type="hidden" name="total" value="{{ $total }}">
@@ -278,7 +295,14 @@
                                 <input type="email" name="email" id="email" required 
                                     class="w-full border border-gray-200 rounded-md px-4 py-3 focus:outline-none focus:border-primary transition-colors">
                             </div>
-                
+                            @error('total')
+                            {{ $message }}
+                                
+                            @enderror
+                            @error('status')
+                            {{ $message }}
+                                
+                            @enderror
                             <div class="transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20 rounded-md">
                                 <label for="type" class="block text-sm font-medium text-gray-700 mb-1">Type *</label>
                                 <div class="relative">
@@ -287,6 +311,10 @@
                                         <option value="service">Service</option>
                                         <option value="product">Product</option>
                                     </select>
+                                    @error('type')
+                            {{ $message }}
+                                
+                            @enderror
                                     <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-500">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
@@ -307,6 +335,10 @@
                                 <input type="text" name="phone" id="phone" required 
                                     class="w-full border border-gray-200 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:border-primary transition-colors">
                             </div>
+                            @error('phone')
+                            {{ $message }}
+                                
+                            @enderror
                         </div>
                     
                         <!-- Address Section -->
@@ -325,6 +357,10 @@
                                     <input type="text" name="address" id="address" required 
                                         class="w-full border border-gray-200 rounded-md pl-12 pr-4 py-3 focus:outline-none focus:border-primary transition-colors">
                                 </div>
+                                @error('address')
+                            {{ $message }}
+                                
+                            @enderror
                             </div>
                         
                             <div class="transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20 rounded-md">
@@ -332,6 +368,10 @@
                                 <input type="text" name="city" id="city" required 
                                     class="w-full border border-gray-200 rounded-md px-4 py-3 focus:outline-none focus:border-primary transition-colors">
                             </div>
+                            @error('city')
+                            {{ $message }}
+                                
+                            @enderror
                         </div>
                     
                         <!-- Payment Method -->
@@ -384,6 +424,10 @@
                                 </label>
                             </div>
                         </div>
+                        @error('payment_method')
+                            {{ $message }}
+                                
+                            @enderror
                     
                         <div class="pt-6 border-t border-gray-100 mt-8">
                             <button type="submit" class="w-full md:w-auto px-8 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors duration-300 flex items-center justify-center">
@@ -443,7 +487,7 @@
                                     <div class="flex-1">
                                         <h3 class="font-medium text-gray-800">{{$service->title}}</h3>
                                         <p class="text-sm text-gray-500">{{$service->description}}</p>
-                                        <p class="text-xs text-gray-500 mt-1">April 25, 2025 • 2:00 PM</p>
+                                        <p class="text-xs text-gray-500 mt-1">{{ $service->booking_date }} • {{ $service->booking_time }} PM</p>
                                     </div>
                                     <div class="text-right mt-4 sm:mt-0">
                                         <p class="font-medium text-gray-800">${{$service->price}}</p>
@@ -480,6 +524,10 @@
                                 <div class="flex justify-between">
                                     <span class="text-gray-500">Tax</span>
                                     <span>$1.95</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">service fees</span>
+                                    <span>$5</span>
                                 </div>
                             </div>
                             
