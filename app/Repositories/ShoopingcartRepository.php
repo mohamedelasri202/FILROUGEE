@@ -14,25 +14,30 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
     {
         $productId = $data['product_id'];
 
-        // Check if the product already exists in the user's shopping cart
+        // Find if there's a pending cart for this product and user
         $existing = Shoopingcart::where('product_id', $productId)
             ->where('user_id', Auth::id())
-            ->first();
+            ->where('status', 'pending')
+            ->first(); // only get the pending one if exists
 
-        if ($existing && $existing->status == 'pending') {
-            // If exists and status is pending, just update the quantity
+        if ($existing) {
+            // If a pending cart exists for this product, update quantity
             $existing->quantity += 1;
             $existing->save();
         } else {
-            // If not found or status is confirmed, create new entry
+            // If not (either no entry or only confirmed entries), create new pending
             Shoopingcart::create([
                 'product_id' => $productId,
                 'quantity' => $data['quantity'],
                 'type' => $data['type'],
-                'user_id' => Auth::id()
+                'user_id' => Auth::id(),
+                'status' => 'pending' // make sure you set status pending if creating
             ]);
         }
     }
+
+
+
 
 
     public function showproducts()
@@ -76,4 +81,7 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
         $product->user_id = Auth::id();
         $product->save();
     }
+    // public function shoopingcart_id(){
+    //     $shoopingcart_id = DB::table('shoopingcart_id')->join('products','shoopingcart.product_id','=','products.id')->where('user_id',Auth::id())->select('shoopingcart_id')->get();
+    // }
 }

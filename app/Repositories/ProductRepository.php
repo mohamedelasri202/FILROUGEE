@@ -51,8 +51,19 @@ class ProductRepository implements ProductRepositoryInterface
     }
     public function showproduct($id)
     {
+        $product = Product::findOrFail($id);
 
-        $product = Product::findorFail($id);
-        return $product;
+        $shoppingCartItems = DB::table('shoopingcart')
+            ->join('products', 'shoopingcart.product_id', '=', 'products.id')
+            ->select('shoopingcart.id', 'shoopingcart.quantity')
+            ->where('shoopingcart.product_id', $product->id)
+            ->where('shoopingcart.status', 'pending')
+            ->limit(1)
+            ->get();
+
+        return [
+            'product' => $product,
+            'shopping_cart_items' => $shoppingCartItems
+        ];
     }
 }

@@ -153,15 +153,20 @@
                     
                     <div class="mb-8">
                         <h3 class="text-sm font-medium mb-2">{{$product->quantity}}</h3>
-                        {{-- <div class="flex items-center border border-gray-200 rounded mr-4">
-                            <form action="{{ route('updat_quantity',$product->shoopingcart_id) }}" method="POST">
+                         <div class="flex items-center border border-gray-200 rounded mr-4">
+                            @dd($shopping_cart_items)
+                            {{-- @foreach ($shopping_cart_items as $item) --}}
+                                
+                          
+                            {{-- <form action="{{ route('updat_quantity',$item->shoopingcart_id) }}" method="POST">
                                 @csrf
                                 @method('PUT')                       
                                 <button type="submit" name="action" value="down" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity" >-</button>
-                            <input name="quantity" type="number" value="{{ $product->quantity }}" min="1" class="w-12 text-center border-x border-gray-200 py-1 focus:outline-none">
+                            <input name="quantity" type="number" value="{{ $item->quantity }}" min="1" class="w-12 text-center border-x border-gray-200 py-1 focus:outline-none">
                             <button  type="submit" name="action" value="up" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity">+</button>
-                            </form>
-                        </div> --}}
+                            </form> --}}
+                            {{-- @endforeach --}}
+                        </div> 
                     </div>
                     @dd($product)
                     <div class="flex space-x-4 mb-8">

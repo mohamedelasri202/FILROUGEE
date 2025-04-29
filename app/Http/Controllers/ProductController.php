@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Repositories\ProductRepository;
 use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ShoopingcartRepository;
 use App\Repositories\ShoopingcartRepositoryInterface;
 
 class ProductController extends Controller
@@ -79,7 +80,8 @@ class ProductController extends Controller
     }
     public function index($id)
     {
-        $product = $this->ProductRepository->showproduct($id);
-        return view('product.product', compact('product'));
+
+        $data = $this->ProductRepository->showproduct($id);
+        return view('product.product', $data);
     }
 }
