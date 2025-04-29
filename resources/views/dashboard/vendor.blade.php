@@ -168,25 +168,25 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-            @if($products->isEmpty())
+           
             <tr>
                 <td colspan="6" class="py-3 px-4 text-center text-sm text-gray-500">No products found.</td>
             </tr>
-            @else
-            @foreach ($products as $product)
+
+       
             <tr>
                 <td class="py-3 px-4">
                     <div class="flex items-center">
                         <div class="h-10 w-10 flex-shrink-0 mr-3">
-                            <img src="{{ asset($product->image) }}" alt="{{$product->title}}" class="h-10 w-10 object-cover">
+                            <img src="" alt="" class="h-10 w-10 object-cover">
                         </div>
                         <div>
-                            <div class="text-sm font-medium text-gray-900">{{$product->title}}</div>
+                            <div class="text-sm font-medium text-gray-900"></div>
                         </div>
                     </div>
                 </td>
-                <td class="py-3 px-4 text-sm text-gray-500">{{$product->category}}</td>
-                <td class="py-3 px-4 text-sm text-gray-500">{{$product->price}}</td>
+                <td class="py-3 px-4 text-sm text-gray-500"><td>
+                <td class="py-3 px-4 text-sm text-gray-500"></td>
                 <td class="py-3 px-4 text-sm text-gray-500">120</td>
                 <td class="py-3 px-4">
                     <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">In Stock</span>
@@ -196,16 +196,16 @@
                         <!-- Edit Button with data attributes -->
                         <button type="button"
                             class="text-primary hover:text-gray-700 edit-button"
-                            data-id="{{ $product->id }}"
-                            data-title="{{ $product->title }}"
-                            data-price="{{ $product->price }}"
-                            data-category="{{ $product->category }}"
-                            data-description="{{ $product->description }}"
-                            data-action="{{ route('updateproduct', $product->id) }}">
+                            data-id=""
+                            data-title=""
+                            data-price=""
+                            data-category=""
+                            data-description=""
+                            data-action="">
                             Edit
                         </button>
 
-                        <form action="{{ route('deleteproduct', $product->id) }}" method="POST" class="inline">
+                        <form action="" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-gray-500 hover:text-red-600">Delete</button>
@@ -213,8 +213,8 @@
                     </div>
                 </td>
             </tr>
-            @endforeach
-            @endif
+
+       
         </tbody>
     </table>
 </div>
@@ -321,7 +321,7 @@
                         </thead>
                         <tbody class="divide-y divide-gray-100">
                             <!-- Order 1 -->
-                            @foreach ($orders as $order )
+                   
                                 
                        
                               
@@ -333,13 +333,13 @@
                                         <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
                                             <span class="text-xs font-medium text-gray-600">JD</span>
                                         </div>
-                                        <div class="text-sm text-gray-900">{{$order->user_name}} {{$order->last_name}}</div>
+                                        <div class="text-sm text-gray-900"></div>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$order->created_at}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-900">{{$order->total}}</td>
+                                <td class="py-3 px-4 text-sm text-gray-500"></td>
+                                <td class="py-3 px-4 text-sm text-gray-900"></td>
                                 <td class="py-3 px-4">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">{{$order->status}}</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800"></span>
                                 </td>
                                 <td class="py-3 px-4 text-right text-sm font-medium">
                                     <div class="flex justify-end space-x-2">
@@ -348,7 +348,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+
                             
                            
                         </tbody>
@@ -426,7 +426,7 @@
                             
                             <!-- Customer 2 -->
                             <tr>
-                                @foreach ($orders_count as $order_count )
+                             
                                     
                                 
                                 <td class="py-3 px-4">
@@ -434,15 +434,14 @@
                                         <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
                                             <span class="text-xs font-medium text-gray-600">MS</span>
                                         </div>
-                                        <div class="text-sm text-gray-900">{{$order_count->name}} {{$order_count->lastname}}</div>
+                                        <div class="text-sm text-gray-900"></div>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$order_count->email}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$order_count->total_orders}}</td>
-                                @foreach ($orders as $order )
-                                    
-                                @endforeach<td class="py-3 px-4 text-sm text-gray-900">${{$order->total}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$order->created_at}}</td>
+                                <td class="py-3 px-4 text-sm text-gray-500"></td>
+                                <td class="py-3 px-4 text-sm text-gray-500"></td>
+                             
+                          <td class="py-3 px-4 text-sm text-gray-900">$</td>
+                                <td class="py-3 px-4 text-sm text-gray-500"></td>
                                 
                                 
                                 <td class="py-3 px-4 text-right text-sm font-medium">
@@ -451,7 +450,7 @@
                                         <button class="text-gray-500 hover:text-gray-700">Email</button>
                                     </div>
                                 </td>
-                                @endforeach
+                           
                             </tr>
                             
                           

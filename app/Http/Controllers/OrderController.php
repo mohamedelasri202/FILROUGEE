@@ -70,8 +70,6 @@ class OrderController extends Controller
                 'quantity' => 'nullable|string',
                 'status' => 'required|string',
                 'total' => 'required|numeric',
-
-                // Keep these just for reading items to attach to order_items
                 'shoopingcart_id' => 'nullable|array',
                 'shoopingcart_id.*' => 'nullable|numeric',
                 'servicecart_id' => 'nullable|array',
@@ -88,7 +86,7 @@ class OrderController extends Controller
                 ->where('status', 'pending')
                 ->update(['status' => 'confirmed']);
 
-            $this->OrderRepository->add_order($request); // Creates order and order_items
+            $this->OrderRepository->add_order($request);
 
             DB::commit();
             return back()->with('success', 'Order placed successfully!');

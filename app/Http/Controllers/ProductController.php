@@ -40,6 +40,7 @@ class ProductController extends Controller
             $imagePath = $request->file('image')->store('products', 'public');
         }
 
+
         $this->ProductRepository->addProduct($request, $imagePath);
 
         return redirect()->route('dashboard.vendor')->with('success', 'Product added successfully!');

@@ -13,7 +13,8 @@ class ProductRepository implements ProductRepositoryInterface
 {
     public function addProduct($request, $imagePath)
     {
-        return Product::create([
+
+        $product = Product::create([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
             'price' => $request->input('price'),
@@ -21,6 +22,7 @@ class ProductRepository implements ProductRepositoryInterface
             'category' => $request->input('category'),
             'vendor_id' => Auth::id(),
         ]);
+        return $product;
     }
     public function showALLproducts()
     {
