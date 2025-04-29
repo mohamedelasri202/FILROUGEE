@@ -491,23 +491,21 @@
 
 <script>
     
-    const toast = document.getElementById('successToast');
+    const toast = document.getElementById('toastMessage');
 
     if (toast) {
-        toast.classList.remove('hidden');
-        toast.classList.remove('opacity-0');
+        toast.classList.remove('hidden', 'opacity-0');
         toast.classList.add('opacity-100', 'transition-opacity');
 
-        setTimeout(function () {
+        setTimeout(() => {
             toast.classList.remove('opacity-100');
             toast.classList.add('opacity-0');
 
-            setTimeout(function () {
+            setTimeout(() => {
                 toast.classList.add('hidden');
-            }, 300); // Matches your transition duration
-        }, 5000); // Show toast for 5 seconds
+            }, 300); // matches your transition duration
+        }, 5000); // display for 5 seconds
     }
-
     
 </script>
 </body>

@@ -150,50 +150,33 @@
                     <p class="text-xl text-primary mb-6">${{$product->price}}</p>
                     <p class="text-gray-600 text-sm mb-6">{{$product->description }}</p>
                     
-                    <div class="mb-6">
-                        <h3 class="text-sm font-medium mb-2">Weight</h3>
-                        <div class="flex space-x-2">
-                            <button class="px-4 py-1.5 border border-primary text-primary text-xs">500g</button>
-                            <button class="px-4 py-1.5 border border-gray-200 text-gray-700 text-xs hover:border-primary hover:text-primary">1kg</button>
-                            <button class="px-4 py-1.5 border border-gray-200 text-gray-700 text-xs hover:border-primary hover:text-primary">2kg</button>
-                        </div>
-                    </div>
                     
                     <div class="mb-8">
-                        <h3 class="text-sm font-medium mb-2">{{$product->quantity}}</h3>
-                         <div class="flex items-center border border-gray-200 rounded mr-4">
-                   
-                            @foreach ($shopping_cart_items as $item) 
-                                
-                         
-                             <form action="{{ route('updat_quantity',$item->id ) }}" method="POST">
-                                @csrf
-                                @method('PUT')     
-                                                
-                                <button type="submit" name="action" value="down" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity" >-</button>
-                            <input name="quantity" type="number" value="{{ $item->quantity }}" min="1" class="w-12 text-center border-x border-gray-200 py-1 focus:outline-none">
-                            <button  type="submit" name="action" value="up" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity">+</button>
-                            </form> 
-                          
-                        </div> 
-                    </div>
-
-                    <div class="flex space-x-4 mb-8">
-                        <form action="{{ route('addshoopingcart',$product->id) }}" method="POST">
+                        <form action="{{ route('addshoopingcart', $product->id) }}" method="POST">
                             @csrf
-                            <input type="hidden" name="type" value="product">
-                            <input type="hidden" name="product_id"  value="{{ $product->id }}">
-                            <input type="hidden" name="quantity" value="{{ $item->quantity }}" min="1">
-                            
-                            <button type="submit" class="mt-2 w-full px-4 py-2 bg-primary text-white rounded-md flex items-center justify-center transition-all hover:bg-gray-700">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                </svg>
-                                Add to Cart
-                            </button>
+                            <div class="flex items-center border border-gray-200 rounded mr-4">
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <button type="button" class="px-3 py-1 text-gray-500 hover:text-primary" id="decrease">-</button>
+                                    <input id="quantity" type="number" name="quantity" value="1" min="1" class="w-12 text-center border-x border-gray-200 py-1 focus:outline-none">
+                                    <button type="button" class="px-3 py-1 text-gray-500 hover:text-primary" id="increase">+</button>
+                                </div>
+                            </div>
+                        
+                            <div class="flex space-x-4 mb-8">
+                                <input type="hidden" name="type" value="product">
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                        
+                                <button type="submit" class="mt-2 w-full px-4 py-2 bg-primary text-white rounded-md flex items-center justify-center transition-all hover:bg-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    </svg>
+                                    Add to Cart
+                                </button>
+                            </div>
                         </form>
-                        </form>
-                        @endforeach
+                        
+                        
+                      
                         
                     </div>
                     
@@ -394,6 +377,23 @@
             </div>
         </div>
     </footer>
+    <script>
+         const decreaseBtn = document.getElementById("decrease");
+  const increaseBtn = document.getElementById("increase");
+  const quantityInput = document.getElementById("quantity");
+
+  decreaseBtn.addEventListener("click", () => {
+    let current = parseInt(quantityInput.value);
+    if (current > 1) {
+      quantityInput.value = current - 1;
+    }
+  });
+
+  increaseBtn.addEventListener("click", () => {
+    let current = parseInt(quantityInput.value);
+    quantityInput.value = current + 1;
+  });
+    </script>
    
 </body>
 </html>

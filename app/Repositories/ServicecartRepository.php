@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ServiceCart;
+use App\Models\Shoopingcart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -12,17 +13,31 @@ class ServicecartRepository implements ServicecartRepositoryInterface
 {
     public function addservicecart($request)
     {
+        $serviceid = $request['service_id'];
 
-        $services = ServiceCart::create([
-            'service_id' => $request['service_id'],
-            'user_id' => Auth::id(),
-            'status' => $request['status'],
-            'booking_date' => $request['booking_date'],
-            'booking_time' => $request['booking_time'],
-        ]);
+        $existe_service = ServiceCart::where('service_id', $serviceid)
+            ->where('booking_time', $request['booking_time'])
+            ->where('booking_date', $request['booking_date'])
+            ->where('status', 'pending')
+            ->first();
 
-        return $services;
+
+        if ($existe_service) {
+            return back()->with('error', 'sorry the service is reserved for the time and date chosen please chose another date or time ');
+        } else {
+            // Otherwise, add to cart
+            $services = ServiceCart::create([
+                'service_id' => $request['service_id'],
+                'user_id' => Auth::id(),
+                'status' => $request['status'],
+                'booking_date' => $request['booking_date'],
+                'booking_time' => $request['booking_time'],
+            ]);
+
+            return $services;
+        }
     }
+
     public function showservices()
     {
         $services = ServiceCart::join('services', 'servicecart.service_id', '=', 'services.id')

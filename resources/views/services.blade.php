@@ -135,7 +135,7 @@
                     @foreach ($services as $service )
 
                     <div class="group">
-                        <a href="service-detail.html" class="block">
+                        <a href="{{ route('booking',$service->id)  }}" class="block">
                             <div class="overflow-hidden mb-4">
                                 <img src="{{ asset($service->image) }}" alt="{{$service->title  }}" class="w-full h-64 object-cover transition duration-500 group-hover:scale-105">
                             </div>
