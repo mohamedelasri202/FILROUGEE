@@ -30,6 +30,14 @@
     </style>
 </head>
 <body class="bg-white text-gray-800">
+    @error('product_id')
+{{ $message }}
+    
+@enderror
+@error('quantity')
+{{ $message }}
+    
+@enderror
     <!-- Header -->
     <header class="py-4 px-6 bg-white border-b border-gray-100">
         <div class="container mx-auto flex items-center justify-between">
@@ -154,28 +162,39 @@
                     <div class="mb-8">
                         <h3 class="text-sm font-medium mb-2">{{$product->quantity}}</h3>
                          <div class="flex items-center border border-gray-200 rounded mr-4">
-                            @dd($shopping_cart_items)
-                            {{-- @foreach ($shopping_cart_items as $item) --}}
+                   
+                            @foreach ($shopping_cart_items as $item) 
                                 
-                          
-                            {{-- <form action="{{ route('updat_quantity',$item->shoopingcart_id) }}" method="POST">
+                         
+                             <form action="{{ route('updat_quantity',$item->id ) }}" method="POST">
                                 @csrf
-                                @method('PUT')                       
+                                @method('PUT')     
+                                                
                                 <button type="submit" name="action" value="down" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity" >-</button>
                             <input name="quantity" type="number" value="{{ $item->quantity }}" min="1" class="w-12 text-center border-x border-gray-200 py-1 focus:outline-none">
                             <button  type="submit" name="action" value="up" class="px-3 py-1 text-gray-500 hover:text-primary decrease-quantity">+</button>
-                            </form> --}}
-                            {{-- @endforeach --}}
+                            </form> 
+                          
                         </div> 
                     </div>
-                    @dd($product)
+
                     <div class="flex space-x-4 mb-8">
-                        <button class="flex-1 px-6 py-2 bg-primary text-white text-sm hover:bg-gray-700 transition">Add to Cart</button>
-                        <button class="px-3 py-2 border border-gray-200 text-gray-700 hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                        </button>
+                        <form action="{{ route('addshoopingcart',$product->id) }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="type" value="product">
+                            <input type="hidden" name="product_id"  value="{{ $product->id }}">
+                            <input type="hidden" name="quantity" value="{{ $item->quantity }}" min="1">
+                            
+                            <button type="submit" class="mt-2 w-full px-4 py-2 bg-primary text-white rounded-md flex items-center justify-center transition-all hover:bg-gray-700">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                                Add to Cart
+                            </button>
+                        </form>
+                        </form>
+                        @endforeach
+                        
                     </div>
                     
                     <div class="border-t border-gray-100 pt-6">
