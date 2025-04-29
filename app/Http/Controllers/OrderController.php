@@ -57,6 +57,7 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
         try {
+
             $validatedData = $request->validate([
                 'name' => 'required|string',
                 'last_name' => 'required|string',
@@ -65,28 +66,35 @@ class OrderController extends Controller
                 'address' => 'required|string',
                 'city' => 'required|string',
                 'type' => 'required|string',
-                'shoopingcart_id' => 'nullable|array',
-                'shoopingcart_id.*' => 'nullable|numeric',
-                'servicecart_id' => 'nullable|array',
-                'servicecart_id.*' => 'nullable|numeric',
                 'payment_method' => 'required|string',
                 'quantity' => 'nullable|string',
                 'status' => 'required|string',
                 'total' => 'required|numeric',
+
+                // Keep these just for reading items to attach to order_items
+                'shoopingcart_id' => 'nullable|array',
+                'shoopingcart_id.*' => 'nullable|numeric',
+                'servicecart_id' => 'nullable|array',
+                'servicecart_id.*' => 'nullable|numeric',
             ]);
 
             ServiceCart::where('user_id', auth()->id())
                 ->where('status', 'pending')
                 ->update(['status' => 'confirmed']);
-            Shoopingcart::where('user_id', Auth()->id())->where('status', 'pending')->update(['status' => 'confirmed']);
 
-            $this->OrderRepository->add_order($request);
 
-            DB::commit(); // <-- add this
-            return back()->with('success', 'Product added successfully!');
+
+            $product = Shoopingcart::where('user_id', auth()->id())
+                ->where('status', 'pending')
+                ->update(['status' => 'confirmed']);
+
+            $this->OrderRepository->add_order($request); // Creates order and order_items
+
+            DB::commit();
+            return back()->with('success', 'Order placed successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'There was a problem placing your order.');
+            return back()->with('succes', 'There was a problem placing your order.');
         }
     }
 }

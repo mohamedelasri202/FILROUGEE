@@ -21,21 +21,17 @@ class ServicecartRepository implements ServicecartRepositoryInterface
             ->where('status', 'pending')
             ->first();
 
-
         if ($existe_service) {
-            return back()->with('error', 'sorry the service is reserved for the time and date chosen please chose another date or time ');
-        } else {
-            // Otherwise, add to cart
-            $services = ServiceCart::create([
-                'service_id' => $request['service_id'],
-                'user_id' => Auth::id(),
-                'status' => $request['status'],
-                'booking_date' => $request['booking_date'],
-                'booking_time' => $request['booking_time'],
-            ]);
-
-            return $services;
+            throw new \Exception('Sorry, this service is already booked for the selected time and date. Please choose another time.');
         }
+
+        return ServiceCart::create([
+            'service_id' => $request['service_id'],
+            'user_id' => Auth::id(),
+            'status' => $request['status'],
+            'booking_date' => $request['booking_date'],
+            'booking_time' => $request['booking_time'],
+        ]);
     }
 
     public function showservices()

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -10,53 +11,47 @@ use App\Repositories\OrderRepositoryInterface;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-
     public function add_order($request)
     {
 
-        // Add each service
-        if (!empty($request['servicecart_id'])) {
-            foreach ($request['servicecart_id'] as $service_cart) {
-                Order::create([
-                    'name' => $request['name'],
-                    'last_name' => $request['last_name'],
-                    'email' => $request['email'],
-                    'address' => $request['address'],
-                    'city' => $request['city'],
-                    'phone' => $request['phone'],
-                    'payment_method' => $request['payment_method'],
-                    'servicecart_id' => $service_cart,
-                    'type' => $request['type'],
-                    'quantity' => $request['quantity'],
-                    'status' => $request['status'],
-                    'user_id' => Auth::id(),
-                    'total' => $request['total']
-                ]);
-            }
+        // Create the main order
+        $order = Order::create([
+            'name' => $request['name'],
+            'last_name' => $request['last_name'],
+            'email' => $request['email'],
+            'address' => $request['address'],
+            'city' => $request['city'],
+            'phone' => $request['phone'],
+            'payment_method' => $request['payment_method'],
+            'quantity' => $request['quantity'],
+            'status' => $request['status'],
+            'user_id' => auth()->id(),
+            'total' => $request['total'],
+        ]);
+
+        // Create order_items for shoopingcart items
+        $productIds = $request['shoopingcart_id'] ?? [];
+
+        foreach ($productIds as $productId) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'item_id' => $productId,
+                'type' => 'product', // or 'shoopingcart' if that's your convention
+            ]);
         }
 
-        // Add only once for the product
-        if (!empty($request['shoopingcart_id'])) {
-            foreach ($request['shoopingcart_id'] as $shooping_id) {
-                Order::create([
-                    'name' => $request['name'],
-                    'last_name' => $request['last_name'],
-                    'email' => $request['email'],
-                    'address' => $request['address'],
-                    'city' => $request['city'],
-                    'phone' => $request['phone'],
-                    'payment_method' => $request['payment_method'],
-                    'shoopingcart_id' => $shooping_id,
-                    'type' => $request['type'],
-                    'quantity' => $request['quantity'],
-                    'status' => $request['status'],
-                    'user_id' => Auth::id(),
-                    'total' => $request['total']
-
-                ]);
-            }
+        // Create order_items for servicecart items
+        $serviceIds = $request['servicecart_id'] ?? [];
+        foreach ($serviceIds as $serviceId) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'item_id' => $serviceId,
+                'type' => 'service',
+            ]);
         }
     }
+
+
     public function countorders_user()
     {
 
@@ -91,5 +86,11 @@ class OrderRepository implements OrderRepositoryInterface
             ->get();
 
         return $orders;
+    }
+
+    public function showstatistic()
+    {
+        $revenue = Order::sum('total');
+        return $revenue;
     }
 }

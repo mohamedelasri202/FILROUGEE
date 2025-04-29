@@ -55,7 +55,15 @@
 </head>
 <body class="bg-white text-gray-800">
 
-  
+    
+    @if (session('success'))
+    <div id="successToast" class="fixed z-[9999] top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg flex items-center space-x-2 hidden opacity-0 transition-opacity duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+        </svg>
+        <span class="text-sm font-medium">{{ session('success') }}</span>
+    </div>
+    @endif
 <!-- Header -->
 <header class="bg-white shadow-sm sticky top-0 z-50">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -111,7 +119,7 @@
                         <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Profile</a>
                         <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Settings</a>
                         <div class="border-t border-gray-100"></div>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Sign out</a>
+                        <a href="{{ route('logoutt') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Sign out</a>
                     </div>
                 </div>
                 
@@ -156,33 +164,8 @@
     </div>
 </header>
 
-@if (session('success'))
-<div id="successToast"
-    class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
-    <div class="flex items-center space-x-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd" />
-        </svg>
-        <span>{{ session('success') }}</span>
-    </div>
-</div>
-@endif
 
-@if (session('successs'))
-<div id="successToast"
-    class="fixed z-50 top-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-md shadow-lg hidden opacity-0 transition-opacity duration-300">
-    <div class="flex items-center space-x-2">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clip-rule="evenodd" />
-        </svg>
-        <span>{{ session('success') }}</span>
-    </div>
-</div>
-@endif
+
 
 <!-- Main Content -->
 <main class="py-8">
@@ -490,23 +473,29 @@
 </footer>
 
 <script>
-    
-    const toast = document.getElementById('toastMessage');
+   function showToast(toastElement) {
+        if (!toastElement) return;
 
-    if (toast) {
-        toast.classList.remove('hidden', 'opacity-0');
-        toast.classList.add('opacity-100', 'transition-opacity');
+        // Show toast
+        toastElement.classList.remove('hidden', 'opacity-0');
+        toastElement.classList.add('opacity-100');
 
+        // Auto-hide after 5 seconds
         setTimeout(() => {
-            toast.classList.remove('opacity-100');
-            toast.classList.add('opacity-0');
-
+            toastElement.classList.remove('opacity-100');
+            toastElement.classList.add('opacity-0');
+            
             setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 300); // matches your transition duration
-        }, 5000); // display for 5 seconds
+                toastElement.classList.add('hidden');
+            }, 300);
+        }, 5000);
     }
-    
+
+    // Initialize toasts on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        showToast(document.getElementById('successToast'));
+        showToast(document.getElementById('errorToast'));
+    });
 </script>
 </body>
 </html>

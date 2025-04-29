@@ -17,17 +17,32 @@ class ServicecartController extends Controller
     }
     public function addservicecart(Request $request)
     {
-        $services = $request->validate([
-            'service_id' => 'required|integer',
-            'status' => 'required|string',
-            'booking_date' => 'required|date',
-            'booking_time' => 'required|date_format:H:i:s'
+        try {
+            $services = $request->validate([
+                'service_id' => 'required|integer',
+                'status' => 'required|string',
+                'booking_date' => 'required|date',
+                'booking_time' => 'required|date_format:H:i:s'
+            ]);
 
-        ]);
-
-        $this->ServicecartRepository->addservicecart($request);
-        return redirect()->back()->with('successs', 'service was added successfylty to the service cart ');
+            $this->ServicecartRepository->addservicecart($request);
+            return redirect()->back()->with('success', 'Service was added successfully to the cart.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
     public function deleteservicecart($id)
     {
         $this->ServicecartRepository->deleteservicecart($id);

@@ -154,120 +154,112 @@
                 </div>
 
                 <!-- Products Table -->
-                <div class="bg-white rounded border border-gray-100 overflow-hidden">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="bg-accent">
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="py-3 px-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <!-- Product 1 -->
-                            @if($products->isEmpty())
+            <!-- Product Table -->
+<div class="bg-white rounded border border-gray-100 overflow-hidden">
+    <table class="w-full">
+        <thead>
+            <tr class="bg-accent">
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                <th class="py-3 px-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+            @if($products->isEmpty())
+            <tr>
+                <td colspan="6" class="py-3 px-4 text-center text-sm text-gray-500">No products found.</td>
+            </tr>
+            @else
+            @foreach ($products as $product)
+            <tr>
+                <td class="py-3 px-4">
+                    <div class="flex items-center">
+                        <div class="h-10 w-10 flex-shrink-0 mr-3">
+                            <img src="{{ asset($product->image) }}" alt="{{$product->title}}" class="h-10 w-10 object-cover">
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-gray-900">{{$product->title}}</div>
+                        </div>
+                    </div>
+                </td>
+                <td class="py-3 px-4 text-sm text-gray-500">{{$product->category}}</td>
+                <td class="py-3 px-4 text-sm text-gray-500">{{$product->price}}</td>
+                <td class="py-3 px-4 text-sm text-gray-500">120</td>
+                <td class="py-3 px-4">
+                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">In Stock</span>
+                </td>
+                <td class="py-3 px-4 text-right text-sm font-medium">
+                    <div class="flex justify-end space-x-2">
+                        <!-- Edit Button with data attributes -->
+                        <button type="button"
+                            class="text-primary hover:text-gray-700 edit-button"
+                            data-id="{{ $product->id }}"
+                            data-title="{{ $product->title }}"
+                            data-price="{{ $product->price }}"
+                            data-category="{{ $product->category }}"
+                            data-description="{{ $product->description }}"
+                            data-action="{{ route('updateproduct', $product->id) }}">
+                            Edit
+                        </button>
 
-                            <tr>
-                                <td colspan="6" class="py-3 px-4 text-center text-sm text-gray-500">No products found.</td>
-                            @else
+                        <form action="{{ route('deleteproduct', $product->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-gray-500 hover:text-red-600">Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            @endforeach
+            @endif
+        </tbody>
+    </table>
+</div>
 
-                            @foreach ($products as $product)
-                                
-                            
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0 mr-3">
-                                            <img src="{{ asset($product->image) }}" alt="{{$product->title}}" class="h-10 w-10 object-cover">
-                                        </div>
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">{{$product->title}}</div>
-                                            
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$product->category}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$product->price}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">120</td>
-                                <td class="py-3 px-4">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">In Stock</span>
-                                </td>
-                                <td class="py-3 px-4 text-right text-sm font-medium">
-                                    <div class="flex justify-end space-x-2">
-                                        <button class="text-primary hover:text-gray-700" id="open-modal-button">Edit</button>
-                                        <form action="{{ route('deleteproduct', $product->id) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-gray-500 hover:text-red-600">Delete</button>
-                                        </form>
+<!-- Modal -->
+<div id="edit-modal" class="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center hidden z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md relative">
+        <form id="edit-form" method="POST" action="" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="product_id" id="modal-product-id">
 
-                                    </div>
-                                </td>
-                            </tr>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                <input type="text" name="title" id="modal-product-title" class="w-full border py-2 px-3">
+            </div>
 
-                            <div class="modal-content p-4">
-                               
-                                <div class="modal-content p-4">
-                                   
-                                </div>
-                                <div class="modal-content p-4" id ="modal-content">
-                                    <form method="POST" action="{{ route('updateproduct', $product->id) }}" enctype="multipart/form-data"class="hidden" id="modal-form">
-                                        @csrf
-                                        @method('PUT') 
-                                
-                                        
-                                        <div class="mb-4">
-                                            <label for="modal-product-name" class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
-                                            <input type="text" id="modal-product-name" name="title" placeholder="Enter product name" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent" value="{{ $product->title }}">
-                                        </div>
-                                
-                                        <div class="grid grid-cols-2 gap-4 mb-4">
-                                       
-                                            <div>
-                                                <label for="modal-product-price" class="block text-sm font-medium text-gray-700 mb-2">Price ($)</label>
-                                                <input type="number" id="modal-product-price" name="price" placeholder="0.00" step="0.01" min="0" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent" value="{{ $product->price }}">
-                                            </div>
-                                        </div>
-                                
-                            
-                                        <div class="mb-4">
-                                            <label for="modal-product-category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                                            <select id="modal-product-category" name="category" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                                <option value="fresh-groceries" {{ $product->category == 'fresh-groceries' ? 'selected' : '' }}>Fresh Groceries</option>
-                                                <option value="household-essentials" {{ $product->category == 'household-essentials' ? 'selected' : '' }}>Household Essentials</option>
-                                                <option value="electronics" {{ $product->category == 'electronics' ? 'selected' : '' }}>Electronics</option>
-                                                <option value="health-beauty" {{ $product->category == 'health-beauty' ? 'selected' : '' }}>Health & Beauty</option>
-                                                <option value="beverages" {{ $product->category == 'beverages' ? 'selected' : '' }}>Beverages</option>
-                                            </select>
-                                        </div>
-                                
-                                 
-                                        <div class="mb-4">
-                                            <label for="modal-product-description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                                            <textarea id="modal-product-description" name="description" rows="3" placeholder="Enter product description" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary bg-transparent">{{ $product->description }}</textarea>
-                                        </div>
-                                
-                                        <div class="modal-footer flex justify-end p-4 border-t border-gray-100">
-                                            <button class="modal-close px-4 py-2 border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition mr-2">
-                                                Cancel
-                                            </button>
-                                            <button type="submit" id="save-product-button" class="px-4 py-2 bg-primary text-white hover:bg-gray-700 transition">
-                                                Update Product
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            
-                            @endforeach
-                            @endif
-                            
-                          
-                        </tbody>
-                    </table>
-                </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                <input type="number" name="price" id="modal-product-price" class="w-full border py-2 px-3">
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <select name="category" id="modal-product-category" class="w-full border py-2 px-3">
+                    <option value="fresh-groceries">Fresh Groceries</option>
+                    <option value="household-essentials">Household Essentials</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="health-beauty">Health & Beauty</option>
+                    <option value="beverages">Beverages</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                <textarea name="description" id="modal-product-description" class="w-full border py-2 px-3" rows="3"></textarea>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="button" id="close-modal" class="mr-2 px-4 py-2 border text-gray-700">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white">Update Product</button>
+            </div>
+        </form>
+    </div>
+</div>
 
                 <!-- Pagination -->
                 <div class="flex justify-between items-center mt-6">
@@ -1017,79 +1009,84 @@
 
     <script>
 
-        // Tab switching functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            const tabButtons = document.querySelectorAll('.tab-button');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    // Remove active class from all buttons and contents
-                    tabButtons.forEach(btn => {
-                        btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
-                        btn.classList.add('text-gray-500');
-                    });
-                    tabContents.forEach(content => {
-                        content.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked button and corresponding content
-                    button.classList.add('text-primary', 'border-b-2', 'border-primary');
-                    button.classList.remove('text-gray-500');
-                    const tabId = button.getAttribute('data-tab');
-                    document.getElementById(tabId).classList.add('active');
-                });
-            });
-            
-            // Modal functionality
-            const openModalButton = document.getElementById('add-product-button');
-            const closeModalButtons = document.querySelectorAll('.modal-close');
-            const modal = document.getElementById('add-product-modal');
-            const saveProductButton = document.getElementById('save-product-button');
-            
-            openModalButton.addEventListener('click', () => {
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                document.body.classList.add('modal-active');
-            });
-            
-            closeModalButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    modal.classList.add('opacity-0', 'pointer-events-none');
-                    document.body.classList.remove('modal-active');
-                });
-            });
 
-            const toggleBtn = document.getElementById('open-modal-button');
-  const form = document.getElementById('modal-form');
-
-  toggleBtn.addEventListener('click', () => {
-    form.classList.toggle('hidden');
-  });        
-            // Close modal when clicking outside
-          
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => {
+                btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                btn.classList.add('text-gray-500');
+            });
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
             
-            // // Save product functionality (just close the modal for now)
-            // saveProductButton.addEventListener('click', () => {
-            //     // Here you would normally handle the form submission
-            //     // For now, just close the modal
-            //     modal.classList.add('opacity-0', 'pointer-events-none');
-            //     document.body.classList.remove('modal-active');
-                
-            //     // Show a success message
-            //     alert('Product added successfully!');
-            // });
-            
-            // Preview image on selection
-          ;
+            // Add active class to clicked button and corresponding content
+            button.classList.add('text-primary', 'border-b-2', 'border-primary');
+            button.classList.remove('text-gray-500');
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
         });
-      
-    // Open the modal when the button is clicked
- 
+    });
 
-    </script>
+
+    const addProductModal = document.getElementById('add-product-modal');
+    const openModalButton = document.getElementById('add-product-button');
+    const closeModalButtons = document.querySelectorAll('.modal-close');
+
+    openModalButton.addEventListener('click', () => {
+        addProductModal.classList.remove('opacity-0', 'pointer-events-none');
+        document.body.classList.add('modal-active');
+    });
+
+    closeModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            addProductModal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        });
+    });
+
+    // Edit Product Modal functionality
+    const editModal = document.getElementById('edit-modal');
+    const editButtons = document.querySelectorAll('.edit-button');
+    const editForm = document.getElementById('edit-form');
+    const closeEditModal = document.getElementById('close-modal');
+
+    // Show edit modal
+    editButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            editForm.action = button.dataset.action;
+            document.getElementById('modal-product-title').value = button.dataset.title;
+            document.getElementById('modal-product-price').value = button.dataset.price;
+            document.getElementById('modal-product-category').value = button.dataset.category;
+            document.getElementById('modal-product-description').value = button.dataset.description;
+            
+            editModal.classList.remove('hidden');
+        });
+    });
+
+    // Close edit modal
+    closeEditModal.addEventListener('click', () => {
+        editModal.classList.add('hidden');
+    });
+
+    // Close modals when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === addProductModal) {
+            addProductModal.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        }
+        if (event.target === editModal) {
+            editModal.classList.add('hidden');
+        }
+    });
+</script>
 </body>
 </html>
+
    
     
     
