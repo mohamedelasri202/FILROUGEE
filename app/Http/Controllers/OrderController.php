@@ -45,7 +45,7 @@ class OrderController extends Controller
         if ($product_count == 0) {
             $total = $totalproduct + $totalservice + 5.00 + 1.95;
         } else {
-            $total = $totalproduct + $totalservice + 1.95 + 5.00 + 5.00;
+            $total = $totalproduct + $totalservice + 1.95 + 5.00;
         };
 
 
