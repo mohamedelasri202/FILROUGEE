@@ -44,6 +44,7 @@
     </style>
 </head>
 <body class="bg-white text-gray-800">
+    @dd($statistics );
    {{-- @dd($orders_count) --}}
 {{-- @dd($orders) --}}
     <!-- Header -->
@@ -494,10 +495,7 @@
                 <div class="bg-white p-4 rounded border border-gray-100 mb-6">
                     <div class="flex flex-wrap items-center justify-between gap-4">
                         <div class="flex items-center space-x-4">
-                            <button class="px-3 py-1 text-sm text-primary border-b border-primary">Last 7 days</button>
-                            <button class="px-3 py-1 text-sm text-gray-500 hover:text-primary">Last 30 days</button>
-                            <button class="px-3 py-1 text-sm text-gray-500 hover:text-primary">Last 90 days</button>
-                            <button class="px-3 py-1 text-sm text-gray-500 hover:text-primary">Year to date</button>
+
                         </div>
                         <div class="flex items-center space-x-2">
                             <button class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:text-primary hover:border-primary transition">
@@ -514,8 +512,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div class="bg-white p-6 border border-gray-100 rounded">
                         <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-500">Total Sales</p>
+
+                                @foreach ($statistics as $statistic)
+                                    
+                             
+                                <p class="text-sm text-gray-500"></p>
                                 <p class="text-2xl font-light mt-1">$12,845</p>
                                 <p class="text-xs text-green-600 mt-1">
                                     <span class="inline-block">↑ 12.5%</span> vs previous period
@@ -580,7 +581,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endforeach
                 <!-- Top Products -->
                 <div class="bg-white rounded border border-gray-100 overflow-hidden mb-8">
                     <div class="p-4 border-b border-gray-100">

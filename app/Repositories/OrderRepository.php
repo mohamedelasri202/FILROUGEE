@@ -15,7 +15,6 @@ class OrderRepository implements OrderRepositoryInterface
     public function add_order($request)
     {
 
-        // Create the main order
         $order = Order::create([
             'name' => $request['name'],
             'last_name' => $request['last_name'],
@@ -30,18 +29,17 @@ class OrderRepository implements OrderRepositoryInterface
             'total' => $request['total'],
         ]);
 
-        // Create order_items for shoopingcart items
         $productIds = $request['shoopingcart_id'] ?? [];
 
         foreach ($productIds as $productId) {
             OrderItem::create([
                 'order_id' => $order->id,
                 'item_id' => $productId,
-                'type' => 'product', // or 'shoopingcart' if that's your convention
+                'type' => 'product',
             ]);
         }
 
-        // Create order_items for servicecart items
+
         $serviceIds = $request['servicecart_id'] ?? [];
         foreach ($serviceIds as $serviceId) {
             OrderItem::create([
@@ -56,10 +54,10 @@ class OrderRepository implements OrderRepositoryInterface
     public function ordercount()
     {
         $usersWithOrders = User::select('name', 'lastname', 'email')
-            ->withCount('orders')                // Number of orders per user
-            ->withSum('orders', 'total')         // Total amount spent
-            ->withMax('orders', 'created_at')    // Latest order date
-            ->has('orders')                      // Only users who placed orders
+            ->withCount('orders')
+            ->withSum('orders', 'total')
+            ->withMax('orders', 'created_at')
+            ->has('orders')
             ->get();
 
         return $usersWithOrders;
@@ -75,16 +73,10 @@ class OrderRepository implements OrderRepositoryInterface
         return $orders;
     }
 
-
-
-
-
-
-
-
     public function showstatistic()
     {
-        $revenue = Order::sum('total');
-        return $revenue;
+        $statistic = DB::table('orders')->selectRaw('COUNT(*) as total_orders, COUNT(DISTINCT user_id) as customers, SUM(total) as revenue')->first();
+
+        return   $statistic;
     }
 }
