@@ -75,7 +75,8 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function showstatistic()
     {
-        $statistic = DB::table('orders')->selectRaw('COUNT(*) as total_orders, COUNT(DISTINCT user_id) as customers, SUM(total) as revenue')->first();
+        $statistic = DB::table('orders')->selectRaw('COUNT(*) as total_orders, COUNT(DISTINCT user_id) as customers, SUM(total) as revenue,ROUND(AVG(total), 2)  as average_price')->first();
+
 
         return   $statistic;
     }

@@ -44,7 +44,6 @@
     </style>
 </head>
 <body class="bg-white text-gray-800">
-    @dd($statistics );
    {{-- @dd($orders_count) --}}
 {{-- @dd($orders) --}}
     <!-- Header -->
@@ -512,12 +511,12 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                     <div class="bg-white p-6 border border-gray-100 rounded">
                         <div class="flex items-center justify-between">
-
-                                @foreach ($statistics as $statistic)
-                                    
+                            <div>
                              
-                                <p class="text-sm text-gray-500"></p>
-                                <p class="text-2xl font-light mt-1">$12,845</p>
+                                    
+                            
+                                <p class="text-sm text-gray-500">Total Sales</p>
+                                <p class="text-2xl font-light mt-1">${{$statistics->revenue}}</p>
                                 <p class="text-xs text-green-600 mt-1">
                                     <span class="inline-block">↑ 12.5%</span> vs previous period
                                 </p>
@@ -534,7 +533,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Orders</p>
-                                <p class="text-2xl font-light mt-1">142</p>
+                                <p class="text-2xl font-light mt-1">{{$statistics->total_orders}}</p>
                                 <p class="text-xs text-green-600 mt-1">
                                     <span class="inline-block">↑ 8.2%</span> vs previous period
                                 </p>
@@ -551,7 +550,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Customers</p>
-                                <p class="text-2xl font-light mt-1">89</p>
+                                <p class="text-2xl font-light mt-1">{{$statistics->customers}}</p>
                                 <p class="text-xs text-green-600 mt-1">
                                     <span class="inline-block">↑ 5.1%</span> vs previous period
                                 </p>
@@ -568,7 +567,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Avg. Order Value</p>
-                                <p class="text-2xl font-light mt-1">$90.46</p>
+                                <p class="text-2xl font-light mt-1">${{$statistics->average_price}}</p>
                                 <p class="text-xs text-red-600 mt-1">
                                     <span class="inline-block">↓ 2.3%</span> vs previous period
                                 </p>
@@ -581,7 +580,7 @@
                         </div>
                     </div>
                 </div>
-                @endforeach
+            
                 <!-- Top Products -->
                 <div class="bg-white rounded border border-gray-100 overflow-hidden mb-8">
                     <div class="p-4 border-b border-gray-100">
