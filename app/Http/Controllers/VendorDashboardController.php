@@ -18,10 +18,10 @@ class VendorDashboardController extends Controller
     public function index()
     {
         $revnue = $this->OrderRepository->showstatistic();
-
-
         $products = $this->ProductRepository->showALLproducts();
+        $usersWithOrders = $this->OrderRepository->allOrders();
+        $customers = $this->OrderRepository->ordercount();
 
-        return view('dashboard.vendor', compact('products', 'revnue'));
+        return view(' dashboard.vendor ', compact('products', 'revnue', 'usersWithOrders', 'customers'));
     }
 }

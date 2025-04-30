@@ -24,4 +24,8 @@ class Order extends Model
         'status',
         'total'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

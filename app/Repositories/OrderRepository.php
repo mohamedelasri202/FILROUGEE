@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
@@ -52,23 +53,27 @@ class OrderRepository implements OrderRepositoryInterface
     }
 
 
-    // public function countorders_user()
-    // {
+    public function ordercount()
+    {
+        $usersWithOrders = User::select('name', 'lastname', 'email')
+            ->withCount('orders')                // Number of orders per user
+            ->withSum('orders', 'total')         // Total amount spent
+            ->withMax('orders', 'created_at')    // Latest order date
+            ->has('orders')                      // Only users who placed orders
+            ->get();
 
-    //     $orders_count = DB::table('orders')
-    //         ->join('shoopingcart', 'orders.shoopingcart_id', '=', 'shoopingcart.id')
-    //         ->join('products', 'shoopingcart.product_id', '=', 'products.id')
-    //         ->join('users', 'orders.user_id', '=', 'users.id')
-    //         ->where('products.vendor_id', 26)
-    //         ->whereNull('orders.servicecart_id')
-    //         ->select('users.id as user_id', 'users.name', 'users.lastname', 'users.email', DB::raw('COUNT(orders.id) as total_orders'))
-    //         ->groupBy('users.id', 'users.name', 'users.lastname')
-    //         ->get();
-
+        return $usersWithOrders;
+    }
 
 
-    //     return $orders_count;
-    // }
+    public function allOrders()
+    {
+        $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->select('orders.id', 'orders.status', 'orders.total', 'orders.created_at', 'orders.name', 'orders.last_name', 'users.name', 'users.lastname') // select the order fields you want
+            ->get();
+
+        return $orders;
+    }
 
 
 
