@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\OrderRepository;
+use App\Repositories\OrderRepositoryInterface;
 use Illuminate\Http\Request;
 
 use App\Repositories\ServiceRepository;
@@ -10,9 +12,11 @@ use App\Repositories\ServiceRepositoryInterface;
 class ServiceController extends Controller
 {
     protected $ServiceRepository;
+    protected $orderRepository;
 
-    public function __construct(ServiceRepository $ServiceRepository)
+    public function __construct(ServiceRepository $ServiceRepository, OrderRepositoryInterface $orderRepository)
     {
+        $this->orderRepository = $orderRepository;
         $this->ServiceRepository = $ServiceRepository;
     }
 
@@ -21,8 +25,10 @@ class ServiceController extends Controller
 
     public function index()
     {
+        $allbookings = $this->orderRepository->allbookings();
         $services = $this->ServiceRepository->showALLservices();
-        return view('dashboard.service_provider', compact('services'));
+
+        return view('dashboard.service_provider', compact('services', 'allbookings'));
     }
     public function add_service(Request $request)
     {

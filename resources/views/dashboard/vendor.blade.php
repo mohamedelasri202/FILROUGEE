@@ -45,7 +45,7 @@
 </head>
 <body class="bg-white text-gray-800">
    {{-- @dd($orders_count) --}}
-{{-- @dd($orders) --}}
+
     <!-- Header -->
     <header class="py-4 px-6 bg-white border-b border-gray-100">
         <div class="container mx-auto flex items-center justify-between">
@@ -439,10 +439,11 @@
                                     </div>
                                 </td>
                                 <td class="py-3 px-4 text-sm text-gray-500">{{$customer->email}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$customer->orders_count}}</td>
-   
-                              <td class="py-3 px-4 text-sm text-gray-900">${{$customer->orders_sum_total}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$customer->orders_max_created_at}}</td>
+                                <td class="py-3 px-4 text-sm text-gray-500">{{$customer->product_orders_count}}</td>
+                              
+                            
+                              <td class="py-3 px-4 text-sm text-gray-900">${{$customer->product_orders_total}}</td>
+                                <td class="py-3 px-4 text-sm text-gray-500">{{$customer->latest_product_order}}</td>
                                 
                                 
                                 <td class="py-3 px-4 text-right text-sm font-medium">

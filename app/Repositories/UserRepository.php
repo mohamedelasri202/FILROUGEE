@@ -28,4 +28,27 @@ class UserRepository implements UserRepositoryInterface
         $user->save();
         return $user;
     }
+    public function editeprofile($id, $request)
+    {
+
+        $user = User::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $id,
+
+        ]);
+
+
+        $user->update([
+            'name' => $validatedData['name'],
+            'lastname' => $validatedData['lastname'],
+            'email' => $validatedData['email'],
+
+        ]);
+
+
+        return $user;
+    }
 }

@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,6 +33,30 @@
     .tab-content.active {
         display: block;
     }
+    .edit-form {
+        display: none;
+    }
+    .edit-form.active {
+        display: block;
+    }
+    /* Animation for modals */
+    .modal-enter {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    .modal-enter-active {
+        opacity: 1;
+        transform: scale(1);
+        transition: opacity 300ms, transform 300ms;
+    }
+    .modal-exit {
+        opacity: 1;
+    }
+    .modal-exit-active {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 300ms, transform 300ms;
+    }
 </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -46,7 +67,7 @@
             <a href="index.html" class="flex items-center">
                 <span class="text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                 </span>
                 <span class="ml-2 text-xl font-light tracking-wide">SUPERMARK</span>
@@ -57,7 +78,7 @@
         <div class="flex items-center space-x-6">
             <a href="#" class="text-gray-500 hover:text-gray-700 transition">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
             </a>
             <div class="relative group">
@@ -67,7 +88,7 @@
                     </div>
                     <span class="text-sm text-gray-700">Alex Smith</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
                 <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded shadow-lg py-1 z-10 hidden group-hover:block">
@@ -114,7 +135,7 @@
                             </div>
                             <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                 </svg>
                             </div>
                         </div>
@@ -127,7 +148,7 @@
                             </div>
                             <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 13l4 4L19 7" />
                                 </svg>
                             </div>
                         </div>
@@ -140,7 +161,7 @@
                             </div>
                             <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
                             </div>
                         </div>
@@ -153,7 +174,7 @@
                 <h1 class="text-2xl font-light">My Services</h1>
                 <button id="add-service-btn" class="px-4 py-2 bg-primary text-white text-sm hover:bg-gray-700 transition flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                     Add New Service
                 </button>
@@ -194,62 +215,9 @@
                         <div class="flex justify-between items-center">
                             <p class="text-primary font-medium">{{$service->price}}</p>
                             <div class="flex space-x-2">
-                                <form action="{{ route('updateservice',$service->id) }}" Method="POST" >
-                                    @csrf
-                                    <!-- Service Image -->
-                                
-                                    @method('PUT') 
-                              
-                                
-                                    <!-- Service Details -->
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                        <!-- Service Name -->
-                                        <div class="col-span-2">
-                                            <label for="service-name" class="block text-sm font-medium text-gray-700 mb-2">Service Name</label>
-                                            <input type="text" id="service-name" name="title" placeholder="Enter service name" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary" value="{{ $service->title }}">
-                                        </div>
-                                
-                                        <!-- Category -->
-                                        <div>
-                                          
-                                            <label for="modal-product-category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                                            <select id="modal-product-category" name="category" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                                <option value="fresh-groceries" {{ $service->category == 'cleaning' ? 'selected' : '' }}>cleaning</option>
-                                                <option value="household-essentials" {{ $service->category == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
-                                                <option value="electronics" {{ $service->category == 'Repair' ? 'selected' : '' }}>Repair</option>
-                                                <option value="health-beauty" {{ $service->category == 'installation' ? 'selected' : '' }}>installation</option>
-                                                <option value="beverages" {{ $service->category == 'other' ? 'selected' : '' }}>other</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                
-                                    <!-- Price Range -->
-                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                        <div>
-                                            <label for="min-price" class="block text-sm font-medium text-gray-700 mb-2">Minimum Price ($)</label>
-                                            <input type="number" id="min-price" name="price" placeholder="0.00" step="0.01" min="0" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary" value="{{ $service->price }}">
-                                        </div>
-                                    </div>
-                                
-                                    <!-- Service Description -->
-                                    <div class="mb-6">
-                                        <label for="service-description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                                        <textarea id="service-description" name="description" rows="4" placeholder="Enter service description" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary" >{{old('description', $service->description )}}</textarea>
-                                    </div>
-                                
-                                    <!-- Form Actions -->
-                                    <div class="flex justify-end space-x-4">
-                                        <button type="button" id="cancel-add-service" class="px-6 py-2 border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition duration-300 rounded">
-                                            Cancel
-                                        </button>
-                                        <button type="submit" class="px-6 py-2 bg-primary text-white hover:bg-gray-700 transition duration-300 rounded">
-                                            Add Service
-                                        </button>
-                                    </div>
-                                </form>
-                                <button class="text-primary hover:text-gray-700">
+                                <button class="text-primary hover:text-gray-700" id="edit-btn-{{$service->id}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                                     </svg> 
                                 </button>
                             
@@ -259,7 +227,7 @@
                                     
                                 <button class="text-gray-500 hover:text-red-600" type="submit">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                     </svg>
                                 </button>
                             </form> 
@@ -382,12 +350,12 @@
                     <div class="relative">
                         <input type="text" placeholder="Search bookings..." class="pl-8 pr-4 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:border-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 absolute left-2.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                     <button class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:border-primary hover:text-primary transition">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                         </svg>
                         Filter
                     </button>
@@ -398,9 +366,6 @@
             <div class="mb-6 border-b border-gray-200">
                 <div class="flex space-x-8">
                     <button class="pb-4 text-sm font-medium text-primary border-b-2 border-primary">All Bookings (24)</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Upcoming (8)</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Completed (14)</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Cancelled (2)</button>
                 </div>
             </div>
 
@@ -421,17 +386,26 @@
                     <tbody class="divide-y divide-gray-100">
                         <!-- Booking 1 -->
                         <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1234</td>
+                    @if ($allbookings->isEmpty())
+                
+                        <tr>sorry ,no bookings availlable at the moment </tr>
+                 
+                                
+                           @else
+                           @foreach ($allbookings as $booking )
+                               
+                         
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-{{$booking->id}}</td>
                             <td class="py-3 px-4">
                                 <div class="flex items-center">
                                     <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
                                         <span class="text-xs font-medium text-gray-600">JD</span>
                                     </div>
-                                    <div class="text-sm font-medium text-gray-900">Jane Doe</div>
+                                    <div class="text-sm font-medium text-gray-900">{{$booking->name}} {{$booking->last_name}}</div>
                                 </div>
                             </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 2:00 PM</td>
+
+                            <td class="py-3 px-4 text-sm text-gray-500">{{$booking->}}</td>
                             <td class="py-3 px-4 text-sm text-gray-500">$149.00</td>
                             <td class="py-3 px-4">
                                 <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
@@ -442,104 +416,11 @@
                                     <button class="text-gray-500 hover:text-red-600">Cancel</button>
                                 </div>
                             </td>
+                            @endforeach
+                            @endif
                         </tr>
                         
-                        <!-- Booking 2 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1233</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">MS</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Michael Smith</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 10:00 AM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$99.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Booking 3 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1232</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">AJ</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Alice Johnson</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 11:30 AM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$199.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Booking 4 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1231</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">RB</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Robert Brown</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 4:30 PM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$129.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                    <button class="text-gray-500 hover:text-red-600">Cancel</button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Booking 5 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1230</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">EW</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Emma Wilson</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Carpet Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 20, 2025, 1:00 PM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$249.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-red-100 text-red-800">Cancelled</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                </div>
-                            </td>
-                        </tr>
+          
                     </tbody>
                 </table>
             </div>
@@ -573,12 +454,12 @@
                     <div class="flex border border-gray-200 rounded">
                         <button class="px-3 py-2 text-gray-700 hover:text-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
                         <button class="px-3 py-2 text-gray-700 hover:text-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
                     </div>
@@ -820,12 +701,12 @@
                     <div class="relative">
                         <input type="text" placeholder="Search reviews..." class="pl-8 pr-4 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:border-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 absolute left-2.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                     </div>
                     <button class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:border-primary hover:text-primary transition">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
                         </svg>
                         Filter
                     </button>
@@ -1175,7 +1056,7 @@
                 <h2 class="text-lg font-medium">Add New Service</h2>
                 <button id="close-modal" class="text-gray-400 hover:text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
@@ -1243,6 +1124,25 @@
     </div>
 </div>
 
+<!-- Edit Service Modal -->
+<div id="edit-service-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-lg w-full max-w-2xl mx-4">
+        <div class="p-6 border-b border-gray-100">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-medium">Edit Service</h2>
+                <button id="close-edit-modal" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="p-6 overflow-y-auto max-h-[60vh]" id="edit-form-container">
+            <!-- The edit form will be moved here dynamically -->
+        </div>
+    </div>
+</div>
+
 <!-- Footer -->
 <footer class="bg-white py-6 border-t border-gray-100">
     <div class="container mx-auto px-6">
@@ -1256,7 +1156,26 @@
         const tabButtons = document.querySelectorAll('.tab-button');
         const tabContents = document.querySelectorAll('.tab-content');
         
-      
+        // Tab switching functionality
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('text-primary', 'border-primary');
+                    btn.classList.add('text-gray-500');
+                });
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('text-primary', 'border-primary');
+                button.classList.remove('text-gray-500');
+                
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
         
         // Add Service Modal
         const addServiceBtn = document.getElementById('add-service-btn');
@@ -1276,8 +1195,53 @@
             addServiceModal.classList.add('hidden');
         });
         
+        // Edit Service Modal
+        const editServiceModal = document.getElementById('edit-service-modal');
+        const closeEditModal = document.getElementById('close-edit-modal');
+        const editFormContainer = document.getElementById('edit-form-container');
         
+        // Close edit modal when clicking the close button
+        closeEditModal.addEventListener('click', () => {
+            editServiceModal.classList.add('hidden');
+        });
         
+        // Edit form functionality
+        document.querySelectorAll('[id^="edit-btn-"]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const serviceId = button.id.split('-').pop();
+                const editForm = document.getElementById(`edit-form-${serviceId}`);
+                
+                // Move the form to the modal
+                editFormContainer.innerHTML = '';
+                editFormContainer.appendChild(editForm.cloneNode(true));
+                
+                // Show the edit modal
+                editServiceModal.classList.remove('hidden');
+                
+                // Make the form visible inside the modal
+                const formInModal = editFormContainer.querySelector('form');
+                formInModal.classList.add('active');
+                
+                // Update the cancel button to close the modal
+                const cancelButton = formInModal.querySelector('button[type="button"]');
+                if (cancelButton) {
+                    cancelButton.addEventListener('click', () => {
+                        editServiceModal.classList.add('hidden');
+                    });
+                }
+            });
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === addServiceModal) {
+                addServiceModal.classList.add('hidden');
+            }
+            if (e.target === editServiceModal) {
+                editServiceModal.classList.add('hidden');
+            }
+        });
     });
 </script>
 </body>

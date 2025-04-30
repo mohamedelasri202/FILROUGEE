@@ -41,6 +41,7 @@ Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('
 Route::post('/register', [UserController::class, 'register'])->name('register.post');
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.post');
+Route::put('edite/profile/{id}', [VendorDashboardController::class, 'editeprofile'])->name('edite_profile')->middleware('auth', 'role:vendor');
 // showing the dashboards 
 Route::get('/dashboard/admin', [AdminController::class, 'showAdminDashboard'])->name('dashboard.admin')->middleware('auth', 'role:admin');
 // the route for the user to get to the home page 

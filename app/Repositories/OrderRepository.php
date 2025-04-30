@@ -51,14 +51,24 @@ class OrderRepository implements OrderRepositoryInterface
     }
 
 
+
     public function ordercount()
     {
-        $usersWithOrders = User::select('name', 'lastname', 'email')
-            ->withCount('orders')
-            ->withSum('orders', 'total')
-            ->withMax('orders', 'created_at')
-            ->has('orders')
+        $usersWithOrders = DB::table('users')
+            ->join('orders', 'users.id', '=', 'orders.user_id')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->where('order_items.type', 'product')
+            ->select(
+                'users.name',
+                'users.lastname',
+                'users.email',
+                DB::raw('COUNT(DISTINCT orders.id) as product_orders_count'),
+                DB::raw('SUM(orders.total) as product_orders_total'),
+                DB::raw('MAX(orders.created_at) as latest_product_order')
+            )
+            ->groupBy('users.id', 'users.name', 'users.lastname', 'users.email')
             ->get();
+
 
         return $usersWithOrders;
     }
@@ -67,17 +77,50 @@ class OrderRepository implements OrderRepositoryInterface
     public function allOrders()
     {
         $orders = Order::join('users', 'orders.user_id', '=', 'users.id')
-            ->select('orders.id', 'orders.status', 'orders.total', 'orders.created_at', 'orders.name', 'orders.last_name', 'users.name', 'users.lastname') // select the order fields you want
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->select(
+                'orders.id',
+                'orders.status',
+                'orders.total',
+                'orders.created_at',
+                'orders.name',
+                'orders.last_name',
+                'users.name as user_name',
+                'users.lastname as user_lastname',
+
+            )
+            ->where('order_items.type', 'product')
             ->get();
+
 
         return $orders;
     }
 
     public function showstatistic()
     {
-        $statistic = DB::table('orders')->selectRaw('COUNT(*) as total_orders, COUNT(DISTINCT user_id) as customers, SUM(total) as revenue,ROUND(AVG(total), 2)  as average_price')->first();
+        $statistic = DB::table('orders')->join('order_items', 'orders.id', '=', 'order_items.order_id')->selectRaw('COUNT(*) as total_orders, COUNT(DISTINCT user_id) as customers, SUM(total) as revenue,ROUND(AVG(total), 2)  as average_price')->where('order_items.type', '=', 'product')->first();
 
 
         return   $statistic;
+    }
+    public function allbookings()
+    {
+
+        $bookings = Order::join('users', 'orders.user_id', '=', 'users.id')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->select(
+                'orders.id',
+                'orders.status',
+                'orders.total',
+                'orders.created_at',
+                'users.name as user_name',
+                'users.lastname as user_lastname',
+
+            )
+            ->where('order_items.type', 'service')
+            ->get();
+
+
+        return $bookings;
     }
 }
