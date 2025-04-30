@@ -9,14 +9,15 @@ use Illuminate\Http\Request;
 class ServiceProviderController extends Controller
 {
     protected $orderRepository;
-    public function __construct(OrderRepositoryInterface $orderRepository)
+    protected $serviceReposiotry;
+    public function __construct(OrderRepositoryInterface $orderRepository, ServiceRepositoryInterface $serviceRepository)
     {
         $this->orderRepository = $orderRepository;
     }
-    public function allbookings()
-    {
-
-
-        return  view('dashboard.service_provider', compact('allbookings'));
-    }
+    // public function upcomingbooking()
+    // {
+    //     
+    //     dd($upcomingdate);
+    //     return view('dashboard.service_provider',);
+    // }
 }

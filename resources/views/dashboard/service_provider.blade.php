@@ -60,6 +60,7 @@
 </style>
 </head>
 <body class="bg-white text-gray-800">
+ 
 <!-- Header -->
 <header class="py-4 px-6 bg-white border-b border-gray-100">
     <div class="container mx-auto flex items-center justify-between">
@@ -368,7 +369,7 @@
                     <button class="pb-4 text-sm font-medium text-primary border-b-2 border-primary">All Bookings (24)</button>
                 </div>
             </div>
-
+           
             <!-- Bookings Table -->
             <div class="bg-white rounded border border-gray-100 overflow-hidden">
                 <table class="w-full">
@@ -376,7 +377,7 @@
                         <tr class="bg-accent">
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                            <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -385,30 +386,31 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         <!-- Booking 1 -->
-                        <tr>
-                    @if ($allbookings->isEmpty())
+                        
+                  
+                        @if ($allbookings->isEmpty())
                 
                         <tr>sorry ,no bookings availlable at the moment </tr>
                  
                                 
                            @else
                            @foreach ($allbookings as $booking )
-                               
-                         
+                        <tr>
+                           
                             <td class="py-3 px-4 text-sm text-gray-500">#BK-{{$booking->id}}</td>
                             <td class="py-3 px-4">
                                 <div class="flex items-center">
                                     <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
                                         <span class="text-xs font-medium text-gray-600">JD</span>
                                     </div>
-                                    <div class="text-sm font-medium text-gray-900">{{$booking->name}} {{$booking->last_name}}</div>
+                                    <div class="text-sm font-medium text-gray-900">{{$booking->user_name}} {{$booking->user_lastname}}</div>
                                 </div>
                             </td>
 
-                            <td class="py-3 px-4 text-sm text-gray-500">{{$booking->}}</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$149.00</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">{{$booking->created_at}}</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">${{$booking->total}}</td>
                             <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
+                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">{{$booking->status}}</span>
                             </td>
                             <td class="py-3 px-4 text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-2">
@@ -416,10 +418,10 @@
                                     <button class="text-gray-500 hover:text-red-600">Cancel</button>
                                 </div>
                             </td>
-                            @endforeach
-                            @endif
+                       
                         </tr>
-                        
+                        @endforeach
+                        @endif
           
                     </tbody>
                 </table>

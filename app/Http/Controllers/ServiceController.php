@@ -27,7 +27,8 @@ class ServiceController extends Controller
     {
         $allbookings = $this->orderRepository->allbookings();
         $services = $this->ServiceRepository->showALLservices();
-
+        $upcomingdate = $this->ServiceRepository->upcomingbooking();
+        dd($upcomingdate);
         return view('dashboard.service_provider', compact('services', 'allbookings'));
     }
     public function add_service(Request $request)
@@ -67,6 +68,7 @@ class ServiceController extends Controller
             'category' => 'string'
         ]);
         $this->ServiceRepository->updateservice($data, $id);
+
         return redirect()->route('dashboard.service_provider');
     }
     public function book_service($id)

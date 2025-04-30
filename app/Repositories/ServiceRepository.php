@@ -53,4 +53,10 @@ class ServiceRepository implements ServiceRepositoryInterface
         $service = service::findorfail($id);
         return $service;
     }
+    public function upcomingbooking()
+    {
+        $today_date = date('Y-m-d H:i:s');
+        dd($today_date);
+        return $today_date;
+    }
 }
