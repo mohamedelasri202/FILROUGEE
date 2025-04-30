@@ -55,8 +55,16 @@ class ServiceRepository implements ServiceRepositoryInterface
     }
     public function upcomingbooking()
     {
-        $today_date = date('Y-m-d H:i:s');
-        dd($today_date);
-        return $today_date;
+        $today_date = date('Y-m-d');
+        $today_time = date('H:i:s');
+
+
+        $bookings = DB::table('orders')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
+            ->where('servicecart.booking_date', '>', $today_date)
+            ->get();
+        dd($bookings);
+        return  $bookings;
     }
 }
