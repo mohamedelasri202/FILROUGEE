@@ -328,7 +328,13 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
-                            <!-- Booking 1 -->
+                            <!-- Booking -->
+                            @if ($recentbookings->isEmpty())
+                            <tr><td>sorry no bookings </td></tr>
+                            @else
+                            @foreach ($recentbookings as $recentbooking)
+                                
+                            @endforeach
                             <tr>
                                 <td class="py-3 px-4">
                                     <div class="flex items-center">
@@ -336,15 +342,15 @@
                                             <span class="text-xs font-medium text-gray-600">JD</span>
                                         </div>
                                         <div>
-                                            <div class="text-sm font-medium text-gray-900">Jane Doe</div>
-                                            <div class="text-xs text-gray-500">jane.doe@example.com</div>
+                                            <div class="text-sm font-medium text-gray-900">{{$recentbooking->name}} {{$recentbooking->last_name}}</div>
+                                            <div class="text-xs text-gray-500">{{$recentbooking->email}}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Today, 2:00 PM</td>
+                                <td class="py-3 px-4 text-sm text-gray-500">{{$recentbooking->title}}</td>
+                                <td class="py-3 px-4 text-sm text-gray-500">{{$recentbooking->booking_date}} {{$recentbooking->booking_time}}</td>
                                 <td class="py-3 px-4">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
+                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">{{$recentbooking->status}}</span>
                                 </td>
                                 <td class="py-3 px-4 text-right text-sm font-medium">
                                     <div class="flex justify-end space-x-2">
@@ -353,56 +359,8 @@
                                     </div>
                                 </td>
                             </tr>
-                            
-                            <!-- Booking 2 -->
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-gray-600">MS</span>
-                                        </div>
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">Michael Smith</div>
-                                            <div class="text-xs text-gray-500">m.smith@example.com</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Today, 10:00 AM</td>
-                                <td class="py-3 px-4">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
-                                </td>
-                                <td class="py-3 px-4 text-right text-sm font-medium">
-                                    <div class="flex justify-end space-x-2">
-                                        <button class="text-primary hover:text-gray-700">View</button>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                            <!-- Booking 3 -->
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-gray-600">AJ</span>
-                                        </div>
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">Alice Johnson</div>
-                                            <div class="text-xs text-gray-500">alice.j@example.com</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Today, 11:30 AM</td>
-                                <td class="py-3 px-4">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
-                                </td>
-                                <td class="py-3 px-4 text-right text-sm font-medium">
-                                    <div class="flex justify-end space-x-2">
-                                        <button class="text-primary hover:text-gray-700">View</button>
-                                    </div>
-                                </td>
-                            </tr>
+                                    
+                            @endif
                         </tbody>
                     </table>
                 </div>

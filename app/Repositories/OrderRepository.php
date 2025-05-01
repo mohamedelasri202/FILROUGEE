@@ -157,10 +157,12 @@ class OrderRepository implements OrderRepositoryInterface
                 'orders.address',
                 'orders.id',
                 'orders.email',
-                'orders.total'
+                'orders.total',
+                'orders.created_at'
             )
-            ->orderBy('servicecart.booking_date', 'desc')  // Order by booking date, descending
+            ->orderBy('orders.created_at', 'desc')
             ->get();
+        // dd($recentbookings);
         return   $recentbookings;
     }
 }
