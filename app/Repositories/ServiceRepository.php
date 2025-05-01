@@ -63,8 +63,6 @@ class ServiceRepository implements ServiceRepositoryInterface
             ->join('order_items', 'orders.id', '=', 'order_items.order_id')
             ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
             ->join('services', 'servicecart.service_id', '=', 'services.id')
-
-
             ->select('services.title', 'servicecart.booking_time', 'servicecart.booking_date', 'orders.name', 'orders.last_name', 'orders.status', 'orders.address', 'orders.id', 'orders.email')
             ->where('servicecart.booking_date', '>', $now)
             ->orderBy('servicecart.booking_date', 'asc')

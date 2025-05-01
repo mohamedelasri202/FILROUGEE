@@ -149,7 +149,7 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Upcoming</p>
-                                <p class="text-2xl font-light mt-1">3</p>
+                                <p class="text-2xl font-light mt-1">{{$countbookings}}</p>
                             </div>
                             <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">

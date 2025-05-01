@@ -14,10 +14,4 @@ class ServiceProviderController extends Controller
     {
         $this->orderRepository = $orderRepository;
     }
-    // public function upcomingbooking()
-    // {
-    //     
-    //     dd($upcomingdate);
-    //     return view('dashboard.service_provider',);
-    // }
 }

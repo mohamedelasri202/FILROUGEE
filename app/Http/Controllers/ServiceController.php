@@ -30,8 +30,10 @@ class ServiceController extends Controller
         $upcomingdate = $this->ServiceRepository->upcomingbooking();
         $bookings = $this->orderRepository->bookings();
         $recentbookings = $this->orderRepository->recentbookings();
+        $countbookings = $this->orderRepository->countbookings();
 
-        return view('dashboard.service_provider', compact('services', 'allbookings', 'upcomingdate', 'bookings', 'recentbookings'));
+
+        return view('dashboard.service_provider', compact('services', 'allbookings', 'upcomingdate', 'bookings', 'recentbookings', 'countbookings'));
     }
     public function add_service(Request $request)
     {

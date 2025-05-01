@@ -11,4 +11,5 @@ interface OrderRepositoryInterface
     public function allbookings();
     public function bookings();
     public function recentbookings();
+    public function countbookings();
 }
