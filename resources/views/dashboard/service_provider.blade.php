@@ -1,3 +1,10 @@
+
+@php
+    use Carbon\Carbon;
+@endphp
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,28 +46,38 @@
     .edit-form.active {
         display: block;
     }
-    /* Animation for modals */
-    .modal-enter {
-        opacity: 0;
-        transform: scale(0.95);
+
+    /* Modal animations */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
-    .modal-enter-active {
-        opacity: 1;
-        transform: scale(1);
-        transition: opacity 300ms, transform 300ms;
+
+    @keyframes slideIn {
+        from { transform: translateY(-20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
     }
-    .modal-exit {
-        opacity: 1;
+
+    #edit-service-modal:not(.hidden) {
+        animation: fadeIn 0.3s ease-out forwards;
     }
-    .modal-exit-active {
-        opacity: 0;
-        transform: scale(0.95);
-        transition: opacity 300ms, transform 300ms;
+
+    #edit-service-modal .bg-white {
+        animation: slideIn 0.3s ease-out forwards;
+    }
+
+    /* Make sure forms in the modal are visible */
+    #edit-form-container form {
+        display: block !important;
+    }
+
+    /* Fix for edit form in modal */
+    #edit-service-modal .edit-form {
+        display: block !important;
     }
 </style>
 </head>
 <body class="bg-white text-gray-800">
- 
 <!-- Header -->
 <header class="py-4 px-6 bg-white border-b border-gray-100">
     <div class="container mx-auto flex items-center justify-between">
@@ -216,6 +233,59 @@
                         <div class="flex justify-between items-center">
                             <p class="text-primary font-medium">{{$service->price}}</p>
                             <div class="flex space-x-2">
+                                <form action="{{ route('updateservice',$service->id) }}" Method="POST" class="edit-form" id="edit-form-{{$service->id}}">
+                                    @csrf
+                                    <!-- Service Image -->
+                                
+                                    @method('PUT') 
+                              
+                                
+                                    <!-- Service Details -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                        <!-- Service Name -->
+                                        <div class="col-span-2">
+                                            <label for="service-name" class="block text-sm font-medium text-gray-700 mb-2">Service Name</label>
+                                            <input type="text" id="service-name" name="title" placeholder="Enter service name" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary" value="{{ $service->title }}">
+                                        </div>
+                                
+                                        <!-- Category -->
+                                        <div>
+                                          
+                                            <label for="modal-product-category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                                            <select id="modal-product-category" name="category" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
+                                                <option value="fresh-groceries" {{ $service->category == 'cleaning' ? 'selected' : '' }}>cleaning</option>
+                                                <option value="household-essentials" {{ $service->category == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
+                                                <option value="electronics" {{ $service->category == 'Repair' ? 'selected' : '' }}>Repair</option>
+                                                <option value="health-beauty" {{ $service->category == 'installation' ? 'selected' : '' }}>installation</option>
+                                                <option value="beverages" {{ $service->category == 'other' ? 'selected' : '' }}>other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Price Range -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                        <div>
+                                            <label for="min-price" class="block text-sm font-medium text-gray-700 mb-2">Minimum Price ($)</label>
+                                            <input type="number" id="min-price" name="price" placeholder="0.00" step="0.01" min="0" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary" value="{{ $service->price }}">
+                                        </div>
+                                    </div>
+                                
+                                    <!-- Service Description -->
+                                    <div class="mb-6">
+                                        <label for="service-description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                                        <textarea id="service-description" name="description" rows="4" placeholder="Enter service description" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary" >{{old('description', $service->description )}}</textarea>
+                                    </div>
+                                
+                                    <!-- Form Actions -->
+                                    <div class="flex justify-end space-x-4">
+                                        <button type="button" id="cancel-add-service" class="px-6 py-2 border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition duration-300 rounded">
+                                            Cancel
+                                        </button>
+                                        <button type="submit" class="px-6 py-2 bg-primary text-white hover:bg-gray-700 transition duration-300 rounded">
+                                            Update Service
+                                        </button>
+                                    </div>
+                                </form>
                                 <button class="text-primary hover:text-gray-700" id="edit-btn-{{$service->id}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -367,9 +437,12 @@
             <div class="mb-6 border-b border-gray-200">
                 <div class="flex space-x-8">
                     <button class="pb-4 text-sm font-medium text-primary border-b-2 border-primary">All Bookings (24)</button>
+                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Upcoming (8)</button>
+                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Completed (14)</button>
+                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Cancelled (2)</button>
                 </div>
             </div>
-           
+
             <!-- Bookings Table -->
             <div class="bg-white rounded border border-gray-100 overflow-hidden">
                 <table class="w-full">
@@ -377,7 +450,7 @@
                         <tr class="bg-accent">
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Booking ID</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-
+                            <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -386,31 +459,21 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         <!-- Booking 1 -->
-                        
-                  
-                        @if ($allbookings->isEmpty())
-                
-                        <tr>sorry ,no bookings availlable at the moment </tr>
-                 
-                                
-                           @else
-                           @foreach ($allbookings as $booking )
                         <tr>
-                           
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-{{$booking->id}}</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1234</td>
                             <td class="py-3 px-4">
                                 <div class="flex items-center">
                                     <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
                                         <span class="text-xs font-medium text-gray-600">JD</span>
                                     </div>
-                                    <div class="text-sm font-medium text-gray-900">{{$booking->user_name}} {{$booking->user_lastname}}</div>
+                                    <div class="text-sm font-medium text-gray-900">Jane Doe</div>
                                 </div>
                             </td>
-
-                            <td class="py-3 px-4 text-sm text-gray-500">{{$booking->created_at}}</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">${{$booking->total}}</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 2:00 PM</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">$149.00</td>
                             <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">{{$booking->status}}</span>
+                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
                             </td>
                             <td class="py-3 px-4 text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-2">
@@ -418,11 +481,104 @@
                                     <button class="text-gray-500 hover:text-red-600">Cancel</button>
                                 </div>
                             </td>
-                       
                         </tr>
-                        @endforeach
-                        @endif
-          
+                        
+                        <!-- Booking 2 -->
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1233</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-gray-600">MS</span>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Michael Smith</div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 10:00 AM</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">$99.00</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
+                            </td>
+                            <td class="py-3 px-4 text-right text-sm font-medium">
+                                <div class="flex justify-end space-x-2">
+                                    <button class="text-primary hover:text-gray-700">View</button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Booking 3 -->
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1232</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-gray-600">AJ</span>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Alice Johnson</div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 11:30 AM</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">$199.00</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
+                            </td>
+                            <td class="py-3 px-4 text-right text-sm font-medium">
+                                <div class="flex justify-end space-x-2">
+                                    <button class="text-primary hover:text-gray-700">View</button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Booking 4 -->
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1231</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-gray-600">RB</span>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Robert Brown</div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 4:30 PM</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">$129.00</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
+                            </td>
+                            <td class="py-3 px-4 text-right text-sm font-medium">
+                                <div class="flex justify-end space-x-2">
+                                    <button class="text-primary hover:text-gray-700">View</button>
+                                    <button class="text-gray-500 hover:text-red-600">Cancel</button>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                        <!-- Booking 5 -->
+                        <tr>
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1230</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
+                                        <span class="text-xs font-medium text-gray-600">EW</span>
+                                    </div>
+                                    <div class="text-sm font-medium text-gray-900">Emma Wilson</div>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Carpet Cleaning</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">Apr 20, 2025, 1:00 PM</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">$249.00</td>
+                            <td class="py-3 px-4">
+                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-red-100 text-red-800">Cancelled</span>
+                            </td>
+                            <td class="py-3 px-4 text-right text-sm font-medium">
+                                <div class="flex justify-end space-x-2">
+                                    <button class="text-primary hover:text-gray-700">View</button>
+                                </div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -446,253 +602,121 @@
 
         <!-- Calendar Tab Content -->
         <div id="calendar-tab" class="tab-content">
-            <!-- Page Header -->
-            <div class="flex justify-between items-center mb-8">
-                <h1 class="text-2xl font-light">Calendar</h1>
-                <div class="flex space-x-2">
-                    <button class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:border-primary hover:text-primary transition">
-                        Today
-                    </button>
-                    <div class="flex border border-gray-200 rounded">
-                        <button class="px-3 py-2 text-gray-700 hover:text-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </button>
-                        <button class="px-3 py-2 text-gray-700 hover:text-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </button>
-                    </div>
-                    <span class="px-4 py-2 text-sm font-medium">April 2025</span>
-                </div>
+    <!-- Page Header -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-2xl font-light">Booking Calendar</h1>
+        <div class="flex space-x-2">
+            <button class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:border-primary hover:text-primary transition">
+                Today
+            </button>
+            <div class="flex border border-gray-200 rounded">
+                <button class="px-3 py-2 text-gray-700 hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button class="px-3 py-2 text-gray-700 hover:text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
             </div>
+            <span class="px-4 py-2 text-sm font-medium">April 2025</span>
+        </div>
+    </div>
 
-            <!-- Calendar View Tabs -->
-            <div class="mb-6 border-b border-gray-200">
-                <div class="flex space-x-8">
-                    <button class="pb-4 text-sm font-medium text-primary border-b-2 border-primary">Month</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Week</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Day</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">List</button>
-                </div>
-            </div>
+    <!-- Calendar View Tabs -->
+    <div class="mb-6 border-b border-gray-200">
+        <div class="flex space-x-8">
+                      <button class="pb-4 text-sm font-medium text-primary border-b-2 border-primary">List</button>
 
-            <!-- Calendar Grid -->
-            <div class="bg-white border border-gray-100 rounded overflow-hidden">
-                <!-- Days of Week -->
-                <div class="grid grid-cols-7 border-b border-gray-100">
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Sun</div>
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Mon</div>
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Tue</div>
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Wed</div>
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Thu</div>
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Fri</div>
-                    <div class="py-2 text-center text-xs font-medium text-gray-500">Sat</div>
-                </div>
+        </div>
+    </div>
 
-                <!-- Calendar Days -->
-                <div class="grid grid-cols-7 grid-rows-5 divide-x divide-y divide-gray-100">
-                    <!-- Previous Month -->
-                    <div class="h-32 p-1 text-gray-400">
-                        <span class="text-xs">30</span>
-                    </div>
-                    <div class="h-32 p-1 text-gray-400">
-                        <span class="text-xs">31</span>
-                    </div>
-                    
-                    <!-- Current Month -->
-                    <div class="h-32 p-1">
-                        <span class="text-xs">1</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">2</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">3</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">4</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">5</span>
-                    </div>
-                    
-                    <!-- Week 2 -->
-                    <div class="h-32 p-1">
-                        <span class="text-xs">6</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">7</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">8</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">9</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">10</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">11</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">12</span>
-                    </div>
-                    
-                    <!-- Week 3 -->
-                    <div class="h-32 p-1">
-                        <span class="text-xs">13</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">14</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">15</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">16</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">17</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">18</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">19</span>
-                    </div>
-                    
-                    <!-- Week 4 -->
-                    <div class="h-32 p-1">
-                        <span class="text-xs">20</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">21</span>
-                        <div class="mt-1">
-                            <div class="bg-blue-100 text-blue-800 text-xs p-1 rounded mb-1 truncate">10:00 AM - Window Cleaning</div>
-                            <div class="bg-blue-100 text-blue-800 text-xs p-1 rounded mb-1 truncate">11:30 AM - Home Cleaning</div>
-                            <div class="bg-blue-100 text-blue-800 text-xs p-1 rounded mb-1 truncate">2:00 PM - Home Cleaning</div>
-                            <div class="bg-blue-100 text-blue-800 text-xs p-1 rounded truncate">4:30 PM - Window Cleaning</div>
-                        </div>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">22</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">23</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">24</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">25</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">26</span>
-                    </div>
-                    
-                    <!-- Week 5 -->
-                    <div class="h-32 p-1">
-                        <span class="text-xs">27</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">28</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">29</span>
-                    </div>
-                    <div class="h-32 p-1">
-                        <span class="text-xs">30</span>
-                    </div>
-                    
-                    <!-- Next Month -->
-                    <div class="h-32 p-1 text-gray-400">
-                        <span class="text-xs">1</span>
-                    </div>
-                    <div class="h-32 p-1 text-gray-400">
-                        <span class="text-xs">2</span>
-                    </div>
-                    <div class="h-32 p-1 text-gray-400">
-                        <span class="text-xs">3</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Upcoming Bookings -->
-            <div class="mt-8">
-                <h2 class="text-lg font-light mb-4">Upcoming Bookings</h2>
-                <div class="bg-white rounded border border-gray-100 overflow-hidden">
-                    <div class="p-4 border-b border-gray-100">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <h3 class="font-medium">Today, April 21</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="divide-y divide-gray-100">
-                        <div class="p-4 flex">
-                            <div class="w-16 text-center">
-                                <div class="text-sm font-medium">10:00</div>
-                                <div class="text-xs text-gray-500">AM</div>
-                            </div>
-                            <div class="ml-4 flex-1">
-                                <div class="flex items-center justify-between">
-                                    <h4 class="font-medium">Window Cleaning</h4>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">Michael Smith</p>
-                                <p class="text-xs text-gray-500 mt-1">123 Main St, Apt 4B</p>
-                            </div>
-                        </div>
-                        <div class="p-4 flex">
-                            <div class="w-16 text-center">
-                                <div class="text-sm font-medium">11:30</div>
-                                <div class="text-xs text-gray-500">AM</div>
-                            </div>
-                            <div class="ml-4 flex-1">
-                                <div class="flex items-center justify-between">
-                                    <h4 class="font-medium">Home Cleaning</h4>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">Alice Johnson</p>
-                                <p class="text-xs text-gray-500 mt-1">456 Oak Ave</p>
-                            </div>
-                        </div>
-                        <div class="p-4 flex">
-                            <div class="w-16 text-center">
-                                <div class="text-sm font-medium">2:00</div>
-                                <div class="text-xs text-gray-500">PM</div>
-                            </div>
-                            <div class="ml-4 flex-1">
-                                <div class="flex items-center justify-between">
-                                    <h4 class="font-medium">Home Cleaning</h4>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">Jane Doe</p>
-                                <p class="text-xs text-gray-500 mt-1">789 Pine St, Suite 3C</p>
-                            </div>
-                        </div>
-                        <div class="p-4 flex">
-                            <div class="w-16 text-center">
-                                <div class="text-sm font-medium">4:30</div>
-                                <div class="text-xs text-gray-500">PM</div>
-                            </div>
-                            <div class="ml-4 flex-1">
-                                <div class="flex items-center justify-between">
-                                    <h4 class="font-medium">Window Cleaning</h4>
-                                    <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Upcoming</span>
-                                </div>
-                                <p class="text-sm text-gray-500 mt-1">Robert Brown</p>
-                                <p class="text-xs text-gray-500 mt-1">321 Elm St</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Booking Filter -->
+    <div class="mb-6 flex flex-wrap gap-2">
+        <button class="px-3 py-1.5 bg-primary text-white text-sm rounded-full">All Bookings</button>
+   
+        <div class="ml-auto">
+            <div class="relative">
+                <input type="text" placeholder="Search bookings..." class="pl-8 pr-4 py-1.5 border border-gray-200 rounded text-sm focus:outline-none focus:border-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 absolute left-2.5 top-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
             </div>
         </div>
+    </div>
+
+    <!-- Bookings Table -->
+    <div class="bg-white rounded border border-gray-100 overflow-hidden mb-8">
+        <table class="w-full">
+            <thead>
+                <tr class="bg-accent">
+                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time</th>
+                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
+                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                    <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="py-3 px-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+                <!-- Today's Bookings -->
+               @if ($upcomingdate->isEmpty())
+               <tr><td>sorry no bookings at the moment</td></tr>
+                   @else
+                   @foreach ($upcomingdate as $bookings )
+                       
+             
+                <tr>
+                    <td class="py-3 px-4 text-sm text-gray-500">{{$bookings->booking_date}}</td>
+                    <td class="py-3 px-4 text-sm text-gray-500">{{$bookings->booking_time}}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center">
+                            <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
+                                <span class="text-xs font-medium text-gray-600">MS</span>
+                            </div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-900">{{$bookings->name}}{{$bookings->last_name}}</div>
+                                <div class="text-xs text-gray-500">{{$bookings->email}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 text-sm text-gray-500">{{$bookings->title}}</td>
+                    <td class="py-3 px-4 text-sm text-gray-500">{{$bookings->address}}</td>
+                    <td class="py-3 px-4">
+                        
+                        @php
+                        $isUpcoming = Carbon::parse($bookings->booking_date . ' ' . $bookings->booking_time)->greaterThan(Carbon::now());
+                    @endphp
+                    
+                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full 
+                        {{ $isUpcoming ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}">
+                        {{ $isUpcoming ? 'Upcoming' : 'Passed' }}
+                    </span>
+                    
+                    </td>
+                    <td class="py-3 px-4 text-right text-sm font-medium">
+                        <div class="flex justify-end space-x-2">
+                            <button class="text-primary hover:text-gray-700">View</button>
+                            <button class="text-gray-500 hover:text-red-600">Cancel</button>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+                @endif
+              
+
+        
+            
+             
+            </tbody>
+        </table>
+    </div>
+
+   
+</div>
 
         <!-- Reviews Tab Content -->
         <div id="reviews-tab" class="tab-content">
@@ -1163,16 +1187,16 @@
             button.addEventListener('click', () => {
                 // Remove active class from all buttons and contents
                 tabButtons.forEach(btn => {
-                    btn.classList.remove('text-primary', 'border-primary');
-                    btn.classList.add('text-gray-500');
+                    btn.classList.remove('text-primary', 'border-b-2', 'border-primary');
+                    btn.classList.add('text-gray-500', 'hover:text-primary');
                 });
                 tabContents.forEach(content => {
                     content.classList.remove('active');
                 });
                 
                 // Add active class to clicked button and corresponding content
-                button.classList.add('text-primary', 'border-primary');
-                button.classList.remove('text-gray-500');
+                button.classList.add('text-primary', 'border-b-2', 'border-primary');
+                button.classList.remove('text-gray-500', 'hover:text-primary');
                 
                 const tabId = button.getAttribute('data-tab');
                 document.getElementById(tabId).classList.add('active');
@@ -1185,55 +1209,71 @@
         const closeModal = document.getElementById('close-modal');
         const cancelAddService = document.getElementById('cancel-add-service');
         
-        addServiceBtn.addEventListener('click', () => {
-            addServiceModal.classList.remove('hidden');
-        });
-        
-        closeModal.addEventListener('click', () => {
-            addServiceModal.classList.add('hidden');
-        });
-        
-        cancelAddService.addEventListener('click', () => {
-            addServiceModal.classList.add('hidden');
-        });
+        if (addServiceBtn && addServiceModal) {
+            addServiceBtn.addEventListener('click', () => {
+                addServiceModal.classList.remove('hidden');
+            });
+            
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    addServiceModal.classList.add('hidden');
+                });
+            }
+            
+            if (cancelAddService) {
+                cancelAddService.addEventListener('click', () => {
+                    addServiceModal.classList.add('hidden');
+                });
+            }
+        }
         
         // Edit Service Modal
         const editServiceModal = document.getElementById('edit-service-modal');
         const closeEditModal = document.getElementById('close-edit-modal');
         const editFormContainer = document.getElementById('edit-form-container');
         
-        // Close edit modal when clicking the close button
-        closeEditModal.addEventListener('click', () => {
-            editServiceModal.classList.add('hidden');
-        });
-        
-        // Edit form functionality
+        // Edit form functionality as modal
         document.querySelectorAll('[id^="edit-btn-"]').forEach(button => {
             button.addEventListener('click', (e) => {
                 e.preventDefault();
                 const serviceId = button.id.split('-').pop();
-                const editForm = document.getElementById(`edit-form-${serviceId}`);
+                const editForm = document.querySelector(`form[id="edit-form-${serviceId}"]`);
                 
-                // Move the form to the modal
-                editFormContainer.innerHTML = '';
-                editFormContainer.appendChild(editForm.cloneNode(true));
-                
-                // Show the edit modal
-                editServiceModal.classList.remove('hidden');
-                
-                // Make the form visible inside the modal
-                const formInModal = editFormContainer.querySelector('form');
-                formInModal.classList.add('active');
-                
-                // Update the cancel button to close the modal
-                const cancelButton = formInModal.querySelector('button[type="button"]');
-                if (cancelButton) {
-                    cancelButton.addEventListener('click', () => {
-                        editServiceModal.classList.add('hidden');
-                    });
+                if (editForm && editServiceModal && editFormContainer) {
+                    // Clone the form to the modal
+                    const clonedForm = editForm.cloneNode(true);
+                    
+                    // Clear previous content and append the cloned form
+                    editFormContainer.innerHTML = '';
+                    editFormContainer.appendChild(clonedForm);
+                    
+                    // Make sure the form is visible
+                    clonedForm.style.display = 'block';
+                    
+                    // Update the cancel button to close the modal
+                    const cancelButton = clonedForm.querySelector('button[type="button"]');
+                    if (cancelButton) {
+                        cancelButton.addEventListener('click', () => {
+                            editServiceModal.classList.add('hidden');
+                        });
+                    }
+                    
+                    // Show the modal with animation
+                    editServiceModal.classList.remove('hidden');
+                    const modalContent = editServiceModal.querySelector('.bg-white');
+                    if (modalContent) {
+                        modalContent.classList.add('modal-content');
+                    }
                 }
             });
         });
+        
+        // Close edit modal when clicking the close button
+        if (closeEditModal) {
+            closeEditModal.addEventListener('click', () => {
+                editServiceModal.classList.add('hidden');
+            });
+        }
         
         // Close modals when clicking outside
         window.addEventListener('click', (e) => {

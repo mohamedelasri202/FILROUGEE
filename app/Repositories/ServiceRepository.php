@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use Carbon\Carbon;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -53,18 +54,22 @@ class ServiceRepository implements ServiceRepositoryInterface
         $service = service::findorfail($id);
         return $service;
     }
+
     public function upcomingbooking()
     {
-        $today_date = date('Y-m-d');
-        $today_time = date('H:i:s');
-
+        $now = Carbon::now();
 
         $bookings = DB::table('orders')
             ->join('order_items', 'orders.id', '=', 'order_items.order_id')
             ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
-            ->where('servicecart.booking_date', '>', $today_date)
+            ->join('services', 'servicecart.service_id', '=', 'services.id')
+
+
+            ->select('services.title', 'servicecart.booking_time', 'servicecart.booking_date', 'orders.name', 'orders.last_name', 'orders.status', 'orders.address', 'orders.id', 'orders.email')
+            ->where('servicecart.booking_date', '>', $now)
+            ->orderBy('servicecart.booking_date', 'asc')
             ->get();
-        dd($bookings);
-        return  $bookings;
+
+        return $bookings;
     }
 }

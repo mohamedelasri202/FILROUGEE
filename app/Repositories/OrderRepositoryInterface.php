@@ -9,4 +9,5 @@ interface OrderRepositoryInterface
     public function ordercount();
     public function showstatistic();
     public function allbookings();
+    public function bookings();
 }

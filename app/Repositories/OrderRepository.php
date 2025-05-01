@@ -123,4 +123,11 @@ class OrderRepository implements OrderRepositoryInterface
 
         return $bookings;
     }
+
+    public function bookings()
+    {
+        $bookings = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')->select('orders.*')->where('order_items.type', '=', 'service')->get();
+
+        return $bookings;
+    }
 }
