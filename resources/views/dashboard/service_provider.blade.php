@@ -437,9 +437,6 @@
             <div class="mb-6 border-b border-gray-200">
                 <div class="flex space-x-8">
                     <button class="pb-4 text-sm font-medium text-primary border-b-2 border-primary">All Bookings (24)</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Upcoming (8)</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Completed (14)</button>
-                    <button class="pb-4 text-sm font-medium text-gray-500 hover:text-primary">Cancelled (2)</button>
                 </div>
             </div>
 
@@ -458,22 +455,34 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
-                        <!-- Booking 1 -->
+                @if ($bookings->isEmpty())
+<tr><td>no booking yet </td></tr>                    
+            @else
+            @foreach ($bookings as $booking)
+                
+          
                         <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1234</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">#BK-{{$booking->id}}</td>
                             <td class="py-3 px-4">
                                 <div class="flex items-center">
                                     <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
                                         <span class="text-xs font-medium text-gray-600">JD</span>
                                     </div>
-                                    <div class="text-sm font-medium text-gray-900">Jane Doe</div>
+                                    <div class="text-sm font-medium text-gray-900">{{$booking->name}}{{$booking->last_name}}</div>
                                 </div>
                             </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 2:00 PM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$149.00</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">{{$booking->title}}</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">{{$booking->booking_date}} at {{$booking->booking_time}}</td>
+                            <td class="py-3 px-4 text-sm text-gray-500">${{$booking->total}}</td>
                             <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
+                                @php
+                                $isUpcoming = Carbon::parse($booking->booking_date . ' ' . $booking->booking_time)->greaterThan(Carbon::now());
+                            @endphp
+                            
+                            <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full 
+                                {{ $isUpcoming ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}">
+                                {{ $isUpcoming ? 'Upcoming' : 'Passed' }}
+                            </span>
                             </td>
                             <td class="py-3 px-4 text-right text-sm font-medium">
                                 <div class="flex justify-end space-x-2">
@@ -482,103 +491,9 @@
                                 </div>
                             </td>
                         </tr>
-                        
-                        <!-- Booking 2 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1233</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">MS</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Michael Smith</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 10:00 AM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$99.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Booking 3 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1232</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">AJ</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Alice Johnson</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Home Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 11:30 AM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$199.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-green-100 text-green-800">Completed</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Booking 4 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1231</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">RB</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Robert Brown</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Window Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 21, 2025, 4:30 PM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$129.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">Upcoming</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                    <button class="text-gray-500 hover:text-red-600">Cancel</button>
-                                </div>
-                            </td>
-                        </tr>
-                        
-                        <!-- Booking 5 -->
-                        <tr>
-                            <td class="py-3 px-4 text-sm text-gray-500">#BK-1230</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-gray-600">EW</span>
-                                    </div>
-                                    <div class="text-sm font-medium text-gray-900">Emma Wilson</div>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Carpet Cleaning</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">Apr 20, 2025, 1:00 PM</td>
-                            <td class="py-3 px-4 text-sm text-gray-500">$249.00</td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-red-100 text-red-800">Cancelled</span>
-                            </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                </div>
-                            </td>
-                        </tr>
+                        @endforeach
+                        @endif
+
                     </tbody>
                 </table>
             </div>

@@ -126,8 +126,41 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function bookings()
     {
-        $bookings = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')->select('orders.*')->where('order_items.type', '=', 'service')->get();
+
+
+        $bookings = DB::table('orders')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
+            ->join('services', 'servicecart.service_id', '=', 'services.id')
+
+
+            ->select('services.title', 'servicecart.booking_time', 'servicecart.booking_date', 'orders.name', 'orders.last_name', 'orders.status', 'orders.address', 'orders.id', 'orders.email', 'orders.total')
+
+
+            ->get();
 
         return $bookings;
+    }
+    public function recentbookings()
+    {
+        $recentbookings = DB::table('orders')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
+            ->join('services', 'servicecart.service_id', '=', 'services.id')
+            ->select(
+                'services.title',
+                'servicecart.booking_time',
+                'servicecart.booking_date',
+                'orders.name',
+                'orders.last_name',
+                'orders.status',
+                'orders.address',
+                'orders.id',
+                'orders.email',
+                'orders.total'
+            )
+            ->orderBy('servicecart.booking_date', 'desc')  // Order by booking date, descending
+            ->get();
+        return   $recentbookings;
     }
 }
