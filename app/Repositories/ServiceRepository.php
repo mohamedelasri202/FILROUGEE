@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Order;
 use Carbon\Carbon;
 use App\Models\Service;
 use Illuminate\Support\Facades\DB;
@@ -69,5 +70,17 @@ class ServiceRepository implements ServiceRepositoryInterface
             ->get();
 
         return $bookings;
+    }
+    public function updatestatus($request, $id)
+    {
+        $order = Order::findOrFail($id);
+        $validated = $request->validate([
+            'status' => 'string',
+        ]);
+
+        $order->update([
+            'status' => $validated['status']
+        ]);
+        return $order;
     }
 }

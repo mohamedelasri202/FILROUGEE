@@ -287,7 +287,7 @@
                                 
                             @enderror
                         </div>
-                        <input type="hidden" name="status" value="confirmed" >
+                        <input type="hidden" name="status" value="pending" >
                         <input type="hidden" name="total" value="{{ $total }}">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="transition-all duration-200 focus-within:ring-2 focus-within:ring-primary/20 rounded-md">

@@ -114,3 +114,7 @@ Route::post('/checkout', [OrderController::class, 'add_order'])->name('CHECK')->
 // the service booking route
 Route::get('/booking-services/{id}', [ServiceController::class, 'book_service'])->name('booking')->middleware('auth', 'role:user');
 Route::get('product/{id}', [ProductController::class, 'index'])->name('product')->middleware('auth', 'role:user');
+
+
+// the updating route for the booking from the  service _provider 
+Route::put('upadating/service/status/{id}', [ServiceProviderController::class, 'update'])->name('orders.update')->middleware('auth', 'role:service_provider');

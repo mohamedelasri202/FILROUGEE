@@ -12,4 +12,5 @@ interface ServiceRepositoryInterface
     public function tow_service();
     public function  service_detaills($id);
     public function upcomingbooking();
+    public function updatestatus($data, $id);
 }

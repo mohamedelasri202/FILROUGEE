@@ -10,6 +10,6 @@ interface OrderRepositoryInterface
     public function showstatistic();
     public function allbookings();
     public function bookings();
-    public function recentbookings();
     public function countbookings();
+    public function statistics();
 }

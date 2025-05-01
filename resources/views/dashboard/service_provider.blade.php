@@ -3,8 +3,6 @@
     use Carbon\Carbon;
 @endphp
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,8 +159,10 @@
                     <div class="bg-white p-6 border border-gray-100 rounded">
                         <div class="flex items-center justify-between">
                             <div>
-                                <p class="text-sm text-gray-500">Completed</p>
-                                <p class="text-2xl font-light mt-1">2</p>
+                            
+                           
+                                <p class="text-sm text-gray-500">confirmed</p>
+                                <p class="text-2xl font-light mt-1">{{ $statistics['confirmed'] }}</p>
                             </div>
                             <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -175,7 +175,8 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <p class="text-sm text-gray-500">Cancelled</p>
-                                <p class="text-2xl font-light mt-1">0</p>
+                                <p class="text-2xl font-light mt-1">{{$statistics['cancelled']}}</p>
+                 
                             </div>
                             <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -313,61 +314,7 @@
             
             </div>
 
-            <!-- Recent Bookings -->
-            <div class="mt-12">
-                <h2 class="text-lg font-light mb-6">Recent Bookings</h2>
-                <div class="bg-white rounded border border-gray-100 overflow-hidden">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="bg-accent">
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                <th class="py-3 px-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <!-- Booking -->
-                            @if ($recentbookings->isEmpty())
-                            <tr><td>sorry no bookings </td></tr>
-                            @else
-                            @foreach ($recentbookings as $recentbooking)
-                                
-                            @endforeach
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-8 w-8 rounded-full bg-gray-200 flex-shrink-0 mr-3 flex items-center justify-center">
-                                            <span class="text-xs font-medium text-gray-600">JD</span>
-                                        </div>
-                                        <div>
-                                            <div class="text-sm font-medium text-gray-900">{{$recentbooking->name}} {{$recentbooking->last_name}}</div>
-                                            <div class="text-xs text-gray-500">{{$recentbooking->email}}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$recentbooking->title}}</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">{{$recentbooking->booking_date}} {{$recentbooking->booking_time}}</td>
-                                <td class="py-3 px-4">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full bg-blue-100 text-blue-800">{{$recentbooking->status}}</span>
-                                </td>
-                                <td class="py-3 px-4 text-right text-sm font-medium">
-                                    <div class="flex justify-end space-x-2">
-                                        <button class="text-primary hover:text-gray-700">View</button>
-                                        <button class="text-gray-500 hover:text-red-600">Cancel</button>
-                                    </div>
-                                </td>
-                            </tr>
-                                    
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mt-4 text-right">
-                    <a href="#" class="text-sm text-primary hover:text-gray-700">View all bookings →</a>
-                </div>
-            </div>
+            
         </div>
 
         <!-- Bookings Tab Content -->
@@ -409,15 +356,14 @@
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
                             <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="py-3 px-4 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                 @if ($bookings->isEmpty())
-<tr><td>no booking yet </td></tr>                    
-            @else
-            @foreach ($bookings as $booking)
-                
+                 <tr><td>no booking yet </td></tr>                    
+                    @else
+                     @foreach ($bookings as $booking)
+                    dd {{$booking->id}}
           
                         <tr>
                             <td class="py-3 px-4 text-sm text-gray-500">#BK-{{$booking->id}}</td>
@@ -433,21 +379,13 @@
                             <td class="py-3 px-4 text-sm text-gray-500">{{$booking->booking_date}} at {{$booking->booking_time}}</td>
                             <td class="py-3 px-4 text-sm text-gray-500">${{$booking->total}}</td>
                             <td class="py-3 px-4">
-                                @php
-                                $isUpcoming = Carbon::parse($booking->booking_date . ' ' . $booking->booking_time)->greaterThan(Carbon::now());
-                            @endphp
                             
-                            <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full 
-                                {{ $isUpcoming ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}">
-                                {{ $isUpcoming ? 'Upcoming' : 'Passed' }}
+                            
+                            <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full">
+                                {{ $booking->status }}
                             </span>
                             </td>
-                            <td class="py-3 px-4 text-right text-sm font-medium">
-                                <div class="flex justify-end space-x-2">
-                                    <button class="text-primary hover:text-gray-700">View</button>
-                                    <button class="text-gray-500 hover:text-red-600">Cancel</button>
-                                </div>
-                            </td>
+                       
                         </tr>
                         @endforeach
                         @endif
@@ -561,19 +499,44 @@
                     <td class="py-3 px-4">
                         
                         @php
+                
                         $isUpcoming = Carbon::parse($bookings->booking_date . ' ' . $bookings->booking_time)->greaterThan(Carbon::now());
+                        $status = strtolower($bookings->status);
                     @endphp
                     
+                    <!-- Time badge -->
                     <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full 
                         {{ $isUpcoming ? 'bg-blue-100 text-blue-800' : 'bg-red-100 text-red-800' }}">
                         {{ $isUpcoming ? 'Upcoming' : 'Passed' }}
                     </span>
                     
+                    <!-- Status badge -->
+                    <span class="px-2 inline-flex text-xs leading-5 font-medium rounded-full
+                        @if ($status === 'confirmed') bg-green-100 text-green-800
+                        @elseif ($status === 'cancelled') bg-red-100 text-red-800
+                        @elseif ($status === 'pending') bg-blue-100 text-blue-800
+                        @else bg-gray-100 text-gray-800 @endif">
+                    {{ ($status) }}    
+                    </span>
+                  
                     </td>
                     <td class="py-3 px-4 text-right text-sm font-medium">
                         <div class="flex justify-end space-x-2">
-                            <button class="text-primary hover:text-gray-700">View</button>
-                            <button class="text-gray-500 hover:text-red-600">Cancel</button>
+
+                            <form action="{{ route('orders.update', $bookings->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="status" value="confirmed">
+                                <button type="submit" class="text-primary hover:text-gray-700">Confirm</button>
+                            </form>
+                        
+                            <!-- Cancel Button -->
+                            <form action="{{ route('orders.update', $bookings->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="status" value="cancelled">
+                                <button type="submit" class="text-gray-500 hover:text-red-600">Cancel</button>
+                            </form>
                         </div>
                     </td>
                 </tr>

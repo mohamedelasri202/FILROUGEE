@@ -8,10 +8,16 @@ use Illuminate\Http\Request;
 
 class ServiceProviderController extends Controller
 {
-    protected $orderRepository;
+
     protected $serviceReposiotry;
-    public function __construct(OrderRepositoryInterface $orderRepository, ServiceRepositoryInterface $serviceRepository)
+    public function __construct(ServiceRepositoryInterface $serviceRepository)
     {
-        $this->orderRepository = $orderRepository;
+        $this->serviceReposiotry = $serviceRepository;
+    }
+    public function update(Request $request, $id)
+    {
+
+        $update = $this->serviceReposiotry->updatestatus($request, $id);
+        return back();
     }
 }

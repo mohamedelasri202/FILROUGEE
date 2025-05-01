@@ -141,30 +141,7 @@ class OrderRepository implements OrderRepositoryInterface
 
         return $bookings;
     }
-    public function recentbookings()
-    {
-        $recentbookings = DB::table('orders')
-            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
-            ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
-            ->join('services', 'servicecart.service_id', '=', 'services.id')
-            ->select(
-                'services.title',
-                'servicecart.booking_time',
-                'servicecart.booking_date',
-                'orders.name',
-                'orders.last_name',
-                'orders.status',
-                'orders.address',
-                'orders.id',
-                'orders.email',
-                'orders.total',
-                'orders.created_at'
-            )
-            ->orderBy('orders.created_at', 'desc')
-            ->get();
-        // dd($recentbookings);
-        return   $recentbookings;
-    }
+
     public function countbookings()
     {
         $recentbookings = DB::table('orders')
@@ -184,9 +161,20 @@ class OrderRepository implements OrderRepositoryInterface
                 'orders.total',
                 'orders.created_at'
             )
+            ->where('orders.status', 'pending')
             ->orderBy('orders.created_at', 'desc')
             ->count();
 
         return   $recentbookings;
+    }
+    public function statistics()
+    {
+        $cancelled = Order::where('status', 'cancelled')->count();
+        $confirmed = Order::where('status', 'confirmed')->count();
+
+        return [
+            'cancelled' => $cancelled,
+            'confirmed' => $confirmed,
+        ];
     }
 }
