@@ -9,9 +9,10 @@ class AdminController extends Controller
 {
     public function showAdminDashboard()
     {
-        $vendors = DB::table('users')->where('role', 'vendor')->get();
-        $serviceProviders = DB::table('users')->where('role', 'service_provider')->get();
+        $vendors = DB::table('users')->where('role', 'vendor')->count();
+        $serviceProviders = DB::table('users')->where('role', 'service_provider')->count();
         $numberofusers = DB::table('users')->where('role', 'user')->count();
+
         return view('dashboard.admin', compact('numberofusers', 'vendors', 'serviceProviders'));
     }
     public function showUsers()

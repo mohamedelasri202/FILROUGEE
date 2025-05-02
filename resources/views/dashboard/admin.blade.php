@@ -19,12 +19,38 @@
             }
         }
     </script>
-    <!-- Chart.js for analytics -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .user-row:hover {
+            background-color: rgba(229, 62, 62, 0.1);
+            color: #e53e3e;
+        }
+        
+        .user-row.active {
+            background-color: rgba(229, 62, 62, 0.1);
+            color: #e53e3e;
+            font-weight: 600;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .status-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .status-badge:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
     <div class="flex h-screen overflow-hidden">
-        <!-- Sidebar - New Style -->
+        <!-- Sidebar -->
         <div class="hidden md:flex md:flex-shrink-0">
             <div class="flex flex-col w-64 bg-white border-r border-gray-200">
                 <!-- Logo -->
@@ -41,16 +67,6 @@
                 
                 <!-- Navigation -->
                 <div class="flex flex-col flex-grow pt-5 pb-4 overflow-y-auto">
-                    <div class="px-4 mb-6">
-                        <div class="flex items-center">
-                            <img class="h-10 w-10 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-gray-700">Admin User</p>
-                                <p class="text-xs text-gray-500">Super Admin</p>
-                            </div>
-                        </div>
-                    </div>
-                    
                     <div class="flex-grow flex flex-col">
                         <p class="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">Main</p>
                         <nav class="flex-1 px-2 space-y-1 mt-2">
@@ -65,38 +81,24 @@
                         
                         <p class="px-4 mt-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Management</p>
                         <nav class="flex-1 px-2 space-y-1 mt-2">
-                            <!-- Users -->
-                            <a href="{{ route('users') }}" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100">
+                            <!-- Users Tab -->
+                            <a href="#" class="tab-link group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100" data-tab="users-tab">
                                 <svg class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                                 </svg>
                                 Users
                             </a>
                             
-                            <!-- Vendors -->
-                           
-                        </nav>
-                        
-                        <p class="px-4 mt-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Store</p>
-                        <nav class="flex-1 px-2 space-y-1 mt-2">
-                            <!-- Products -->
-                            <a href="#" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100">
-                                <svg class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                                </svg>
-                                Products
-                            </a>
-                            
-                            <!-- Orders -->
-                            <a href="#" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100">
+                            <!-- Orders Tab -->
+                            <a href="#" class="tab-link group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100" data-tab="orders-tab">
                                 <svg class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                                 </svg>
                                 Orders
                             </a>
                             
-                            <!-- Services -->
-                            <a href="#" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100">
+                            <!-- Services Tab -->
+                            <a href="#" class="tab-link group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100" data-tab="services-tab">
                                 <svg class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -104,42 +106,16 @@
                                 Services
                             </a>
                         </nav>
-                        
-                        <p class="px-4 mt-6 text-xs font-semibold text-gray-400 uppercase tracking-wider">Analytics</p>
-                        <nav class="flex-1 px-2 space-y-1 mt-2">
-                            <!-- Reports -->
-                            <a href="#" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100">
-                                <svg class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                                </svg>
-                                Reports
-                            </a>
-                            
-                            <!-- Settings -->
-                            <a href="#" class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg text-gray-700 hover:bg-gray-100">
-                                <svg class="mr-3 h-5 w-5 text-gray-500 group-hover:text-gray-700" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                Settings
-                            </a>
-                        </nav>
                     </div>
                     
-                    <div class="px-4 mt-6">
-                        <div class="bg-gray-100 rounded-lg p-3">
-                            <div class="flex items-center">
-                                <div class="flex-shrink-0">
-                                    <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                    </svg>
-                                </div>
-                                <div class="ml-3">
-                                    <p class="text-sm font-medium text-gray-700">Need help?</p>
-                                    <a href="#" class="text-xs text-primary hover:text-red-700">View documentation</a>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- Logout Button -->
+                    <div class="px-4 mt-6 mb-8">
+                        <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-red-700 transition-colors duration-150">
+                            <svg class="mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                            Logout
+                        </a>
                     </div>
                 </div>
             </div>
@@ -149,7 +125,7 @@
         <div class="flex flex-col w-0 flex-1 overflow-hidden">
             <!-- Top Header -->
             <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
-                <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden">
+                <button class="px-4 border-r border-gray-200 text-gray-500 focus:outline-none focus:bg-gray-100 focus:text-gray-600 md:hidden" id="sidebar-toggle">
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
                     </svg>
@@ -176,16 +152,6 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                             </svg>
                         </button>
-
-                        <!-- Profile dropdown -->
-                        <div class="ml-3 relative">
-                            <div>
-                                <button type="button" class="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" id="user-menu-button">
-                                    <span class="sr-only">Open user menu</span>
-                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                </button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -196,6 +162,7 @@
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                         <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
                     </div>
+                    
                     <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                         <!-- Stats Cards -->
                         <div class="mt-8">
@@ -241,7 +208,7 @@
                                                 <dl>
                                                     <dt class="text-sm font-medium text-gray-500 truncate">Total Vendors</dt>
                                                     <dd class="flex items-baseline">
-                                                        <div class="text-2xl font-semibold text-gray-900">@if ($vendors->count() == 0) 0 @else {{$vendors}} @endif</div>
+                                                        <div class="text-2xl font-semibold text-gray-900">@if ($vendors == 0) 0 @else {{$vendors}}@endif </div>
                                                         <div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
                                                             <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -269,7 +236,7 @@
                                                 <dl>
                                                     <dt class="text-sm font-medium text-gray-500 truncate">Service Providers</dt>
                                                     <dd class="flex items-baseline">
-                                                        <div class="text-2xl font-semibold text-gray-900">@if($serviceProviders->count() == 0) 0 @else {{$serviceProviders}}@endif</div>
+                                                        <div class="text-2xl font-semibold text-gray-900">@if($serviceProviders == 0) 0 @else {{$serviceProviders}}@endif</div>
                                                         <div class="ml-2 flex items-baseline text-sm font-semibold text-green-600">
                                                             <svg class="self-center flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                                                 <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -314,215 +281,548 @@
                             </div>
                         </div>
 
-                        <!-- Charts Section -->
-                        <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2">
-                            <!-- Sales Chart -->
-                            <div class="bg-white overflow-hidden shadow rounded-lg">
-                                <div class="p-5">
-                                    <div class="flex items-center justify-between">
-                                        <h3 class="text-lg font-medium text-gray-900">Sales Overview</h3>
-                                        <div class="flex items-center">
-                                            <span class="px-3 py-1 text-xs font-medium text-green-800 bg-green-100 rounded-full">+12.5%</span>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4" style="height: 300px;">
-                                        <canvas id="salesChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- User Activity Chart -->
-                            <div class="bg-white overflow-hidden shadow rounded-lg">
-                                <div class="p-5">
-                                    <div class="flex items-center justify-between">
-                                        <h3 class="text-lg font-medium text-gray-900">User Activity</h3>
-                                        <div class="flex items-center">
-                                            <span class="px-3 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full">Last 7 days</span>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4" style="height: 300px;">
-                                        <canvas id="userChart"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recent Activity -->
+                        <!-- Tab Content -->
                         <div class="mt-8">
-                            <div class="bg-white shadow rounded-lg">
-                                <div class="px-5 py-4 border-b border-gray-200">
-                                    <h3 class="text-lg font-medium text-gray-900">Recent Activity</h3>
-                                </div>
-                                <div class="p-5">
-                                    <ul class="divide-y divide-gray-200">
-                                        <li class="py-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0">
-                                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                            <!-- Users Tab Content -->
+                            <div id="users-tab" class="tab-content active">
+                                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                                    <div class="px-4 py-5 border-b border-gray-200 sm:px-6 flex justify-between items-center">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">Users</h3>
+                                        <div class="flex space-x-3">
+                                            <div class="relative">
+                                                <select class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                                    <option>All Users</option>
+                                                    <option>Active</option>
+                                                    <option>Suspended</option>
+                                                </select>
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                                    </svg>
                                                 </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                                        New user registered: Sarah Johnson
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate">
-                                                        Email: sarah.johnson@example.com
+                                            </div>
+                                            <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                                Export
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Name
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Email
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Role
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Status
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <!-- User Row 1 -->
+                                                <tr class="user-row">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div>
+                                                                <div class="text-sm font-medium text-gray-900">
+                                                                    John Smith
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">john.smith@example.com</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">User</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Active
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="status-toggle-btn mr-2 px-3 py-1 bg-primary text-white rounded hover:bg-red-700 transition-colors duration-150">
+                                                            Suspend
+                                                        </button>
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            Edit
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- User Row 2 -->
+                                                <tr class="user-row">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div>
+                                                                <div class="text-sm font-medium text-gray-900">
+                                                                    Jane Doe
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">jane.doe@example.com</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Admin</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Active
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="status-toggle-btn mr-2 px-3 py-1 bg-primary text-white rounded hover:bg-red-700 transition-colors duration-150">
+                                                            Suspend
+                                                        </button>
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            Edit
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- User Row 3 -->
+                                                <tr class="user-row">
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="flex items-center">
+                                                            <div>
+                                                                <div class="text-sm font-medium text-gray-900">
+                                                                    Robert Johnson
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">robert.johnson@example.com</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">User</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            Suspended
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="status-toggle-btn mr-2 px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-150">
+                                                            Activate
+                                                        </button>
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            Edit
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex-1 flex justify-between sm:hidden">
+                                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                                    Previous
+                                                </a>
+                                                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                                    Next
+                                                </a>
+                                            </div>
+                                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                                <div>
+                                                    <p class="text-sm text-gray-700">
+                                                        Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">20</span> results
                                                     </p>
                                                 </div>
                                                 <div>
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                        User
-                                                    </span>
-                                                </div>
-                                                <div class="text-sm text-gray-500">
-                                                    5 minutes ago
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="py-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0">
-                                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                                        New vendor registered: Fresh Farms Inc.
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate">
-                                                        Contact: Michael Brown
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                        Vendor
-                                                    </span>
-                                                </div>
-                                                <div class="text-sm text-gray-500">
-                                                    1 hour ago
+                                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                                            <span class="sr-only">Previous</span>
+                                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                            1
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-primary text-sm font-medium text-white hover:bg-red-700">
+                                                            2
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                            3
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                                            <span class="sr-only">Next</span>
+                                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </a>
+                                                    </nav>
                                                 </div>
                                             </div>
-                                        </li>
-                                        <li class="py-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0">
-                                                    <img class="h-8 w-8 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                                        New service provider: Elite Cleaning Services
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate">
-                                                        Contact: Jennifer Wilson
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                        Service Provider
-                                                    </span>
-                                                </div>
-                                                <div class="text-sm text-gray-500">
-                                                    3 hours ago
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="py-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0">
-                                                    <div class="h-8 w-8 rounded-full bg-gray-100 flex items-center justify-center">
-                                                        <svg class="h-5 w-5 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                                        </svg>
-                                                    </div>
-                                                </div>
-                                                <div class="flex-1 min-w-0">
-                                                    <p class="text-sm font-medium text-gray-900 truncate">
-                                                        New order #12345 placed
-                                                    </p>
-                                                    <p class="text-sm text-gray-500 truncate">
-                                                        Total: $156.78
-                                                    </p>
-                                                </div>
-                                                <div>
-                                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                                                        Order
-                                                    </span>
-                                                </div>
-                                                <div class="text-sm text-gray-500">
-                                                    5 hours ago
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="mt-6">
-                                        <a href="#" class="w-full flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                                            View all activity
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Quick Actions -->
-                        <div class="mt-8">
-                            <h2 class="text-lg font-medium text-gray-900">Quick Actions</h2>
-                            <div class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-                                <div class="bg-white overflow-hidden shadow rounded-lg">
-                                    <div class="p-5 flex flex-col items-center text-center">
-                                        <div class="flex-shrink-0 bg-primary bg-opacity-10 rounded-full p-3">
-                                            <svg class="h-6 w-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                                            </svg>
+                            
+                            <!-- Orders Tab Content -->
+                            <div id="orders-tab" class="tab-content">
+                                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                                    <div class="px-4 py-5 border-b border-gray-200 sm:px-6 flex justify-between items-center">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">Orders</h3>
+                                        <div class="flex space-x-3">
+                                            <div class="relative">
+                                                <select class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                                    <option>All Orders</option>
+                                                    <option>Pending</option>
+                                                    <option>Completed</option>
+                                                    <option>Cancelled</option>
+                                                </select>
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                                Export
+                                            </button>
                                         </div>
-                                        <h3 class="mt-3 text-lg font-medium text-gray-900">Add Product</h3>
-                                        <p class="mt-1 text-sm text-gray-500">Add new products to your inventory</p>
-                                        <a href="#" class="mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700">
-                                            Add Product
-                                        </a>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Order ID
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Customer
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Date
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Total
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Status
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <!-- Order Row 1 -->
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">#ORD-12345</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">John Smith</div>
+                                                        <div class="text-sm text-gray-500">john.smith@example.com</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">May 1, 2023</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">$156.78</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Completed
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Order Row 2 -->
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">#ORD-12346</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Jane Doe</div>
+                                                        <div class="text-sm text-gray-500">jane.doe@example.com</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">May 2, 2023</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">$89.99</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
+                                                            Pending
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Order Row 3 -->
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">#ORD-12347</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Robert Johnson</div>
+                                                        <div class="text-sm text-gray-500">robert.johnson@example.com</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">May 3, 2023</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">$245.50</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            Cancelled
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex-1 flex justify-between sm:hidden">
+                                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                                    Previous
+                                                </a>
+                                                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                                    Next
+                                                </a>
+                                            </div>
+                                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                                <div>
+                                                    <p class="text-sm text-gray-700">
+                                                        Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">20</span> results
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                                            <span class="sr-only">Previous</span>
+                                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                            1
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-primary text-sm font-medium text-white hover:bg-red-700">
+                                                            2
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                            3
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                                            <span class="sr-only">Next</span>
+                                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </a>
+                                                    </nav>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="bg-white overflow-hidden shadow rounded-lg">
-                                    <div class="p-5 flex flex-col items-center text-center">
-                                        <div class="flex-shrink-0 bg-secondary bg-opacity-10 rounded-full p-3">
-                                            <svg class="h-6 w-6 text-secondary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                                            </svg>
+                            </div>
+                            
+                            <!-- Services Tab Content -->
+                            <div id="services-tab" class="tab-content">
+                                <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+                                    <div class="px-4 py-5 border-b border-gray-200 sm:px-6 flex justify-between items-center">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900">Services</h3>
+                                        <div class="flex space-x-3">
+                                            <div class="relative">
+                                                <select class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                                    <option>All Services</option>
+                                                    <option>Active</option>
+                                                    <option>Inactive</option>
+                                                </select>
+                                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                            <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                                Export
+                                            </button>
                                         </div>
-                                        <h3 class="mt-3 text-lg font-medium text-gray-900">Add Vendor</h3>
-                                        <p class="mt-1 text-sm text-gray-500">Register a new vendor to your platform</p>
-                                        <a href="#" class="mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-secondary hover:bg-blue-700">
-                                            Add Vendor
-                                        </a>
                                     </div>
-                                </div>
-
-                                <div class="bg-white overflow-hidden shadow rounded-lg">
-                                    <div class="p-5 flex flex-col items-center text-center">
-                                        <div class="flex-shrink-0 bg-yellow-100 rounded-full p-3">
-                                            <svg class="h-6 w-6 text-yellow-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                            </svg>
-                                        </div>
-                                        <h3 class="mt-3 text-lg font-medium text-gray-900">Generate Report</h3>
-                                        <p class="mt-1 text-sm text-gray-500">Create sales and inventory reports</p>
-                                        <a href="#" class="mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-yellow-600 hover:bg-yellow-700">
-                                            Generate Report
-                                        </a>
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200">
+                                            <thead class="bg-gray-50">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Service Name
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Provider
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Category
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Price
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Status
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-white divide-y divide-gray-200">
+                                                <!-- Service Row 1 -->
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">Home Cleaning</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Elite Cleaning Services</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Cleaning</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">$80/hr</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Active
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Service Row 2 -->
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">Lawn Mowing</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Green Thumb Landscaping</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Gardening</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">$50/visit</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                            Active
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                
+                                                <!-- Service Row 3 -->
+                                                <tr>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm font-medium text-gray-900">Plumbing Repair</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Quick Fix Plumbing</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">Home Repair</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <div class="text-sm text-gray-900">$95/hr</div>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap">
+                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            Inactive
+                                                        </span>
+                                                    </td>
+                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-
-                                <div class="bg-white overflow-hidden shadow rounded-lg">
-                                    <div class="p-5 flex flex-col items-center text-center">
-                                        <div class="flex-shrink-0 bg-green-100 rounded-full p-3">
-                                            <svg class="h-6 w-6 text-green-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                            </svg>
+                                    <div class="bg-white px-4 py-3 border-t border-gray-200 sm:px-6">
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex-1 flex justify-between sm:hidden">
+                                                <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                                    Previous
+                                                </a>
+                                                <a href="#" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                                                    Next
+                                                </a>
+                                            </div>
+                                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                                <div>
+                                                    <p class="text-sm text-gray-700">
+                                                        Showing <span class="font-medium">1</span> to <span class="font-medium">10</span> of <span class="font-medium">20</span> results
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                                            <span class="sr-only">Previous</span>
+                                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                            1
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-primary text-sm font-medium text-white hover:bg-red-700">
+                                                            2
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                                            3
+                                                        </a>
+                                                        <a href="#" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                                                            <span class="sr-only">Next</span>
+                                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                                            </svg>
+                                                        </a>
+                                                    </nav>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <h3 class="mt-3 text-lg font-medium text-gray-900">Settings</h3>
-                                        <p class="mt-1 text-sm text-gray-500">Configure system settings</p>
-                                        <a href="#" class="mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700">
-                                            Go to Settings
-                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -533,73 +833,135 @@
         </div>
     </div>
 
-    <!-- Chart.js Initialization -->
-    <script>
-        // Initialize Sales Chart
-        const salesCtx = document.getElementById('salesChart').getContext('2d');
-        const salesChart = new Chart(salesCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Products',
-                    data: [12500, 15000, 17500, 16000, 19000, 21500, 25000],
-                    backgroundColor: 'rgba(229, 62, 62, 0.1)',
-                    borderColor: 'rgba(229, 62, 62, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }, {
-                    label: 'Services',
-                    data: [5000, 7000, 6500, 8000, 9500, 10000, 12000],
-                    backgroundColor: 'rgba(43, 108, 176, 0.1)',
-                    borderColor: 'rgba(43, 108, 176, 1)',
-                    borderWidth: 2,
-                    tension: 0.4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: function(value) {
-                                return '$' + value.toLocaleString();
-                            }
-                        }
-                    }
-                }
-            }
-        });
+    <!-- Mobile Sidebar -->
+    <div class="fixed inset-0 z-40 hidden" id="mobile-sidebar">
+        <div class="fixed inset-0 bg-gray-600 bg-opacity-75"></div>
+        <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+            <div class="absolute top-0 right-0 -mr-12 pt-2">
+                <button class="ml-1 flex items-center justify-center h-10 w-10 rounded-full focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" id="close-sidebar">
+                    <span class="sr-only">Close sidebar</span>
+                    <svg class="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                <div class="flex-shrink-0 flex items-center px-4">
+                    <span class="text-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                    </span>
+                    <span class="ml-2 text-xl font-bold text-gray-800">Supermark</span>
+                </div>
+                <nav class="mt-5 px-2 space-y-1">
+                    <a href="#" class="group flex items-center px-2 py-2 text-base font-medium rounded-md bg-primary bg-opacity-10 text-primary">
+                        <svg class="mr-4 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        Dashboard
+                    </a>
+                    <a href="#" class="mobile-tab-link group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" data-tab="users-tab">
+                        <svg class="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        Users
+                    </a>
+                    <a href="#" class="mobile-tab-link group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" data-tab="orders-tab">
+                        <svg class="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                        Orders
+                    </a>
+                    <a href="#" class="mobile-tab-link group flex items-center px-2 py-2 text-base font-medium rounded-md text-gray-600 hover:bg-gray-50 hover:text-gray-900" data-tab="services-tab">
+                        <svg class="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Services
+                    </a>
+                </nav>
+            </div>
+            <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
+                <a href="#" class="flex-shrink-0 group block">
+                    <div class="flex items-center">
+                        <div>
+                            <svg class="inline-block h-10 w-10 rounded-full text-gray-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">
+                                Admin User
+                            </p>
+                            <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">
+                                Logout
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="flex-shrink-0 w-14"></div>
+    </div>
 
-        // Initialize User Chart
-        const userCtx = document.getElementById('userChart').getContext('2d');
-        const userChart = new Chart(userCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                datasets: [{
-                    label: 'New Users',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    backgroundColor: 'rgba(43, 108, 176, 0.8)',
-                }, {
-                    label: 'Active Users',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    backgroundColor: 'rgba(72, 187, 120, 0.8)',
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+    <!-- JavaScript for Tab Switching and User Status Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabLinks = document.querySelectorAll('.tab-link, .mobile-tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get the tab to show
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Hide all tabs
+                    tabContents.forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Show the selected tab
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Update active state on links
+                
+                    
+           
+                    
+                    // Close mobile sidebar if open
+                    document.getElementById('mobile-sidebar').classList.add('hidden');
+                });
+            });
+            
+            // User row highlighting
+            const userRows = document.querySelectorAll('.user-row');
+            userRows.forEach(row => {
+                row.addEventListener('click', function() {
+                    userRows.forEach(r => r.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // Status toggle buttons
+           
+            
+            // Mobile sidebar toggle
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const closeSidebar = document.getElementById('close-sidebar');
+            const mobileSidebar = document.getElementById('mobile-sidebar');
+            
+            sidebarToggle.addEventListener('click', function() {
+                mobileSidebar.classList.remove('hidden');
+            });
+            
+            closeSidebar.addEventListener('click', function() {
+                mobileSidebar.classList.add('hidden');
+            });
         });
     </script>
-  
 </body>
 </html>

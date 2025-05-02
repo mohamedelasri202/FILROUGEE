@@ -53,9 +53,6 @@ class UserController extends Controller
 
 
 
-
-
-
     public function showLoginForm()
     {
         return view('login');
@@ -71,7 +68,7 @@ class UserController extends Controller
 
         if ($user && Hash::check($validated['password'], $user->password)) {
             if ($user->status !== 'active') {
-                // Redirect to custom status page if user is not active
+
                 $status = DB::table('users')
                     ->where('id', $user->id)
                     ->value('status');
