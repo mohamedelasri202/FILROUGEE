@@ -128,19 +128,21 @@ class UserController extends Controller
 
     public function updateStatus(Request $request)
     {
+        dd($request);
+
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'status' => 'required|string',
         ]);
 
-        $user = User::find($request->user_id); // Make sure this returns a user
+        $user = User::find($request->user_id);
 
         if (!$user) {
             return redirect()->back()->with('error', 'User not found.');
         }
 
-        $user->status = $request->status;
-        $user->save();
+
+        User::where('id', $request->user_id)->update(['status' => $request->status]);
 
         return redirect()->back()->with('success', 'User status updated successfully.');
     }

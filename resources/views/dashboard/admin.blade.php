@@ -361,15 +361,22 @@
                                                         <form action="{{ route('users.updateStatus') }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input type="hidden" value="suspend" name="status">
+                                                            <input type="hidden" value="suspended" name="status">
                                                             <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                                        <button  type="submit" class="status-toggle-btn mr-2 px-3 py-1 bg-primary text-white rounded hover:bg-red-700 transition-colors duration-150">
-                                                            Suspend
+                                                            <button type="submit" class="status-toggle-btn mr-2 px-4 py-1.5 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all duration-200 shadow-sm">
+                                                                Suspend
+                                                            </button>                                                         
                                                         </button>
                                                     </form>
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            Edit
+                                                    <form action="{{ route('users.updateStatus') }}"  method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                        <input type="hidden" name="status" value="active">
+                                                        <button type="submit" class="status-toggle-btn px-4 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all duration-200 shadow-sm">
+                                                            Activate
                                                         </button>
+                                                        </form>
                                                     </td>
                                                 </tr>
                                                 @endforeach
