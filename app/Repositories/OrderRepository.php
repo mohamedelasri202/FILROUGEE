@@ -177,4 +177,10 @@ class OrderRepository implements OrderRepositoryInterface
             'confirmed' => $confirmed,
         ];
     }
+
+    public function getrevenue()
+    {
+        $revenue = Order::sum('total');
+        return $revenue;
+    }
 }
