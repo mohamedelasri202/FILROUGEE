@@ -1,12 +1,4 @@
 
-
-
-
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -335,101 +327,54 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
-                                                <!-- User Row 1 -->
+                                                @if ($users->isEmpty())
+                                                <tr>
+                                                    <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
+                                                        No users found.
+                                                    </td>
+                                                </tr>
+                                                @else
+            
+                                                @foreach ($users as $user)
                                                 <tr class="user-row">
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
                                                             <div>
                                                                 <div class="text-sm font-medium text-gray-900">
-                                                                    John Smith
+                                                                    {{ $user->name }}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">john.smith@example.com</div>
+                                                        <div class="text-sm text-gray-900">{{ $user->email }}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">User</div>
+                                                        <div class="text-sm text-gray-900">{{ $user->role}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            Active
+                                                            {{ $user->status }}
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="status-toggle-btn mr-2 px-3 py-1 bg-primary text-white rounded hover:bg-red-700 transition-colors duration-150">
+                                                        <form action="{{ route('users.updateStatus') }}" method="POST">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" value="suspend" name="status">
+                                                            <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                                        <button  type="submit" class="status-toggle-btn mr-2 px-3 py-1 bg-primary text-white rounded hover:bg-red-700 transition-colors duration-150">
                                                             Suspend
                                                         </button>
+                                                    </form>
                                                         <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
                                                             Edit
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                
-                                                <!-- User Row 2 -->
-                                                <tr class="user-row">
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <div>
-                                                                <div class="text-sm font-medium text-gray-900">
-                                                                    Jane Doe
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">jane.doe@example.com</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Admin</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            Active
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="status-toggle-btn mr-2 px-3 py-1 bg-primary text-white rounded hover:bg-red-700 transition-colors duration-150">
-                                                            Suspend
-                                                        </button>
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            Edit
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                
-                                                <!-- User Row 3 -->
-                                                <tr class="user-row">
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="flex items-center">
-                                                            <div>
-                                                                <div class="text-sm font-medium text-gray-900">
-                                                                    Robert Johnson
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">robert.johnson@example.com</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">User</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                            Suspended
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="status-toggle-btn mr-2 px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-150">
-                                                            Activate
-                                                        </button>
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            Edit
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
+                                                @endif
+                                            
                                             </tbody>
                                         </table>
                                     </div>

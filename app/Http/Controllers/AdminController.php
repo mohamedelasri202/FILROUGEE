@@ -20,13 +20,8 @@ class AdminController extends Controller
         $serviceProviders = DB::table('users')->where('role', 'service_provider')->count();
         $numberofusers = DB::table('users')->where('role', 'user')->count();
         $revenue = $this->orderRepository->getrevenue();
-        return view('dashboard.admin', compact('numberofusers', 'vendors', 'serviceProviders', 'revenue'));
-    }
-    public function showUsers()
-    {
+        $users = DB::table('users')->where('role', '!=', 'admin')->get();
 
-        $users = DB::table('users')->where('role',  'service_provider')->get();
-
-        return view('dashboard.dashboard_users', compact('users'));
+        return view('dashboard.admin', compact('numberofusers', 'vendors', 'serviceProviders', 'revenue', 'users'));
     }
 }

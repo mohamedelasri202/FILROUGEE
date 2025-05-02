@@ -24,6 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-100">
+   
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar - New Style -->
         <div class="hidden md:flex md:flex-shrink-0">
