@@ -152,4 +152,10 @@ class UserController extends Controller
         $services = $this->serviceRepository->showALLservices();
         return view('services', compact('services', 'service_count'));
     }
+
+    // showing the my orders page 
+    public function myorders()
+    {
+        return view('orders');
+    }
 }
