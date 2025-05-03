@@ -25,10 +25,9 @@ class AdminController extends Controller
     {
 
 
-        // Pass the request to filterusers method
-        $filterusers = $this->userRepository->filterusers($request); // Now we get the filtered users/orders
 
-        // Fetch other necessary data
+        $filterusers = $this->userRepository->filterusers($request);
+
         $vendors = DB::table('users')->where('role', 'vendor')->count();
         $serviceProviders = DB::table('users')->where('role', 'service_provider')->count();
         $numberofusers = DB::table('users')->where('role', 'user')->count();
@@ -36,7 +35,7 @@ class AdminController extends Controller
         $services = $this->serviceRepository->showallbooking();
         $orders = $this->orderRepository->showallorders($request);
 
-        // Return the data to the view
+
         return view('dashboard.admin', compact('numberofusers', 'vendors', 'serviceProviders', 'revenue', 'services', 'orders', 'filterusers'));
     }
 }
