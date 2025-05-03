@@ -13,4 +13,5 @@ interface ServiceRepositoryInterface
     public function  service_detaills($id);
     public function upcomingbooking();
     public function updatestatus($data, $id);
+    public function showallbooking();
 }

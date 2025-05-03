@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Models\Order;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -50,5 +51,21 @@ class UserRepository implements UserRepositoryInterface
 
 
         return $user;
+    }
+    public function filterusers($request)
+    {
+        $query = User::query();
+
+
+        $query->where('role', '!=', 'admin');
+
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $users = $query->get();
+
+        return $users;
     }
 }

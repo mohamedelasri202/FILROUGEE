@@ -112,7 +112,7 @@
                     
                     <!-- Logout Button -->
                     <div class="px-4 mt-6 mb-8">
-                        <a href="#" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-red-700 transition-colors duration-150">
+                        <a href="{{route('logoutt') }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-red-700 transition-colors duration-150">
                             <svg class="mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
@@ -289,11 +289,24 @@
                                         <h3 class="text-lg leading-6 font-medium text-gray-900">Users</h3>
                                         <div class="flex space-x-3">
                                             <div class="relative">
-                                                <select class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
-                                                    <option>All Users</option>
-                                                    <option>Active</option>
-                                                    <option>Suspended</option>
-                                                </select>
+                                                <form method="GET" action="{{ route('dashboard.admin') }}">
+                                                    <div class="relative">
+                                                        <select name="status" onchange="this.form.submit()"
+                                                            class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                                            <option value="">All Users</option>
+                                                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                            <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                                                            <option value="suspended" {{ request('status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
+                                                        </select>
+                                                
+                                                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                
                                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                                                         <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
@@ -326,16 +339,17 @@
                                                     </th>
                                                 </tr>
                                             </thead>
+  
                                             <tbody class="bg-white divide-y divide-gray-200">
-                                                @if ($users->isEmpty())
+                                                @if ($filterusers->isEmpty())
                                                 <tr>
                                                     <td colspan="5" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
                                                         No users found.
                                                     </td>
                                                 </tr>
-                                                @else
-            
-                                                @foreach ($users as $user)
+                                              
+                                            @else
+                                                @foreach ( $filterusers as $user)
                                                 <tr class="user-row">
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <div class="flex items-center">
@@ -353,11 +367,20 @@
                                                         <div class="text-sm text-gray-900">{{ $user->role}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                                                        @if ( $user->status == 'active') <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                                             {{ $user->status }}
                                                         </span>
+                                                        @elseif ( $user->status == 'suspended')
+                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                                                            {{ $user->status }}
+                                                        </span>
+                                                        @else
+                                                        <span class="status-badge px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                                                            {{ $user->status }}
+                                                        </span>
+                                                        @endif
                                                     </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <td class="px-6 py-4 flex text-sm text-gray-500">
                                                         <form action="{{ route('users.updateStatus') }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
@@ -374,7 +397,7 @@
                                                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                                                         <input type="hidden" name="status" value="active">
                                                         <button type="submit" class="status-toggle-btn px-4 py-1.5 bg-green-600 text-white rounded-md hover:bg-green-700 transition-all duration-200 shadow-sm">
-                                                            Activate
+                                                            Activated
                                                         </button>
                                                         </form>
                                                     </td>
@@ -481,24 +504,26 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
-                                                <!-- Order Row 1 -->
+                                         @foreach ($orders as $order)
+                                             
+                                      
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">#ORD-12345</div>
+                                                        <div class="text-sm font-medium text-gray-900">#ORD-{{$order->id}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">John Smith</div>
-                                                        <div class="text-sm text-gray-500">john.smith@example.com</div>
+                                                        <div class="text-sm text-gray-900">{{$order->name}} {{$order->last_name}}</div>
+                                                        <div class="text-sm text-gray-500">{{$order->email}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">May 1, 2023</div>
+                                                        <div class="text-sm text-gray-900">{{$order->created_at}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">$156.78</div>
+                                                        <div class="text-sm text-gray-900">${{$order->total}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            Completed
+                                                            {{ $order->status }}
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -508,59 +533,7 @@
                                                     </td>
                                                 </tr>
                                                 
-                                                <!-- Order Row 2 -->
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">#ORD-12346</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Jane Doe</div>
-                                                        <div class="text-sm text-gray-500">jane.doe@example.com</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">May 2, 2023</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">$89.99</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">
-                                                            Pending
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                
-                                                <!-- Order Row 3 -->
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">#ORD-12347</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Robert Johnson</div>
-                                                        <div class="text-sm text-gray-500">robert.johnson@example.com</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">May 3, 2023</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">$245.50</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                            Cancelled
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                @endforeach 
                                             </tbody>
                                         </table>
                                     </div>
@@ -660,22 +633,25 @@
                                             </thead>
                                             <tbody class="bg-white divide-y divide-gray-200">
                                                 <!-- Service Row 1 -->
+                                                @foreach ($services as $service )
+                                                    
+                                                
                                                 <tr>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">Home Cleaning</div>
+                                                        <div class="text-sm font-medium text-gray-900">{{$service->title}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Elite Cleaning Services</div>
+                                                        <div class="text-sm text-gray-900">{{$service->name}} {{$service->lastname}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Cleaning</div>
+                                                        <div class="text-sm text-gray-900">{{$service->category}}</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">$80/hr</div>
+                                                        <div class="text-sm text-gray-900">${{$service->price}}/hr</div>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap">
                                                         <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            Active
+                                                       active
                                                         </span>
                                                     </td>
                                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -684,58 +660,8 @@
                                                         </button>
                                                     </td>
                                                 </tr>
-                                                
-                                                <!-- Service Row 2 -->
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">Lawn Mowing</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Green Thumb Landscaping</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Gardening</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">$50/visit</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            Active
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                
-                                                <!-- Service Row 3 -->
-                                                <tr>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm font-medium text-gray-900">Plumbing Repair</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Quick Fix Plumbing</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">Home Repair</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <div class="text-sm text-gray-900">$95/hr</div>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap">
-                                                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                                            Inactive
-                                                        </span>
-                                                    </td>
-                                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                        <button class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors duration-150">
-                                                            View
-                                                        </button>
-                                                    </td>
-                                                </tr>
+                                                @endforeach
+                                            
                                             </tbody>
                                         </table>
                                     </div>

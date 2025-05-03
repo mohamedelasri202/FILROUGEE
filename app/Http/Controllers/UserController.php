@@ -128,7 +128,7 @@ class UserController extends Controller
 
     public function updateStatus(Request $request)
     {
-        dd($request);
+
 
         $request->validate([
             'user_id' => 'required|exists:users,id',

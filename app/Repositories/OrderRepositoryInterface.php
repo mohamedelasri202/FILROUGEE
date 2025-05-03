@@ -13,4 +13,5 @@ interface OrderRepositoryInterface
     public function countbookings();
     public function statistics();
     public function getrevenue();
+    public function showallorders($request);
 }

@@ -118,3 +118,4 @@ Route::get('product/{id}', [ProductController::class, 'index'])->name('product')
 
 // the updating route for the booking from the  service _provider 
 Route::put('upadating/service/status/{id}', [ServiceProviderController::class, 'update'])->name('orders.update')->middleware('auth', 'role:service_provider');
+// filter function 

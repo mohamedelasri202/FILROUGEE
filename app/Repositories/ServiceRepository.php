@@ -83,4 +83,10 @@ class ServiceRepository implements ServiceRepositoryInterface
         ]);
         return $order;
     }
+    public function showallbooking()
+    {
+        $allbooking = Service::join('users', 'services.vendor_id', '=', 'users.id')->select('services.*', 'users.name', 'users.lastname')->get();
+
+        return $allbooking;
+    }
 }

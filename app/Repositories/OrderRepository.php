@@ -183,4 +183,14 @@ class OrderRepository implements OrderRepositoryInterface
         $revenue = Order::sum('total');
         return $revenue;
     }
+    public function showallorders($request)
+    {
+        $query = Order::query();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        $orders = $query->get();
+        return $orders;
+    }
 }

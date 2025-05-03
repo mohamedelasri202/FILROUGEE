@@ -14,24 +14,23 @@ class ShoopingcartRepository implements ShoopingcartRepositoryInterface
     {
         $productId = $data['product_id'];
 
-        // Find if there's a pending cart for this product and user
         $existing = Shoopingcart::where('product_id', $productId)
             ->where('user_id', Auth::id())
             ->where('status', 'pending')
-            ->first(); // only get the pending one if exists
+            ->first();
 
         if ($existing) {
-            // If a pending cart exists for this product, update quantity
+
             $existing->quantity += 1;
             $existing->save();
         } else {
-            // If not (either no entry or only confirmed entries), create new pending
+
             Shoopingcart::create([
                 'product_id' => $productId,
                 'quantity' => $data['quantity'],
                 'type' => $data['type'],
                 'user_id' => Auth::id(),
-                'status' => 'pending' // make sure you set status pending if creating
+                'status' => 'pending'
             ]);
         }
     }
