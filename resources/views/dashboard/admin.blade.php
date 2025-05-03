@@ -113,6 +113,7 @@
                     <!-- Logout Button -->
                     <div class="px-4 mt-6 mb-8">
                         <form action="{{route('logoutt') }}" method="POST">
+                            @csrf
                         <button type="submit"
                          class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-red-700 transition-colors duration-150">
                             <svg class="mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -316,9 +317,7 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                                                Export
-                                            </button>
+                                     
                                         </div>
                                     </div>
                                     <div class="overflow-x-auto">
@@ -480,10 +479,7 @@
                                                 </div>
                                             </div>
                                         
-                                            <button type="submit"
-                                                class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                                                Export
-                                            </button>
+                                
                                         </form>
                                         
                                     </div>
@@ -610,9 +606,7 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
-                                                Export
-                                            </button>
+                                       
                                         </div>
                                     </div>
                                     <div class="overflow-x-auto">
