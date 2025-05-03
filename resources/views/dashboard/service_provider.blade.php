@@ -531,6 +531,14 @@
                                 <input type="hidden" name="status" value="cancelled">
                                 <button type="submit" class="text-gray-500 hover:text-red-600">Cancel</button>
                             </form>
+                            
+                            <form action="{{ route('orders.update', $bookings->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="status" value="completed">
+                                <button type="submit" class="text-gray-500 hover:text-red-600">completed</button>
+                            </form>
+
                         </div>
                     </td>
                 </tr>

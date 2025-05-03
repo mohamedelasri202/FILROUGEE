@@ -112,12 +112,15 @@
                     
                     <!-- Logout Button -->
                     <div class="px-4 mt-6 mb-8">
-                        <a href="{{route('logoutt') }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-red-700 transition-colors duration-150">
+                        <form action="{{route('logoutt') }}" method="POST">
+                        <button type="submit"
+                         class="flex items-center px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-red-700 transition-colors duration-150">
                             <svg class="mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
                             Logout
-                        </a>
+                    </button>
+                </form>
                     </div>
                 </div>
             </div>
@@ -460,24 +463,29 @@
                                 <div class="bg-white shadow overflow-hidden sm:rounded-lg">
                                     <div class="px-4 py-5 border-b border-gray-200 sm:px-6 flex justify-between items-center">
                                         <h3 class="text-lg leading-6 font-medium text-gray-900">Orders</h3>
-                                        <div class="flex space-x-3">
+                                        <form method="GET" action="{{ route('dashboard.admin') }}" class="flex space-x-3">
                                             <div class="relative">
-                                                <select class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
-                                                    <option>All Orders</option>
-                                                    <option>Pending</option>
-                                                    <option>Completed</option>
-                                                    <option>Cancelled</option>
+                                                <select name="status" onchange="this.form.submit()"
+                                                    class="block appearance-none bg-white border border-gray-300 hover:border-gray-400 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary">
+                                                    <option value="">All Orders</option>
+                                                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                                    <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                                                    <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
                                                 </select>
+                                        
                                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                                                        <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <button class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                                        
+                                            <button type="submit"
+                                                class="px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
                                                 Export
                                             </button>
-                                        </div>
+                                        </form>
+                                        
                                     </div>
                                     <div class="overflow-x-auto">
                                         <table class="min-w-full divide-y divide-gray-200">
