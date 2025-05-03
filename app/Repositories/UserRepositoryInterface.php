@@ -9,4 +9,5 @@ interface UserRepositoryInterface
     public function updatesatatus($id, $status);
     public function editeprofile($request, $id);
     public function filterusers($request);
+    public function myorders();
 }

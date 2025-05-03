@@ -135,147 +135,58 @@
                 <div id="orders-tab" class="tab-content">
                     <div class="space-y-6">
                         <!-- Order 1 -->
-                        <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                @foreach ($myorders as $orderId => $items)
+    <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+            <div>
+                <p class="text-sm font-medium text-gray-900">Order #ORD-{{ $orderId }}</p>
+                <p class="text-xs text-gray-500">
+                    Placed on {{ date('F j, Y', strtotime($items->first()->created_at)) }}
+                </p>
+                
+            </div>
+            <div class="flex items-center">
+                <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-800">
+                    Delivered
+                </span>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div class="flex-1">
+                    <div class="flex flex-wrap gap-4">
+                        @foreach ($items as $item)
+                            <div class="flex items-center space-x-4">
+                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
+                                    <img src="{{ asset($item->image) }}" alt="{{ $item->title }}" class="h-full w-full object-cover">
+                                </div>
                                 <div>
-                                    <p class="text-sm font-medium text-gray-900">Order #ORD-12345</p>
-                                    <p class="text-xs text-gray-500">Placed on May 1, 2023</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                                        Delivered
-                                    </span>
+                                    <p class="text-sm font-medium text-gray-900">{{ $item->title }}</p>
+                                    <p class="text-xs text-gray-500">Qty: {{ $item->quantity }} × ${{ number_format($item->price, 2) }}</p>
                                 </div>
                             </div>
-                            <div class="p-6">
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex flex-wrap gap-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                    <img src="https://via.placeholder.com/150" alt="Organic Apples" class="h-full w-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900">Organic Apples</p>
-                                                    <p class="text-xs text-gray-500">Qty: 2 × $3.99</p>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                    <img src="https://via.placeholder.com/150" alt="Fresh Milk" class="h-full w-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900">Fresh Milk</p>
-                                                    <p class="text-xs text-gray-500">Qty: 1 × $2.49</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 md:mt-0 md:ml-6">
-                                        <p class="text-sm font-medium text-gray-900">Total: $10.47</p>
-                                        <div class="mt-2 flex space-x-2">
-                                            <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="mt-4 md:mt-0 md:ml-6">
+                    <p class="text-sm font-medium text-gray-900">Total: ${{ number_format($items->first()->order_total, 2) }}</p>
+                    <div class="mt-2 flex space-x-2">
+                        <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+
 
                         <!-- Order 2 -->
-                        <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">Order #ORD-12346</p>
-                                    <p class="text-xs text-gray-500">Placed on May 5, 2023</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                        Processing
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex flex-wrap gap-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                    <img src="https://via.placeholder.com/150" alt="Whole Grain Bread" class="h-full w-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900">Whole Grain Bread</p>
-                                                    <p class="text-xs text-gray-500">Qty: 1 × $4.99</p>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                    <img src="https://via.placeholder.com/150" alt="Organic Eggs" class="h-full w-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900">Organic Eggs</p>
-                                                    <p class="text-xs text-gray-500">Qty: 1 × $5.49</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 md:mt-0 md:ml-6">
-                                        <p class="text-sm font-medium text-gray-900">Total: $10.48</p>
-                                        <div class="mt-2 flex space-x-2">
-                                            <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                                            <button class="text-xs text-red-600 hover:text-red-800 font-medium">Cancel Order</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                       
 
                         <!-- Order 3 -->
-                        <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">Order #ORD-12347</p>
-                                    <p class="text-xs text-gray-500">Placed on May 10, 2023</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="px-3 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                                        Shipped
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex flex-wrap gap-4">
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                    <img src="https://via.placeholder.com/150" alt="Coffee Beans" class="h-full w-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900">Premium Coffee Beans</p>
-                                                    <p class="text-xs text-gray-500">Qty: 1 × $12.99</p>
-                                                </div>
-                                            </div>
-                                            <div class="flex items-center space-x-4">
-                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                    <img src="https://via.placeholder.com/150" alt="Chocolate Bar" class="h-full w-full object-cover">
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm font-medium text-gray-900">Dark Chocolate Bar</p>
-                                                    <p class="text-xs text-gray-500">Qty: 2 × $3.99</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 md:mt-0 md:ml-6">
-                                        <p class="text-sm font-medium text-gray-900">Total: $20.97</p>
-                                        <div class="mt-2 flex space-x-2">
-                                            <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                                            <button class="text-xs text-red-600 hover:text-red-800 font-medium">Cancel Order</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    
                     </div>
                 </div>
 

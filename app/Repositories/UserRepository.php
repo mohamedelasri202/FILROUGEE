@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Models\Order;
+use Illuminate\Support\Facades\DB;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -67,5 +68,32 @@ class UserRepository implements UserRepositoryInterface
         $users = $query->get();
 
         return $users;
+    }
+    public function myorders()
+    {
+
+        $userId = auth()->id();
+
+        $orderProducts = DB::table('orders')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->join('shoopingcart', 'order_items.item_id', '=', 'shoopingcart.id')
+            ->join('products', 'shoopingcart.product_id', '=', 'products.id')
+            ->where('orders.user_id', $userId)
+            ->where('shoopingcart.status', 'confirmed')
+            ->where('order_items.type', 'product') // ✅ New condition here
+            ->select(
+                'orders.id as order_id',
+                'orders.created_at',
+                'orders.total as order_total',
+                'products.title',
+                'products.image',
+                'products.price',
+                'shoopingcart.quantity'
+            )
+            ->orderBy('orders.id', 'desc')
+            ->get()
+            ->groupBy('order_id');
+
+        return $orderProducts;
     }
 }

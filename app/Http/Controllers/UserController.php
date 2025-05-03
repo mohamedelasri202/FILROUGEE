@@ -156,6 +156,7 @@ class UserController extends Controller
     // showing the my orders page 
     public function myorders()
     {
-        return view('orders');
+        $myorders = $this->userRepository->myorders();
+        return view('orders', compact('myorders'));
     }
 }
