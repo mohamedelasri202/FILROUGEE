@@ -245,6 +245,7 @@
         <div class="bg-white rounded-lg shadow-sm overflow-hidden">
             <!-- Service Header -->
             <div class="relative">
+                
                 <img src="/{{ $service->image }}" alt="Home Cleaning" class="w-full h-64 md:h-96 object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">
                     <div class="p-6 md:p-8 w-full">
@@ -524,13 +525,16 @@
                                 <span class="text-gray-600 text-sm">4.8 out of 5</span>
                             </div>
                             <div class="space-y-4">
+                                @foreach ( $reviews as $review)
+                                    
+                         
                                 <div class="review-card p-4 bg-gray-50 rounded-lg">
                                     <div class="flex items-center mb-2">
                                         <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
                                             <span class="text-xs font-medium text-gray-600">JD</span>
                                         </div>
                                         <div>
-                                            <h4 class="text-sm font-medium text-gray-900">Jane Doe</h4>
+                                            <h4 class="text-sm font-medium text-gray-900">{{$review->name}} {{$review->lastname}}</h4>
                                             <div class="flex text-yellow-400 text-xs">
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
@@ -540,26 +544,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="text-sm text-gray-600">The cleaning service was exceptional! The team was thorough, professional, and left my home spotless.</p>
+                                    <p class="text-sm text-gray-600">{{$review->content}}</p>
                                 </div>
-                                <div class="review-card p-4 bg-gray-50 rounded-lg">
-                                    <div class="flex items-center mb-2">
-                                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-2">
-                                            <span class="text-xs font-medium text-gray-600">MS</span>
-                                        </div>
-                                        <div>
-                                            <h4 class="text-sm font-medium text-gray-900">Michael Smith</h4>
-                                            <div class="flex text-yellow-400 text-xs">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-gray-600">I've been using this service monthly for a year now. Always consistent and high quality. Highly recommend!</p>
-                                </div>
+                                @endforeach
                             </div>
                             <a href="#" class="block text-center text-primary hover:underline text-sm mt-4">View all 89 reviews</a>
                         </div>

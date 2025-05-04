@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\OrderRepository;
-use App\Repositories\OrderRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Repositories\OrderRepository;
 
 use App\Repositories\ServiceRepository;
+use App\Repositories\OrderRepositoryInterface;
 use App\Repositories\ServiceRepositoryInterface;
 
 class ServiceController extends Controller
@@ -78,7 +79,12 @@ class ServiceController extends Controller
     public function book_service($id)
     {
         $service = $this->ServiceRepository->service_detaills($id);
+        $reviews = DB::table('reviews')
+            ->join('users', 'reviews.user_id', 'users.id')
+            ->select('reviews.*', 'users.name', 'users.lastname')
+            ->where('service_id', $id)
+            ->get();
 
-        return view('cart.booking_service', compact('service'));
+        return view('cart.booking_service', compact('service', 'reviews'));
     }
 }

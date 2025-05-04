@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ReviewRepositoryInterface;
+use App\Repositories\UserRepository;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
     protected $ReviewRepository;
 
+
     public function __construct(ReviewRepositoryInterface $reviewRepository)
     {
+
         $this->ReviewRepository = $reviewRepository;
     }
     public function add_review(Request $request)
