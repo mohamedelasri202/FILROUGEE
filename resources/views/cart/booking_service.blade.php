@@ -473,12 +473,12 @@
                             <h3 class="text-xl font-medium text-gray-900 mb-4">Service Summary</h3>
                             <div class="flex justify-between mb-2">
                                 <span class="text-gray-600">Standard Cleaning</span>
-                                <span class="font-medium">$149.00</span>
+                                <span class="font-medium">${{$service->price}}</span>
                             </div>
                             <div class="border-t border-gray-200 my-4"></div>
                             <div class="flex justify-between mb-4">
                                 <span class="font-medium text-gray-900">Total</span>
-                                <span class="font-medium text-gray-900">$149.00</span>
+                                <span class="font-medium text-gray-900">${{$service->price}}</span>
                             </div>
                             <button id="book-now-sidebar" class="w-full px-6 py-3 bg-primary text-white rounded-md hover:bg-gray-700 transition-colors duration-300 flex items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -568,92 +568,8 @@
             </div>
         </div>
         
-        <!-- Related Services -->
-        <div class="mt-12">
-            <h2 class="text-2xl font-light text-gray-900 mb-6">Related Services</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Service 1 -->
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div class="relative">
-                        <img src="/placeholder.svg?height=200&width=400" alt="Window Cleaning" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 right-2">
-                            <span class="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">Popular</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-light text-lg mb-1">Window Cleaning</h3>
-                        <p class="text-gray-500 text-sm mb-3">Crystal clear windows inside and out</p>
-                        <div class="flex items-center mb-3">
-                            <div class="text-yellow-400 flex">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                            </div>
-                            <span class="ml-2 text-xs text-gray-500">5.0 (42 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <p class="text-primary font-medium">$99.00</p>
-                            <a href="window-cleaning.html" class="text-primary hover:text-gray-700 text-sm font-medium">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Service 2 -->
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div class="relative">
-                        <img src="/placeholder.svg?height=200&width=400" alt="Carpet Cleaning" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-light text-lg mb-1">Carpet Cleaning</h3>
-                        <p class="text-gray-500 text-sm mb-3">Professional deep carpet cleaning</p>
-                        <div class="flex items-center mb-3">
-                            <div class="text-yellow-400 flex">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="far fa-star text-xs"></i>
-                            </div>
-                            <span class="ml-2 text-xs text-gray-500">4.0 (18 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <p class="text-primary font-medium">$129.00</p>
-                            <a href="carpet-cleaning.html" class="text-primary hover:text-gray-700 text-sm font-medium">View Details</a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Service 3 -->
-                <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-                    <div class="relative">
-                        <img src="/placeholder.svg?height=200&width=400" alt="Deep Cleaning" class="w-full h-48 object-cover">
-                        <div class="absolute top-2 right-2">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">New</span>
-                        </div>
-                    </div>
-                    <div class="p-4">
-                        <h3 class="font-light text-lg mb-1">Deep Cleaning</h3>
-                        <p class="text-gray-500 text-sm mb-3">Thorough cleaning for every corner</p>
-                        <div class="flex items-center mb-3">
-                            <div class="text-yellow-400 flex">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star-half-alt text-xs"></i>
-                            </div>
-                            <span class="ml-2 text-xs text-gray-500">4.5 (32 reviews)</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <p class="text-primary font-medium">$199.00</p>
-                            <a href="deep-cleaning.html" class="text-primary hover:text-gray-700 text-sm font-medium">View Details</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+     
+   
     </div>
 </main>
 

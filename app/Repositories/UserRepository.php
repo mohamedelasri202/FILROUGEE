@@ -80,7 +80,7 @@ class UserRepository implements UserRepositoryInterface
             ->join('products', 'shoopingcart.product_id', '=', 'products.id')
             ->where('orders.user_id', $userId)
             ->where('shoopingcart.status', 'confirmed')
-            ->where('order_items.type', 'product') // ✅ New condition here
+            ->where('order_items.type', 'product')
             ->select(
                 'orders.id as order_id',
                 'orders.created_at',
@@ -88,12 +88,42 @@ class UserRepository implements UserRepositoryInterface
                 'products.title',
                 'products.image',
                 'products.price',
-                'shoopingcart.quantity'
+                'shoopingcart.quantity',
+                'products.id'
             )
             ->orderBy('orders.id', 'desc')
             ->get()
             ->groupBy('order_id');
 
         return $orderProducts;
+    }
+    public function myServiceOrders()
+    {
+        $userId = auth()->id();
+
+        $serviceOrders = DB::table('orders')
+            ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+            ->join('servicecart', 'order_items.item_id', '=', 'servicecart.id')
+            ->join('services', 'servicecart.service_id', '=', 'services.id')
+            ->join('users', 'servicecart.user_id', '=', 'users.id')
+            ->where('orders.user_id', $userId)
+            ->where('servicecart.status', 'confirmed')
+            ->where('order_items.type', 'service')
+            ->select(
+                'orders.id as order_id',
+                'orders.total as order_total',
+                'services.title',
+                'services.image',
+                'services.price',
+                'orders.created_at',
+                'users.name as provider_name',
+                'orders.status',
+                'services.id'
+            )
+            ->orderBy('orders.id', 'desc')
+            ->get()
+            ->groupBy('order_id');
+        // dd($serviceOrders);
+        return $serviceOrders;
     }
 }

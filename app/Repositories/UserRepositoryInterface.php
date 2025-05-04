@@ -10,4 +10,5 @@ interface UserRepositoryInterface
     public function editeprofile($request, $id);
     public function filterusers($request);
     public function myorders();
+    public function myServiceOrders();
 }

@@ -38,6 +38,53 @@
             border-bottom: 2px solid #6a7280;
             color: #6a7280;
         }
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 50;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            border-radius: 0.375rem;
+            max-width: 600px;
+            animation: modalFadeIn 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        /* Star rating styles */
+        .star-rating {
+            display: inline-flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            color: #ddd;
+            font-size: 1.5rem;
+            padding: 0 0.1rem;
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label {
+            color: #ffb700;
+        }
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #ffb700;
+        }
     </style>
 </head>
 <body class="bg-white text-gray-800">
@@ -50,7 +97,7 @@
                     d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                     clip-rule="evenodd" />
             </svg>
-            <span>Order status updated successfully!</span>
+            <span>Review submitted successfully!</span>
         </div>
     </div>
 
@@ -172,21 +219,12 @@
 
                 <div class="mt-4 md:mt-0 md:ml-6">
                     <p class="text-sm font-medium text-gray-900">Total: ${{ number_format($items->first()->order_total, 2) }}</p>
-                    <div class="mt-2 flex space-x-2">
-                        <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                    </div>
+               
                 </div>
             </div>
         </div>
     </div>
 @endforeach
-
-
-                        <!-- Order 2 -->
-                       
-
-                        <!-- Order 3 -->
-                    
                     </div>
                 </div>
 
@@ -194,143 +232,153 @@
                 <div id="services-tab" class="tab-content hidden">
                     <div class="space-y-6">
                         <!-- Service 1 -->
-                        <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">Booking #SRV-5678</p>
-                                    <p class="text-xs text-gray-500">Booked on April 28, 2023</p>
+                        @foreach ($myservices as $orderId => $services)
+                        @foreach ($services as $service)
+                            <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden mb-4">
+                                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">Booking #SRV-{{ $orderId }}</p>
+                                        <p class="text-xs text-gray-500">
+                                            Booked on {{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}
+                                        </p>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <span class="px-3 py-1 text-xs rounded-full
+                                            {{ $service->status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800' }}">
+                                            {{ ucfirst($service->status) }}
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="flex items-center">
-                                    <span class="px-3 py-1 text-xs rounded-full bg-green-100 text-green-800">
-                                        Completed
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                <img src="https://via.placeholder.com/150" alt="Home Cleaning" class="h-full w-full object-cover">
+                
+                                <div class="p-6">
+                                    <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                                        <div class="flex-1">
+                                            <div class="flex items-center space-x-4">
+                                                <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
+                                                    <img src="{{ asset( $service->image) }}" alt="{{ $service->title }}" class="h-full w-full object-cover">
+                                                </div>
+                                                <div>
+                                                    <p class="text-sm font-medium text-gray-900">{{ $service->title }}</p>
+                                                    <p class="text-xs text-gray-500">Provider: {{ $service->provider_name }}</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-gray-900">Home Cleaning Service</p>
-                                                <p class="text-xs text-gray-500">Provider: Elite Cleaning Services</p>
-                                                <p class="text-xs text-gray-500 mt-1">
-                                                    <span class="inline-flex items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                        May 2, 2023 at 10:00 AM
-                                                    </span>
+                                        </div>
+                                        <div class="mt-4 md:mt-0 md:ml-6 text-right">
+                                            <p class="text-sm font-medium text-gray-900">Price: ${{ number_format($service->price, 2) }}</p>
+                                            <div class="mt-2 flex space-x-2">
+                                                <a href="{{ route('booking',$service->id) }}" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
+                                                
+                                                <!-- Add review button for completed services -->
+                                                @if($service->status === 'completed')
+                                                    <button onclick="openReviewModal('SRV-{{ $orderId }}', '{{ $service->title }}', {{ $service->id }})" class="text-xs text-blue-600 hover:text-blue-800 font-medium">
+                                                        Leave a Review
+                                                    </button>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Display existing review if there is one -->
+                                    @if(isset($service->review))
+                                    <div class="mt-4 pt-4 border-t border-gray-100">
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0">
+                                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                    <span class="text-xs font-medium text-gray-600">{{ substr(auth()->user()->name ?? 'User', 0, 2) }}</span>
+                                                </div>
+                                            </div>
+                                            {{-- <div class="ml-3 flex-1">
+                                                <div class="flex items-center">
+                                                    <div class="flex text-yellow-400 text-sm">
+                                                        @for($i = 1; $i <= 5; $i++)
+                                                            @if($i <= $service->review->rating)
+                                                                <i class="fas fa-star"></i>
+                                                            @else
+                                                                <i class="far fa-star"></i>
+                                                            @endif
+                                                        @endfor
+                                                    </div>
+                                                    <span class="ml-2 text-xs text-gray-500">Posted on {{ \Carbon\Carbon::parse($service->review->created_at)->format('M d, Y') }}</span>
+                                                </div>
+                                                <p class="mt-1 text-sm text-gray-600">
+                                                    {{ $service->review->comment }}
                                                 </p>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
-                                    <div class="mt-4 md:mt-0 md:ml-6">
-                                        <p class="text-sm font-medium text-gray-900">Price: $80.00</p>
-                                        <div class="mt-2 flex space-x-2">
-                                            <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                                        </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
-                        </div>
-
-                        <!-- Service 2 -->
-                        <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">Booking #SRV-5679</p>
-                                    <p class="text-xs text-gray-500">Booked on May 5, 2023</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                                        Confirmed
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                <img src="https://via.placeholder.com/150" alt="Lawn Mowing" class="h-full w-full object-cover">
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-gray-900">Lawn Mowing Service</p>
-                                                <p class="text-xs text-gray-500">Provider: Green Thumb Landscaping</p>
-                                                <p class="text-xs text-gray-500 mt-1">
-                                                    <span class="inline-flex items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                        May 15, 2023 at 2:00 PM
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 md:mt-0 md:ml-6">
-                                        <p class="text-sm font-medium text-gray-900">Price: $50.00</p>
-                                        <div class="mt-2 flex space-x-2">
-                                            <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                                            <button class="text-xs text-red-600 hover:text-red-800 font-medium">Cancel Booking</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Service 3 -->
-                        <div class="order-card bg-white border border-gray-200 rounded-lg overflow-hidden">
-                            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                                <div>
-                                    <p class="text-sm font-medium text-gray-900">Booking #SRV-5680</p>
-                                    <p class="text-xs text-gray-500">Booked on May 8, 2023</p>
-                                </div>
-                                <div class="flex items-center">
-                                    <span class="px-3 py-1 text-xs rounded-full bg-purple-100 text-purple-800">
-                                        In-Progress
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="p-6">
-                                <div class="flex flex-col md:flex-row md:items-center md:justify-between">
-                                    <div class="flex-1">
-                                        <div class="flex items-center space-x-4">
-                                            <div class="flex-shrink-0 h-16 w-16 bg-gray-100 rounded-md overflow-hidden">
-                                                <img src="https://via.placeholder.com/150" alt="Plumbing Repair" class="h-full w-full object-cover">
-                                            </div>
-                                            <div>
-                                                <p class="text-sm font-medium text-gray-900">Plumbing Repair Service</p>
-                                                <p class="text-xs text-gray-500">Provider: Quick Fix Plumbing</p>
-                                                <p class="text-xs text-gray-500 mt-1">
-                                                    <span class="inline-flex items-center">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                        </svg>
-                                                        May 12, 2023 at 9:30 AM
-                                                    </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-4 md:mt-0 md:ml-6">
-                                        <p class="text-sm font-medium text-gray-900">Price: $95.00</p>
-                                        <div class="mt-2 flex space-x-2">
-                                            <a href="#" class="text-xs text-primary hover:text-gray-700 font-medium">View Details</a>
-                                            <button class="text-xs text-red-600 hover:text-red-800 font-medium">Cancel Booking</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
+                    @endforeach
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="modal">
+        <div class="modal-content">
+            <div class="p-6 bg-gray-50 border-b border-gray-100 flex items-center justify-between">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center mr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-lg font-medium">Leave a Review</h2>
+                </div>
+                <button id="close-review-modal" class="text-gray-400 hover:text-gray-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            
+            <form id="review-form" action="" method="POST" class="p-6">
+                @csrf
+                <input type="hidden" id="service-id" name="service_id" value="">
+                <input type="hidden" id="booking-id" name="booking_id" value="">
+                
+                <!-- Service Name -->
+                <div class="mb-6">
+                    <h3 id="service-name" class="text-lg font-medium text-gray-900 mb-2"></h3>
+                    <p class="text-sm text-gray-600">Share your experience with this service</p>
+                </div>
+                
+                <!-- Rating -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="rating" value="5" required />
+                        <label for="star5" title="5 stars">★</label>
+                        <input type="radio" id="star4" name="rating" value="4" />
+                        <label for="star4" title="4 stars">★</label>
+                        <input type="radio" id="star3" name="rating" value="3" />
+                        <label for="star3" title="3 stars">★</label>
+                        <input type="radio" id="star2" name="rating" value="2" />
+                        <label for="star2" title="2 stars">★</label>
+                        <input type="radio" id="star1" name="rating" value="1" />
+                        <label for="star1" title="1 star">★</label>
+                    </div>
+                </div>
+                
+                <!-- Review Text -->
+                <div class="mb-6">
+                    <label for="review-text" class="block text-sm font-medium text-gray-700 mb-2">Your Review</label>
+                    <textarea id="review-text" name="comment" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Share your experience with this service..." required></textarea>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="flex justify-end">
+                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
+                        Submit Review
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- Newsletter -->
     <section class="py-12 bg-accent">
@@ -456,7 +504,67 @@
                     document.getElementById(tabId).classList.remove('hidden');
                 });
             });
+
+            // Review modal functionality
+            const reviewModal = document.getElementById('review-modal');
+            const closeReviewModal = document.getElementById('close-review-modal');
+            
+            // Close modal when clicking the close button
+            closeReviewModal.addEventListener('click', function() {
+                reviewModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(event) {
+                if (event.target == reviewModal) {
+                    reviewModal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Handle review form submission
+            const reviewForm = document.getElementById('review-form');
+            reviewForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would normally send the data to the server
+                // For this static example, we'll just show the success toast
+                
+                // Close the modal
+                reviewModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // Show success toast
+                const toast = document.getElementById('successToast');
+                toast.querySelector('span').textContent = 'Review submitted successfully!';
+                toast.classList.remove('hidden');
+                toast.classList.add('opacity-100');
+                setTimeout(function() {
+                    toast.classList.remove('opacity-100');
+                    setTimeout(function() {
+                        toast.classList.add('hidden');
+                    }, 300);
+                }, 5000);
+            });
         });
+
+        // Function to open the review modal
+        function openReviewModal(bookingId, serviceName, serviceId) {
+            const modal = document.getElementById('review-modal');
+            const serviceNameElement = document.getElementById('service-name');
+            const serviceIdInput = document.getElementById('service-id');
+            const bookingIdInput = document.getElementById('booking-id');
+            
+            // Set the service details in the modal
+            serviceNameElement.textContent = serviceName;
+            serviceIdInput.value = serviceId;
+            bookingIdInput.value = bookingId;
+            
+            // Show the modal
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
     </script>
 </body>
 </html>
