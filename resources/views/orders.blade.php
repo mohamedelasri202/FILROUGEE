@@ -339,7 +339,7 @@
             <form id="review-form" action="" method="POST" class="p-6">
                 @csrf
                 <input type="hidden" id="service-id" name="service_id" value="">
-                <input type="hidden" id="booking-id" name="booking_id" value="">
+               
                 
                 <!-- Service Name -->
                 <div class="mb-6">
