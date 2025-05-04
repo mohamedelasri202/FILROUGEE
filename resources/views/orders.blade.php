@@ -336,11 +336,16 @@
                 </button>
             </div>
             
-            <form id="review-form" action="" method="POST" class="p-6">
+            <form id="review-form" action="{{ route('review') }}" method="POST" class="p-6">
                 @csrf
-                <input type="hidden" id="service-id" name="service_id" value="">
-               
-                
+                @foreach ($myservices as $orderId => $services)
+                @foreach ($services as $service)
+                 <input type="hidden" id="service-id" name="service_id" value="{{ $service->id }}">
+          
+                 @endforeach
+                 @endforeach
+              
+                 <button type="submit">add a revi</button>
                 <!-- Service Name -->
                 <div class="mb-6">
                     <h3 id="service-name" class="text-lg font-medium text-gray-900 mb-2"></h3>
@@ -351,15 +356,15 @@
                 <div class="mb-6">
                     <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
                     <div class="star-rating">
-                        <input type="radio" id="star5" name="rating" value="5" required />
+                        <input type="radio" id="star5" name="stars" value="5" required />
                         <label for="star5" title="5 stars">★</label>
-                        <input type="radio" id="star4" name="rating" value="4" />
+                        <input type="radio" id="star4" name="stars" value="4" />
                         <label for="star4" title="4 stars">★</label>
-                        <input type="radio" id="star3" name="rating" value="3" />
+                        <input type="radio" id="star3" name="stars" value="3" />
                         <label for="star3" title="3 stars">★</label>
-                        <input type="radio" id="star2" name="rating" value="2" />
+                        <input type="radio" id="star2" name="stars" value="2" />
                         <label for="star2" title="2 stars">★</label>
-                        <input type="radio" id="star1" name="rating" value="1" />
+                        <input type="radio" id="star1" name="stars" value="1" />
                         <label for="star1" title="1 star">★</label>
                     </div>
                 </div>
@@ -367,15 +372,13 @@
                 <!-- Review Text -->
                 <div class="mb-6">
                     <label for="review-text" class="block text-sm font-medium text-gray-700 mb-2">Your Review</label>
-                    <textarea id="review-text" name="comment" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Share your experience with this service..." required></textarea>
+                    <textarea id="review-text" name="content" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Share your experience with this service..." required></textarea>
                 </div>
                 
                 <!-- Submit Button -->
-                <div class="flex justify-end">
-                    <button type="submit" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-gray-700 transition-colors duration-300">
-                        Submit Review
-                    </button>
-                </div>
+       
+              
+          
             </form>
         </div>
     </div>
@@ -523,30 +526,7 @@
                 }
             });
 
-            // Handle review form submission
-            const reviewForm = document.getElementById('review-form');
-            reviewForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Here you would normally send the data to the server
-                // For this static example, we'll just show the success toast
-                
-                // Close the modal
-                reviewModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                
-                // Show success toast
-                const toast = document.getElementById('successToast');
-                toast.querySelector('span').textContent = 'Review submitted successfully!';
-                toast.classList.remove('hidden');
-                toast.classList.add('opacity-100');
-                setTimeout(function() {
-                    toast.classList.remove('opacity-100');
-                    setTimeout(function() {
-                        toast.classList.add('hidden');
-                    }, 300);
-                }, 5000);
-            });
+           
         });
 
         // Function to open the review modal
@@ -554,12 +534,12 @@
             const modal = document.getElementById('review-modal');
             const serviceNameElement = document.getElementById('service-name');
             const serviceIdInput = document.getElementById('service-id');
-            const bookingIdInput = document.getElementById('booking-id');
+            // const bookingIdInput = document.getElementById('booking-id');
             
             // Set the service details in the modal
             serviceNameElement.textContent = serviceName;
             serviceIdInput.value = serviceId;
-            bookingIdInput.value = bookingId;
+            // bookingIdInput.value = bookingId;
             
             // Show the modal
             modal.style.display = 'block';

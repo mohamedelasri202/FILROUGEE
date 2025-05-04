@@ -123,4 +123,4 @@ Route::put('upadating/service/status/{id}', [ServiceProviderController::class, '
 Route::get('/myorders', [UserController::class, 'myorders'])->name('myorders')->middleware('auth', 'role:user');
 // route for the review form 
 
-Route::post('/add-review', [ReviewController::class, 'add-reviw'])->name('review')->middleware('auth', 'role:user');
+Route::post('/add-review', [ReviewController::class, 'add_review'])->name('review')->middleware('auth', 'role:user');

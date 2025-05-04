@@ -2,9 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ReviewRepositoryInterface;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    //
+    protected $ReviewRepository;
+
+    public function __construct(ReviewRepositoryInterface $reviewRepository)
+    {
+        $this->ReviewRepository = $reviewRepository;
+    }
+    public function add_review(Request $request)
+    {
+
+        $data = $request->validate([
+            'service_id' => 'required|integer',
+            'stars' => 'required|integer|min:1|max:5',
+            'content' => 'required|string'
+        ]);
+
+        $this->ReviewRepository->add_review($data);
+        return redirect()->back()->with('success', 'Review submitted!');
+    }
 }

@@ -13,6 +13,8 @@ use App\Repositories\ServicecartRepository;
 use App\Repositories\ShoopingcartRepository;
 use App\Repositories\UserRepositoryInterface;
 use App\Repositories\ProductRepositoryInterface;
+use App\Repositories\ReviewRepository;
+use App\Repositories\ReviewRepositoryInterface;
 use App\Repositories\ServiceRepositoryInterface;
 use App\Repositories\ServicecartRepositoryInterface;
 use App\Repositories\ShoopingcartRepositoryInterface;
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ShoopingcartRepositoryInterface::class, ShoopingcartRepository::class);
         $this->app->bind(ServicecartRepositoryInterface::class, ServicecartRepository::class);
         $this->app->bind(OrderRepositoryInterface::class, OrderRepository::class);
+        $this->app->bind(ReviewRepositoryInterface::class, ReviewRepository::class);
     }
 
     /**
