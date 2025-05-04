@@ -6,5 +6,5 @@ namespace App\Repositories;
 interface ReviewRepositoryInterface
 {
 
-    public function add_review();
+    public function add_review($request, $id);
 }
