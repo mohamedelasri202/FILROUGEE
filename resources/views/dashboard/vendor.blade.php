@@ -251,26 +251,7 @@
 </div>
 
                 <!-- Pagination -->
-                <div class="flex justify-between items-center mt-6">
-                    <div class="text-sm text-gray-500">
-                        Showing 1 to 5 of 24 products
-                    </div>
-                    <div class="flex space-x-1">
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </a>
-                        <a href="#" class="px-3 py-1 border border-primary text-primary text-sm">1</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">2</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">3</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+               
             </div>
 
             <!-- Orders Tab Content -->
@@ -357,26 +338,7 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="flex justify-between items-center mt-6">
-                    <div class="text-sm text-gray-500">
-                        Showing 1 to 5 of 28 orders
-                    </div>
-                    <div class="flex space-x-1">
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </a>
-                        <a href="#" class="px-3 py-1 border border-primary text-primary text-sm">1</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">2</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">3</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+            
             </div>
 
             <!-- Customers Tab Content -->
@@ -462,26 +424,7 @@
                 </div>
 
                 <!-- Pagination -->
-                <div class="flex justify-between items-center mt-6">
-                    <div class="text-sm text-gray-500">
-                        Showing 1 to 5 of 42 customers
-                    </div>
-                    <div class="flex space-x-1">
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7" />
-                            </svg>
-                        </a>
-                        <a href="#" class="px-3 py-1 border border-primary text-primary text-sm">1</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">2</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">3</a>
-                        <a href="#" class="px-3 py-1 border border-gray-200 text-gray-500 text-sm hover:border-primary hover:text-primary transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+       
             </div>
 
             <!-- Analytics Tab Content -->
