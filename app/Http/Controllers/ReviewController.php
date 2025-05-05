@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ReviewRepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
-use Illuminate\Http\Request;
+use App\Repositories\ReviewRepositoryInterface;
 
 class ReviewController extends Controller
 {

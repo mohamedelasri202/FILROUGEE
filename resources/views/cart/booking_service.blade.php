@@ -518,11 +518,9 @@
                                 <div class="flex text-yellow-400 mr-2">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
                                     <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <span class="text-gray-600 text-sm">4.8 out of 5</span>
+                                <span class="text-gray-600 text-sm">{{$avr_rating}}</span>
                             </div>
                             <div class="space-y-4">
                                 @foreach ( $reviews as $review)
@@ -536,11 +534,29 @@
                                         <div>
                                             <h4 class="text-sm font-medium text-gray-900">{{$review->name}} {{$review->lastname}}</h4>
                                             <div class="flex text-yellow-400 text-xs">
+                                                @if($review->stars == 1)
+                                                <i class="fas fa-star"></i>
+                                                @elseif ($review->stars == 2)
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                @elseif ($review->stars == 3)
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                               
+                                                @elseif ($review->stars == 4)
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
                                                 <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
+                                            @elseif ($review->stars == 5)
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            @endif
+
                                             </div>
                                         </div>
                                     </div>
