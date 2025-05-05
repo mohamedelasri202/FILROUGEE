@@ -91,26 +91,25 @@
             <span class="ml-4 text-sm text-gray-500">Service Provider Dashboard</span>
         </div>
 
-        <div class="flex items-center space-x-6">
-            <div class="relative group">
-                <button class="flex items-center space-x-2 focus:outline-none">
-                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                        <span class="text-sm font-medium text-gray-600">AS</span>
-                    </div>
-                    <span class="text-sm text-gray-700">Alex Smith</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded shadow-lg py-1 z-10 hidden group-hover:block">
-
-                    <div class="border-t border-gray-100"></div>
-                    <form action="{{ route('logoutt') }}" method="POST">
-                        @csrf
-                    <button  class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Log out</button>
-                    </form>
+        <div class="flex items-center space-x-4">
+            <!-- User Profile -->
+            <div class="flex items-center">
+                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                    <span class="text-sm font-medium text-gray-600">AS</span>
                 </div>
+                <span class="ml-2 text-sm text-gray-700">{{ auth()->user()->name }} {{ auth()->user()->lastname }} </span>
             </div>
+            
+            <!-- Logout Button -->
+            <form action="{{ route('logoutt') }}" method="POST" class="ml-4">
+                @csrf
+                <button type="submit" class="flex items-center px-3 py-1.5 border border-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-primary transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Logout
+                </button>
+            </form>
         </div>
     </div>
 </header>
@@ -214,16 +213,24 @@
                     <div class="p-4">
                         <h3 class="font-light text-lg mb-1">{{$service->title}}</h3>
                         <p class="text-gray-500 text-sm mb-3">{{$service->category}}</p>
+                        @foreach ($services as $service)
+                        @php
+                            $stat = $review_stats->firstWhere('service_id', $service->id);
+                            $avg = $stat?->avg_rating ?? 0;
+                            $count = $stat?->reviews_count ?? 0;
+                            $rounded = round($avg);
+                        @endphp
+                    
                         <div class="flex items-center mb-3">
                             <div class="text-yellow-400 flex">
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
-                                <i class="fas fa-star text-xs"></i>
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <i class="fas fa-star text-xs {{ $i <= $rounded ? '' : 'text-gray-300' }}"></i>
+                                @endfor
                             </div>
-                            <span class="ml-2 text-xs text-gray-500">5.0 (89 reviews)</span>
+                            <span class="ml-2 text-xs text-gray-500">{{ number_format($avg, 1) }} ({{ $count }} reviews)</span>
                         </div>
+                    @endforeach
+                    
                         <div class="flex justify-between items-center">
                             <p class="text-primary font-medium">${{$service->price}}</p>
                             <div class="flex space-x-2">

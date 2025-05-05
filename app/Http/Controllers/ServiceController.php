@@ -38,8 +38,9 @@ class ServiceController extends Controller
         $reviews = $this->reviewRepository->reviews();
         $avr_rating = round(DB::table('reviews')->avg('stars'), 1);
         // dd($avr_rating);
+        $review_stats = $this->reviewRepository->reviews_stats();
 
-        return view('dashboard.service_provider', compact('services', 'allbookings', 'upcomingdate', 'bookings', 'countbookings', 'statistics', 'reviews', 'avr_rating'));
+        return view('dashboard.service_provider', compact('services', 'allbookings', 'upcomingdate', 'bookings', 'countbookings', 'statistics', 'reviews', 'avr_rating', 'review_stats'));
     }
     public function add_service(Request $request)
     {

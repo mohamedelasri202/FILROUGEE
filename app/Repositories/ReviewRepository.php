@@ -31,4 +31,13 @@ class ReviewRepository implements ReviewRepositoryInterface
         // dd($reviews);
         return $reviews;
     }
+    public function reviews_stats()
+    {
+        $reviews_stats = Review::select('service_id')
+            ->selectRaw('COUNT(*) as reviews_count')
+            ->selectRaw('ROUND(AVG(stars), 1) as avg_rating')
+            ->groupBy('service_id')
+            ->get();
+        return $reviews_stats;
+    }
 }
