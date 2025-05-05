@@ -23,4 +23,12 @@ class ReviewRepository implements ReviewRepositoryInterface
             'user_id' => Auth::id(),
         ]);
     }
+    public function reviews()
+    {
+        $reviews = Review::join('services', 'reviews.service_id', '=', 'services.id')
+            ->join('users', 'services.vendor_id', '=', 'users.id')
+            ->select('reviews.*', 'services.title', 'users.name', 'users.lastname')->get();
+        // dd($reviews);
+        return $reviews;
+    }
 }

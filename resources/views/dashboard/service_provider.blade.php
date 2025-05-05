@@ -123,7 +123,6 @@
             <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="bookings-tab">Bookings</button>
             <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="calendar-tab">Calendar</button>
             <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="reviews-tab">Reviews</button>
-            <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="settings-tab">Settings</button>
         </div>
     </div>
 </div>
@@ -561,20 +560,7 @@
             <!-- Page Header -->
             <div class="flex justify-between items-center mb-8">
                 <h1 class="text-2xl font-light">Reviews</h1>
-                <div class="flex space-x-2">
-                    <div class="relative">
-                        <input type="text" placeholder="Search reviews..." class="pl-8 pr-4 py-2 border border-gray-200 rounded text-sm focus:outline-none focus:border-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 absolute left-2.5 top-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                    <button class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:border-primary hover:text-primary transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                        </svg>
-                        Filter
-                    </button>
-                </div>
+                
             </div>
 
             <!-- Reviews Summary -->
@@ -582,72 +568,27 @@
                 <div class="flex flex-col md:flex-row md:items-center">
                     <div class="flex-1">
                         <div class="flex items-center">
-                            <div class="text-4xl font-light">4.8</div>
+                            <div class="text-4xl font-light">{{$avr_rating}}</div>
                             <div class="ml-4">
                                 <div class="text-yellow-400 flex">
                                     <i class="fas fa-star"></i>
                                     <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
                                     <i class="fas fa-star-half-alt"></i>
                                 </div>
-                                <div class="text-sm text-gray-500 mt-1">Based on 149 reviews</div>
+                                <div class="text-sm text-gray-500 mt-1">Based on {{$reviews->count()}} reviews</div>
                             </div>
                         </div>
                     </div>
-                    <div class="flex-1 mt-6 md:mt-0">
-                        <div class="flex items-center mb-1">
-                            <div class="text-xs font-medium w-8">5 ★</div>
-                            <div class="flex-1 mx-2">
-                                <div class="h-2 bg-gray-200 rounded">
-                                    <div class="h-2 bg-yellow-400 rounded" style="width: 80%"></div>
-                                </div>
-                            </div>
-                            <div class="text-xs text-gray-500 w-8">80%</div>
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="text-xs font-medium w-8">4 ★</div>
-                            <div class="flex-1 mx-2">
-                                <div class="h-2 bg-gray-200 rounded">
-                                    <div class="h-2 bg-yellow-400 rounded" style="width: 15%"></div>
-                                </div>
-                            </div>
-                            <div class="text-xs text-gray-500 w-8">15%</div>
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="text-xs font-medium w-8">3 ★</div>
-                            <div class="flex-1 mx-2">
-                                <div class="h-2 bg-gray-200 rounded">
-                                    <div class="h-2 bg-yellow-400 rounded" style="width: 3%"></div>
-                                </div>
-                            </div>
-                            <div class="text-xs text-gray-500 w-8">3%</div>
-                        </div>
-                        <div class="flex items-center mb-1">
-                            <div class="text-xs font-medium w-8">2 ★</div>
-                            <div class="flex-1 mx-2">
-                                <div class="h-2 bg-gray-200 rounded">
-                                    <div class="h-2 bg-yellow-400 rounded" style="width: 1%"></div>
-                                </div>
-                            </div>
-                            <div class="text-xs text-gray-500 w-8">1%</div>
-                        </div>
-                        <div class="flex items-center">
-                            <div class="text-xs font-medium w-8">1 ★</div>
-                            <div class="flex-1 mx-2">
-                                <div class="h-2 bg-gray-200 rounded">
-                                    <div class="h-2 bg-yellow-400 rounded" style="width: 1%"></div>
-                                </div>
-                            </div>
-                            <div class="text-xs text-gray-500 w-8">1%</div>
-                        </div>
-                    </div>
+                  
                 </div>
             </div>
 
             <!-- Reviews List -->
             <div class="space-y-6">
                 <!-- Review 1 -->
+                @foreach ($reviews as $review )
+                    
+             
                 <div class="bg-white p-6 border border-gray-100 rounded">
                     <div class="flex items-start">
                         <div class="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 mr-4 flex items-center justify-center">
@@ -655,260 +596,51 @@
                         </div>
                         <div class="flex-1">
                             <div class="flex items-center justify-between">
-                                <h3 class="font-medium">Jane Doe</h3>
-                                <span class="text-xs text-gray-500">2 days ago</span>
+                                <h3 class="font-medium">{{$review->name}} {{$review->lastname}}</h3>
+                                <span class="text-xs text-gray-500">{{$review->created_at}}</span>
                             </div>
                             <div class="flex items-center mt-1">
                                 <div class="text-yellow-400 flex">
+                                    @if($review->stars == 1)
+                                    <i class="fas fa-star text-xs"></i>
+                                    @elseif ($review->stars == 2)
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    @elseif ($review->stars == 3)
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    <i class="fas fa-star text-xs"></i>
+                                    @elseif ($review->stars == 4)
                                     <i class="fas fa-star text-xs"></i>
                                     <i class="fas fa-star text-xs"></i>
                                     <i class="fas fa-star text-xs"></i>
                                     <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
+                                    @elseif ($review->stars == 5)
+                                    <i class="fas fa-star text-xs"></i> 
+                                    <i class="fas fa-star text-xs"></i> 
+                                    <i class="fas fa-star text-xs"></i> 
+                                    <i class="fas fa-star text-xs"></i> 
+                                    <i class="fas fa-star text-xs"></i> 
+                                    @endif
                                 </div>
-                                <span class="ml-2 text-xs text-gray-500">Home Cleaning</span>
+                                <span class="ml-2 text-xs text-gray-500">{{$review->title}}</span>
                             </div>
-                            <p class="text-sm text-gray-700 mt-3">The cleaning service was exceptional! The team was thorough, professional, and left my home spotless. I'll definitely be booking again.</p>
+                            <p class="text-sm text-gray-700 mt-3">{{$review->content}}</p>
                             <div class="mt-4 flex justify-end">
                                 <button class="text-sm text-primary hover:text-gray-700">Reply</button>
                             </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
 
-                <!-- Review 2 -->
-                <div class="bg-white p-6 border border-gray-100 rounded">
-                    <div class="flex items-start">
-                        <div class="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 mr-4 flex items-center justify-center">
-                            <span class="text-sm font-medium text-gray-600">MS</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium">Michael Smith</h3>
-                                <span class="text-xs text-gray-500">1 week ago</span>
-                            </div>
-                            <div class="flex items-center mt-1">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                </div>
-                                <span class="ml-2 text-xs text-gray-500">Window Cleaning</span>
-                            </div>
-                            <p class="text-sm text-gray-700 mt-3">I'm very impressed with the window cleaning service. Every window is crystal clear, and the technician was punctual and professional. Great job!</p>
-                            <div class="mt-4 flex justify-end">
-                                <button class="text-sm text-primary hover:text-gray-700">Reply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review 3 -->
-                <div class="bg-white p-6 border border-gray-100 rounded">
-                    <div class="flex items-start">
-                        <div class="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 mr-4 flex items-center justify-center">
-                            <span class="text-sm font-medium text-gray-600">RB</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium">Robert Brown</h3>
-                                <span class="text-xs text-gray-500">2 weeks ago</span>
-                            </div>
-                            <div class="flex items-center mt-1">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="far fa-star text-xs"></i>
-                                </div>
-                                <span class="ml-2 text-xs text-gray-500">Carpet Cleaning</span>
-                            </div>
-                            <p class="text-sm text-gray-700 mt-3">The carpet cleaning service was good overall. Most stains were removed, but there was one stubborn spot that couldn't be completely eliminated. Still, I'm satisfied with the results.</p>
-                            <div class="mt-4 flex justify-end">
-                                <button class="text-sm text-primary hover:text-gray-700">Reply</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Review with Reply -->
-                <div class="bg-white p-6 border border-gray-100 rounded">
-                    <div class="flex items-start">
-                        <div class="h-10 w-10 rounded-full bg-gray-200 flex-shrink-0 mr-4 flex items-center justify-center">
-                            <span class="text-sm font-medium text-gray-600">AJ</span>
-                        </div>
-                        <div class="flex-1">
-                            <div class="flex items-center justify-between">
-                                <h3 class="font-medium">Alice Johnson</h3>
-                                <span class="text-xs text-gray-500">3 weeks ago</span>
-                            </div>
-                            <div class="flex items-center mt-1">
-                                <div class="text-yellow-400 flex">
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                    <i class="fas fa-star text-xs"></i>
-                                </div>
-                                <span class="ml-2 text-xs text-gray-500">Home Cleaning</span>
-                            </div>
-                            <p class="text-sm text-gray-700 mt-3">Absolutely fantastic service! The team was on time, efficient, and thorough. My home has never looked better. Will definitely use again!</p>
-                            
-                            <!-- Reply -->
-                            <div class="mt-4 ml-6 p-4 bg-gray-50 rounded">
-                                <div class="flex items-start">
-                                    <div class="h-8 w-8 rounded-full bg-primary flex-shrink-0 mr-3 flex items-center justify-center">
-                                        <span class="text-xs font-medium text-white">AS</span>
-                                    </div>
-                                    <div>
-                                        <div class="flex items-center">
-                                            <h4 class="text-sm font-medium">Alex Smith</h4>
-                                            <span class="ml-2 text-xs text-gray-500">2 weeks ago</span>
-                                        </div>
-                                        <p class="text-sm text-gray-700 mt-1">Thank you for your kind words, Alice! We're thrilled that you're happy with our service. Looking forward to serving you again soon!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
             
-            <!-- Pagination -->
-            <div class="mt-6 flex items-center justify-between">
-                <div class="text-sm text-gray-500">
-                    Showing <span class="font-medium">1</span> to <span class="font-medium">4</span> of <span class="font-medium">149</span> reviews
-                </div>
-                <div class="flex space-x-1">
-                    <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-500 hover:border-primary hover:text-primary">Previous</button>
-                    <button class="px-3 py-1 border border-primary bg-primary text-white rounded text-sm">1</button>
-                    <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-700 hover:border-primary hover:text-primary">2</button>
-                    <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-700 hover:border-primary hover:text-primary">3</button>
-                    <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-700 hover:border-primary hover:text-primary">...</button>
-                    <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-700 hover:border-primary hover:text-primary">38</button>
-                    <button class="px-3 py-1 border border-gray-200 rounded text-sm text-gray-700 hover:border-primary hover:text-primary">Next</button>
-                </div>
-            </div>
+        
         </div>
 
         <!-- Settings Tab Content -->
-        <div id="settings-tab" class="tab-content">
-            <!-- Page Header -->
-            <div class="mb-8">
-                <h1 class="text-2xl font-light">Settings</h1>
-                <p class="text-gray-500 mt-1">Manage your account settings and preferences</p>
-            </div>
-
-            <!-- Settings Navigation -->
-            <div class="flex flex-col md:flex-row">
-                <div class="w-full md:w-64 mb-6 md:mb-0">
-                    <div class="bg-white border border-gray-100 rounded overflow-hidden">
-                        <div class="p-4 border-b border-gray-100">
-                            <h2 class="font-medium">Settings</h2>
-                        </div>
-                        <div class="divide-y divide-gray-100">
-                            <button class="w-full text-left px-4 py-3 text-sm font-medium text-primary bg-accent">Profile</button>
-                            <button class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-accent">Business Information</button>
-                            <button class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-accent">Services</button>
-                            <button class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-accent">Availability</button>
-                            <button class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-accent">Notifications</button>
-                            <button class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-accent">Payment Methods</button>
-                            <button class="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-accent">Security</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex-1 md:ml-6">
-                    <div class="bg-white border border-gray-100 rounded">
-                        <div class="p-6 border-b border-gray-100">
-                            <h2 class="text-lg font-medium">Profile</h2>
-                            <p class="text-sm text-gray-500 mt-1">Update your personal information</p>
-                        </div>
-                        <div class="p-6">
-                            <form>
-                                <!-- Profile Photo -->
-                                <div class="mb-6">
-                                    <label class="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
-                                    <div class="flex items-center">
-                                        <div class="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center">
-                                            <span class="text-lg font-medium text-gray-600">AS</span>
-                                        </div>
-                                        <div class="ml-4">
-                                            <button type="button" class="px-3 py-1.5 border border-gray-200 text-sm text-gray-700 hover:border-primary hover:text-primary rounded">Change</button>
-                                            <button type="button" class="px-3 py-1.5 border border-gray-200 text-sm text-gray-700 hover:border-primary hover:text-primary rounded ml-2">Remove</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Name -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                    <div>
-                                        <label for="first-name" class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
-                                        <input type="text" id="first-name" name="first-name" value="Alex" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                    <div>
-                                        <label for="last-name" class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
-                                        <input type="text" id="last-name" name="last-name" value="Smith" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                </div>
-                                
-                                <!-- Contact Information -->
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                    <div>
-                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                        <input type="email" id="email" name="email" value="alex.smith@example.com" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                    <div>
-                                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                        <input type="tel" id="phone" name="phone" value="(555) 123-4567" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                </div>
-                                
-                                <!-- Address -->
-                                <div class="mb-6">
-                                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-                                    <input type="text" id="address" name="address" value="123 Service St" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary mb-2">
-                                    <input type="text" id="address-2" name="address-2" value="Suite 456" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                </div>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                                    <div>
-                                        <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City</label>
-                                        <input type="text" id="city" name="city" value="Serviceville" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                    <div>
-                                        <label for="state" class="block text-sm font-medium text-gray-700 mb-2">State</label>
-                                        <input type="text" id="state" name="state" value="CA" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                    <div>
-                                        <label for="zip" class="block text-sm font-medium text-gray-700 mb-2">ZIP Code</label>
-                                        <input type="text" id="zip" name="zip" value="90210" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">
-                                    </div>
-                                </div>
-                                
-                                <!-- Bio -->
-                                <div class="mb-6">
-                                    <label for="bio" class="block text-sm font-medium text-gray-700 mb-2">Bio</label>
-                                    <textarea id="bio" name="bio" rows="4" class="w-full border border-gray-200 rounded py-2 px-3 focus:outline-none focus:border-primary">Professional service provider with over 10 years of experience in home and office cleaning services.</textarea>
-                                </div>
-                                
-                                <!-- Form Actions -->
-                                <div class="flex justify-end space-x-4">
-                                    <button type="button" class="px-6 py-2 border border-gray-200 text-gray-700 hover:text-primary hover:border-primary transition duration-300 rounded">
-                                        Cancel
-                                    </button>
-                                    <button type="submit" class="px-6 py-2 bg-primary text-white hover:bg-gray-700 transition duration-300 rounded">
-                                        Save Changes
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     </div>
 </main>
 

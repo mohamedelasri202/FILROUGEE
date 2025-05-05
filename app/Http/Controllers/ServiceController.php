@@ -8,17 +8,20 @@ use App\Repositories\OrderRepository;
 
 use App\Repositories\ServiceRepository;
 use App\Repositories\OrderRepositoryInterface;
+use App\Repositories\ReviewRepositoryInterface;
 use App\Repositories\ServiceRepositoryInterface;
 
 class ServiceController extends Controller
 {
     protected $ServiceRepository;
     protected $orderRepository;
+    protected $reviewRepository;
 
-    public function __construct(ServiceRepository $ServiceRepository, OrderRepositoryInterface $orderRepository)
+    public function __construct(ServiceRepository $ServiceRepository, OrderRepositoryInterface $orderRepository, ReviewRepositoryInterface $reviewRepository)
     {
         $this->orderRepository = $orderRepository;
         $this->ServiceRepository = $ServiceRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
 
@@ -32,9 +35,11 @@ class ServiceController extends Controller
         $bookings = $this->orderRepository->bookings();
         $countbookings = $this->orderRepository->countbookings();
         $statistics = $this->orderRepository->statistics();
+        $reviews = $this->reviewRepository->reviews();
+        $avr_rating = round(DB::table('reviews')->avg('stars'), 1);
+        // dd($avr_rating);
 
-
-        return view('dashboard.service_provider', compact('services', 'allbookings', 'upcomingdate', 'bookings', 'countbookings', 'statistics'));
+        return view('dashboard.service_provider', compact('services', 'allbookings', 'upcomingdate', 'bookings', 'countbookings', 'statistics', 'reviews', 'avr_rating'));
     }
     public function add_service(Request $request)
     {
