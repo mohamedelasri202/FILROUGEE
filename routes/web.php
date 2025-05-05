@@ -118,7 +118,7 @@ Route::get('product/{id}', [ProductController::class, 'index'])->name('product')
 
 
 // the updating route for the booking from the  service _provider 
-Route::put('upadating/service/status/{id}', [ServiceProviderController::class, 'update'])->name('orders.update')->middleware('auth', 'role:service_provider');
+Route::put('upadating/service/status/{id}', [ServiceProviderController::class, 'update'])->name('orders.update')->middleware('auth');
 // the route for the my orders page 
 Route::get('/myorders', [UserController::class, 'myorders'])->name('myorders')->middleware('auth', 'role:user');
 // route for the review form 

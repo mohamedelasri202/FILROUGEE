@@ -53,47 +53,37 @@
                 <a href="index.html" class="flex items-center">
                     <span class="text-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
                     </span>
                     <span class="ml-2 text-xl font-light tracking-wide">SUPERMARK</span>
                 </a>
-                <span class="ml-4 text-sm text-gray-500">Vendor Dashboard</span>
+                <span class="ml-4 text-sm text-gray-500">Service Provider Dashboard</span>
             </div>
-
-            <div class="flex items-center space-x-6">
-                <a href="#" class="text-gray-500 hover:text-gray-700 transition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                    </svg>
-                </a>
-                <div class="relative group">
-                    <button class="flex items-center space-x-2 focus:outline-none">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                            @php
-                            $user = Auth::user();
-                            $initials = strtoupper(substr($user->name, 0, 1) . substr($user->lastname, 0, 1));
-                             @endphp
-                            <span class="text-sm font-medium text-gray-600">{{$initials}}</span>
-                        </div>
-                        <span class="text-sm text-gray-700"> {{ auth()->user()->name }}</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded shadow-lg py-1 z-10 hidden group-hover:block">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Settings</a>
-                        <div class="border-t border-gray-100"></div>
-                        <form action="{{ route('logoutt') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent" method ="POST">
-                            @csrf
-                            <button type="submit">Sign out</a>
-                        </form>
+    
+            <div class="flex items-center space-x-4">
+                <!-- User Profile -->
+                <div class="flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                        <span class="text-sm font-medium text-gray-600">AS</span>
                     </div>
+                    <span class="ml-2 text-sm text-gray-700">{{ auth()->user()->name }} {{ auth()->user()->lastname }} </span>
                 </div>
+                
+                <!-- Logout Button -->
+                <form action="{{ route('logoutt') }}" method="POST" class="ml-4">
+                    @csrf
+                    <button type="submit" class="flex items-center px-3 py-1.5 border border-gray-200 rounded-md text-sm text-gray-600 hover:bg-gray-50 hover:text-primary hover:border-primary transition-colors duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                        </svg>
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </header>
+    
 
     <!-- Navigation Tabs -->
     <div class="bg-white border-b border-gray-100">
@@ -103,7 +93,6 @@
                 <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="orders">Orders</button>
                 <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="customers">Customers</button>
                 <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="analytics">Analytics</button>
-                <button class="tab-button px-4 py-4 text-sm font-medium text-gray-500 hover:text-primary" data-tab="settings">Settings</button>
             </div>
         </div>
     </div>
@@ -343,8 +332,20 @@
                                 </td>
                                 <td class="py-3 px-4 text-right text-sm font-medium">
                                     <div class="flex justify-end space-x-2">
-                                        <button class="text-primary hover:text-gray-700">View</button>
-                                        <button class="text-gray-500 hover:text-gray-700">Invoice</button>
+                                        <form action="{{ route('orders.update', $usersWithOrder->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="confirmed">
+                                            <button type="submit" class="text-primary hover:text-gray-700">Confirm</button>
+                                        </form>
+                                    
+                                        <!-- Cancel Button -->
+                                        <form action="{{ route('orders.update', $usersWithOrder->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <button type="submit" class="text-gray-500 hover:text-red-600">Cancel</button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
@@ -583,327 +584,13 @@
                 </div>
             
                 <!-- Top Products -->
-                <div class="bg-white rounded border border-gray-100 overflow-hidden mb-8">
-                    <div class="p-4 border-b border-gray-100">
-                        <h2 class="text-lg font-light">Top Selling Products</h2>
-                    </div>
-                    <table class="w-full">
-                        <thead>
-                            <tr class="bg-accent">
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Units Sold</th>
-                                <th class="py-3 px-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Revenue</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0 mr-3">
-                                            <img src="/placeholder.svg?height=40&width=40" alt="Premium Coffee" class="h-10 w-10 object-cover">
-                                        </div>
-                                        <div class="text-sm text-gray-900">Premium Coffee</div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Beverages</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">245</td>
-                                <td class="py-3 px-4 text-sm text-gray-900">$3,182.55</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0 mr-3">
-                                            <img src="/placeholder.svg?height=40&width=40" alt="Wireless Earbuds" class="h-10 w-10 object-cover">
-                                        </div>
-                                        <div class="text-sm text-gray-900">Wireless Earbuds</div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Electronics</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">187</td>
-                                <td class="py-3 px-4 text-sm text-gray-900">$11,219.13</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0 mr-3">
-                                            <img src="/placeholder.svg?height=40&width=40" alt="Organic Skincare Set" class="h-10 w-10 object-cover">
-                                        </div>
-                                        <div class="text-sm text-gray-900">Organic Skincare Set</div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Health & Beauty</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">156</td>
-                                <td class="py-3 px-4 text-sm text-gray-900">$5,459.44</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0 mr-3">
-                                            <img src="/placeholder.svg?height=40&width=40" alt="Eco-Friendly Detergent" class="h-10 w-10 object-cover">
-                                        </div>
-                                        <div class="text-sm text-gray-900">Eco-Friendly Detergent</div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Household Essentials</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">132</td>
-                                <td class="py-3 px-4 text-sm text-gray-900">$1,120.68</td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 px-4">
-                                    <div class="flex items-center">
-                                        <div class="h-10 w-10 flex-shrink-0 mr-3">
-                                            <img src="/placeholder.svg?height=40&width=40" alt="Organic Apples" class="h-10 w-10 object-cover">
-                                        </div>
-                                        <div class="text-sm text-gray-900">Organic Apples</div>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-4 text-sm text-gray-500">Fresh Groceries</td>
-                                <td class="py-3 px-4 text-sm text-gray-500">124</td>
-                                <td class="py-3 px-4 text-sm text-gray-900">$618.76</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+             
 
-                <!-- Customer Acquisition -->
-                <div class="bg-white rounded border border-gray-100 overflow-hidden">
-                    <div class="p-4 border-b border-gray-100">
-                        <h2 class="text-lg font-light">Customer Acquisition</h2>
-                    </div>
-                    <div class="p-6">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div>
-                                <h3 class="text-sm font-medium text-gray-700 mb-4">Traffic Sources</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Direct</span>
-                                            <span class="text-sm text-gray-700">45%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 45%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Search</span>
-                                            <span class="text-sm text-gray-700">30%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 30%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Social</span>
-                                            <span class="text-sm text-gray-700">15%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 15%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Referral</span>
-                                            <span class="text-sm text-gray-700">10%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 10%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-gray-700 mb-4">Device Type</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Mobile</span>
-                                            <span class="text-sm text-gray-700">65%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 65%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Desktop</span>
-                                            <span class="text-sm text-gray-700">30%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 30%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">Tablet</span>
-                                            <span class="text-sm text-gray-700">5%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 5%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-gray-700 mb-4">Customer Demographics</h3>
-                                <div class="space-y-4">
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">18-24</span>
-                                            <span class="text-sm text-gray-700">15%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 15%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">25-34</span>
-                                            <span class="text-sm text-gray-700">40%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 40%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">35-44</span>
-                                            <span class="text-sm text-gray-700">25%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 25%"></div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="flex justify-between mb-1">
-                                            <span class="text-sm text-gray-500">45+</span>
-                                            <span class="text-sm text-gray-700">20%</span>
-                                        </div>
-                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                            <div class="bg-primary h-1.5 rounded-full" style="width: 20%"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
             </div>
 
             <!-- Settings Tab Content -->
-            <div id="settings" class="tab-content">
-                <!-- Page Header -->
-                <div class="mb-8">
-                    <h1 class="text-2xl font-light mb-2">Settings</h1>
-                    <p class="text-gray-500">Manage your store settings and preferences</p>
-                </div>
-
-                <!-- Settings Navigation -->
-                <div class="bg-white rounded border border-gray-100 overflow-hidden mb-8">
-                    <div class="flex border-b border-gray-100">
-                        <button class="px-6 py-3 text-sm font-medium text-primary border-b-2 border-primary">Store Profile</button>
-                        <button class="px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary">Payment Methods</button>
-                        <button class="px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary">Shipping</button>
-                        <button class="px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary">Tax</button>
-                        <button class="px-6 py-3 text-sm font-medium text-gray-500 hover:text-primary">Notifications</button>
-                    </div>
-
-                    <!-- Store Profile Settings -->
-                    <div class="p-6">
-                        <form>
-                            <!-- Store Information -->
-                            <div class="mb-8">
-                                <h2 class="text-lg font-light mb-4">Store Information</h2>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label for="store-name" class="block text-sm font-medium text-gray-700 mb-2">Store Name</label>
-                                        <input type="text" id="store-name" name="store-name" value="Supermark" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
-                                        <input type="email" id="store-email" name="store-email" value="info@supermark.com" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-phone" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                                        <input type="tel" id="store-phone" name="store-phone" value="+1 (555) 123-4567" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-currency" class="block text-sm font-medium text-gray-700 mb-2">Currency</label>
-                                        <select id="store-currency" name="store-currency" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                            <option value="USD" selected>USD - US Dollar</option>
-                                            <option value="EUR">EUR - Euro</option>
-                                            <option value="GBP">GBP - British Pound</option>
-                                            <option value="CAD">CAD - Canadian Dollar</option>
-                                            <option value="AUD">AUD - Australian Dollar</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Store Address -->
-                            <div class="mb-8">
-                                <h2 class="text-lg font-light mb-4">Store Address</h2>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div class="md:col-span-2">
-                                        <label for="store-address" class="block text-sm font-medium text-gray-700 mb-2">Street Address</label>
-                                        <input type="text" id="store-address" name="store-address" value="123 Market Street, Suite 10" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-city" class="block text-sm font-medium text-gray-700 mb-2">City</label>
-                                        <input type="text" id="store-city" name="store-city" value="San Francisco" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-state" class="block text-sm font-medium text-gray-700 mb-2">State/Province</label>
-                                        <input type="text" id="store-state" name="store-state" value="CA" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-zip" class="block text-sm font-medium text-gray-700 mb-2">ZIP/Postal Code</label>
-                                        <input type="text" id="store-zip" name="store-zip" value="94103" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                    </div>
-                                    <div>
-                                        <label for="store-country" class="block text-sm font-medium text-gray-700 mb-2">Country</label>
-                                        <select id="store-country" name="store-country" class="w-full border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent">
-                                            <option value="US" selected>United States</option>
-                                            <option value="CA">Canada</option>
-                                            <option value="UK">United Kingdom</option>
-                                            <option value="AU">Australia</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Store Logo -->
-                            <div class="mb-8">
-                                <h2 class="text-lg font-light mb-4">Store Logo</h2>
-                                <div class="flex items-center">
-                                    <div class="h-16 w-16 flex-shrink-0 mr-4 bg-gray-100 flex items-center justify-center">
-                                        <span class="text-primary">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <button type="button" class="px-4 py-2 border border-gray-200 text-gray-700 text-sm hover:text-primary hover:border-primary transition duration-300">
-                                            Change Logo
-                                        </button>
-                                        <p class="mt-1 text-xs text-gray-500">Recommended size: 512x512px</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Save Button -->
-                            <div class="flex justify-end">
-                                <button type="submit" class="px-6 py-2 bg-primary text-white hover:bg-gray-700 transition duration-300">
-                                    Save Changes
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+      
         </div>
     </main>
 
