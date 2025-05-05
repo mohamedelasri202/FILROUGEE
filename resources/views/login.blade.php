@@ -121,68 +121,76 @@
     </form>
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-white pt-12 pb-6 border-t mt-12">
-    <div class="container mx-auto px-4">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <!-- Logo and Social -->
-        <div>
-          <div class="flex items-center mb-4">
-            <div class="text-green-500 mr-1">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14h-2v-6h2v6zm4 0h-2V7h2v9z" fill="currentColor" />
-              </svg>
-            </div>
-            <span class="font-bold text-xl">Organic</span>
+  <!-- Footer -->   <footer class="bg-white pt-16 pb-8 border-t border-gray-100">
+        <div class="container mx-auto px-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <!-- Supermark Column -->
+              <div>
+                  <div class="flex items-center mb-8">
+                      <span class="text-primary">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                          </svg>
+                      </span>
+                      <span class="ml-2 text-base font-light">SUPERMARK</span>
+                  </div>
+                  <ul class="space-y-3 text-sm">
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">About us</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Store Locations</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Careers</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Our Partners</a></li>
+                  </ul>
+                  <div class="flex space-x-4 mt-6">
+                      <a href="#" class="text-gray-400 hover:text-gray-600 text-sm">
+                          <i class="fab fa-facebook-f"></i>
+                      </a>
+                      <a href="#" class="text-gray-400 hover:text-gray-600 text-sm">
+                          <i class="fab fa-twitter"></i>
+                      </a>
+                      <a href="#" class="text-gray-400 hover:text-gray-600 text-sm">
+                          <i class="fab fa-instagram"></i>
+                      </a>
+                  </div>
+              </div>
+              
+              <!-- Quick Links -->
+              <div>
+                  <h3 class="text-sm font-medium mb-6">Quick Links</h3>
+                  <ul class="space-y-3 text-sm">
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Weekly Offers</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Gift Cards</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Store Finder</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Track Order</a></li>
+                  </ul>
+              </div>
+              
+              <!-- Customer Service -->
+              <div>
+                  <h3 class="text-sm font-medium mb-6">Customer Service</h3>
+                  <ul class="space-y-3 text-sm">
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Help Center</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Contact Us</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Privacy Policy</a></li>
+                      <li><a href="#" class="text-gray-500 hover:text-gray-700">Returns & Refunds</a></li>
+                  </ul>
+              </div>
+              
+              <!-- Subscribe Us -->
+              <div>
+                  <h3 class="text-sm font-medium mb-6">Newsletter</h3>
+                  <p class="text-sm text-gray-500 mb-4">Get updates on special offers and exclusive deals</p>
+                  <div class="flex">
+                      <input type="email" placeholder="Email Address" class="flex-1 border-b border-gray-200 py-2 px-2 focus:outline-none focus:border-primary bg-transparent text-sm">
+                      <button class="bg-transparent text-primary px-4 py-2 hover:text-gray-700">→</button>
+                  </div>
+              </div>
           </div>
-          <div class="flex space-x-4 mb-4">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fas fa-envelope"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-youtube"></i>
+          
+          <div class="border-t border-gray-100 mt-12 pt-8">
+              <p class="text-center text-xs text-gray-400">© 2025 Supermark. All rights reserved.</p>
           </div>
-        </div>
-
-        <!-- Organic -->
-        <div>
-          <h3 class="font-bold mb-4">Organic</h3>
-          <ul class="space-y-2 text-sm">
-            <li>About us</li>
-            <li>Conditions</li>
-            <li>Our Journals</li>
-            <li>Careers</li>
-            <li>Affiliate Programme</li>
-            <li>Ultras Press</li>
-          </ul>
-        </div>
-
-        <!-- Quick Links -->
-        <div>
-          <h3 class="font-bold mb-4">Quick Links</h3>
-          <ul class="space-y-2 text-sm">
-            <li>Offers</li>
-            <li>Discount Coupons</li>
-            <li>Stores</li>
-            <li>Track Order</li>
-            <li>Shop</li>
-            <li>Info</li>
-          </ul>
-        </div>
-
-        <!-- Customer Service -->
-        <div>
-          <h3 class="font-bold mb-4">Customer Service</h3>
-          <ul class="space-y-2 text-sm">
-            <li>FAQ</li>
-            <li>Contact</li>
-            <li>Privacy Policy</li>
-            <li>Returns & Refunds</li>
-            <li>Cookie Guidelines</li>
-            <li>Delivery Information</li>
-          </ul>
-        </div>
       </div>
+  </footer>
 
-      <!-- Subscribe -->
-      <div class="mt-8
+</body>
+</html>

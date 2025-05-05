@@ -159,6 +159,7 @@ class UserController extends Controller
         $myorders = $this->userRepository->myorders();
         $myservices = $this->userRepository->myServiceOrders();
 
+
         return view('orders', compact('myorders', 'myservices'));
     }
 }

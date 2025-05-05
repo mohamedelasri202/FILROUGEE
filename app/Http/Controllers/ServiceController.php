@@ -86,8 +86,9 @@ class ServiceController extends Controller
             ->get();
 
         $avr_rating = round(DB::table('reviews')->avg('stars'), 1);
-        // dd($avr_rating);
+        $count_reviews = DB::table('reviews')->orderby('service_id')->count();
 
-        return view('cart.booking_service', compact('service', 'reviews', 'avr_rating'));
+
+        return view('cart.booking_service', compact('service', 'reviews', 'avr_rating', 'count_reviews'));
     }
 }

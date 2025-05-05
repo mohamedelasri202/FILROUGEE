@@ -124,3 +124,11 @@ Route::get('/myorders', [UserController::class, 'myorders'])->name('myorders')->
 // route for the review form 
 
 Route::post('/add-review', [ReviewController::class, 'add_review'])->name('review')->middleware('auth', 'role:user');
+
+
+
+
+
+
+// route for the layout 
+Route::get('/layout', [UserController::class, 'layout']);

@@ -147,7 +147,8 @@
     {{-- Your main content --}}
 </div>
 <!-- Header -->
-<header class="py-4 px-6 bg-white border-b border-gray-100">
+<!-- Header -->
+<header class="py-4 px-6 bg-white border-b border-gray-100 fixed top-0 left-0 right-0 z-50">
     <div class="container mx-auto flex items-center justify-between">
         <div class="flex items-center">
             <a href="index.html" class="flex items-center">
@@ -167,25 +168,21 @@
                 </svg>
             </a>
             <div class="relative group">
-                <button class="flex items-center space-x-2 focus:outline-none">
-                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                        <span class="text-sm font-medium text-gray-600">JD</span>
-                    </div>
-                    <span class="text-sm text-gray-700">John Doe</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded shadow-lg py-1 z-10 hidden group-hover:block">
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Profile</a>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Settings</a>
-                    <div class="border-t border-gray-100"></div>
-                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Sign out</a>
-                </div>
+                <form method="POST" action="{{ route('logoutt') }}">
+                    @csrf
+                    <button type="submit" class="px-4 py-1.5 border border-gray-200 text-gray-500 text-xs hover:text-primary hover:border-primary transition duration-300">
+                        Logout
+                    </button>
+                </form>
+             
+             
             </div>
         </div>
     </div>
 </header>
+
+<!-- Spacer to prevent content from being hidden under fixed header -->
+<div class="h-16"></div>
 
 <!-- Checkout Progress -->
 <div class="bg-white border-b border-gray-100">

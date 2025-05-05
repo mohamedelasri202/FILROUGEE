@@ -65,101 +65,80 @@
     </div>
     @endif
 <!-- Header -->
-<header class="bg-white shadow-sm sticky top-0 z-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <!-- Logo and Navigation -->
-            <div class="flex">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center">
-                    <a href="index.html" class="flex items-center">
-                        <span class="text-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                            </svg>
-                        </span>
-                        <span class="ml-2 text-xl font-light tracking-wide">SUPERMARK</span>
-                    </a>
-                </div>
-                
-                <!-- Desktop Navigation -->
-                <nav class="hidden md:ml-8 md:flex md:space-x-8">
-                    <a href="products.html" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
-                        Products
-                    </a>
-                    <a href="services.html" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
-                        Services
-                    </a>
-                    <a href="orders.html" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
-                        Orders
-                    </a>
-                    <a href="about.html" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
-                        About
-                    </a>
-                    <a href="contact.html" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
-                        Contact
-                    </a>
-                </nav>
-            </div>
-            
-            <!-- Right Side Menu -->
-            <div class="flex items-center">
-                <!-- User Profile -->
-                <div class="relative dropdown">
-                    <button class="flex items-center space-x-2 focus:outline-none">
-                        <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                            <span class="text-sm font-medium text-gray-600">JD</span>
-                        </div>
-                        <span class="hidden md:block text-sm text-gray-700">John Doe</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="hidden md:block h-4 w-4 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                        </svg>
-                    </button>
-                    <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border border-gray-100 rounded shadow-lg py-1 z-10 hidden group-hover:block">
-                        <a href="profile.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Profile</a>
-                        <a href="settings.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Settings</a>
-                        <div class="border-t border-gray-100"></div>
-                        <a href="{{ route('logoutt') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-accent">Sign out</a>
-                    </div>
-                </div>
-                
-                <!-- Mobile menu button -->
-                <div class="flex items-center md:hidden ml-4">
-                    <button id="mobile-menu-button" class="p-2 rounded-md text-gray-500 hover:text-primary hover:bg-gray-100 focus:outline-none">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="mobile-menu fixed inset-0 bg-gray-800 bg-opacity-75 z-50 md:hidden hidden">
-        <div class="fixed inset-y-0 left-0 w-full max-w-xs bg-white shadow-xl overflow-y-auto">
-            <div class="px-6 pt-6 pb-4 flex items-center justify-between">
-                <a href="index.html" class="flex items-center">
-                    <span class="text-primary">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                        </svg>
-                    </span>
-                    <span class="ml-2 text-xl font-light tracking-wide">SUPERMARK</span>
-                </a>
-                <button id="close-mobile-menu" class="text-gray-500 hover:text-primary">
+<header class="py-4 px-6 bg-white border-b border-gray-100 fixed w-full z-50">
+    <div class="container mx-auto flex items-center justify-between">
+        <!-- Left side: Logo -->
+        <div class="flex items-center">
+            <a href="{{ route('home') }}" class="flex items-center">
+                <span class="text-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
+                </span>
+                <span class="ml-2 text-xl font-light tracking-wide">SUPERMARK</span>
+            </a>
+        </div>
+
+        <!-- Center: Navigation Links -->
+        <nav class="hidden md:flex md:space-x-8 absolute left-1/2 transform -translate-x-1/2">
+            <a href="{{ route('products') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
+                Products
+            </a>
+            <a href="{{ route('services') }}" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
+                Services
+            </a>
+            <a href="" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
+                Orders
+            </a>
+            <a href="" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
+                About
+            </a>
+            <a href="" class="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-500 hover:text-primary border-b-2 border-transparent hover:border-primary transition duration-150">
+                Contact
+            </a>
+        </nav>
+
+        <!-- Right side: Auth Icons -->
+        <div class="flex items-center space-x-6">
+            @auth
+            <!-- Authenticated User Icons -->
+            <a href="#" class="text-gray-500 hover:text-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+            </a>
+            <a href="{{ route('cart') }}" class="relative text-gray-500 hover:text-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">{{$cart_count ?? 0}}</span>
+            </a>
+            <!-- Logout Button -->
+            <form method="POST" action="{{ route('logoutt') }}">
+                @csrf
+                <button type="submit" class="px-4 py-1.5 border border-gray-200 text-gray-500 text-xs hover:text-primary hover:border-primary transition duration-300">
+                    Logout
                 </button>
-            </div>
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="products.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-accent">Products</a>
-                <a href="services.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-accent">Services</a>
-                <a href="orders.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-accent">Orders</a>
-                <a href="about.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-accent">About</a>
-                <a href="contact.html" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary hover:bg-accent">Contact</a>
-            </div>
+            </form>
+            @else
+            <!-- Guest Links -->
+            <a href="{{ route('login') }}" class="text-gray-500 hover:text-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+            </a>
+            <a href="#" class="text-gray-500 hover:text-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+            </a>
+            <a href="#" class="relative text-gray-500 hover:text-gray-700 transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">0</span>
+            </a>
+            @endauth
         </div>
     </div>
 </header>
