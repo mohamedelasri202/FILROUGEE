@@ -612,17 +612,22 @@
         const closeMobileMenu = document.getElementById('close-mobile-menu');
         const mobileMenu = document.getElementById('mobile-menu');
         
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.remove('hidden');
-        });
-        
-        closeMobileMenu.addEventListener('click', function() {
-            mobileMenu.classList.add('hidden');
-        });
+        if (mobileMenuButton && closeMobileMenu && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('hidden');
+            });
+            
+            closeMobileMenu.addEventListener('click', function() {
+                mobileMenu.classList.add('hidden');
+            });
+        }
         
         // Set minimum date for date picker to today
         const today = new Date().toISOString().split('T')[0];
-        document.getElementById('booking_date').min = today;
+        const dateInput = document.getElementById('booking_date');
+        if (dateInput) {
+            dateInput.min = today;
+        }
         
         // Booking modal
         const modal = document.getElementById('booking-modal');
@@ -631,22 +636,34 @@
         const closeModal = document.getElementById('close-modal');
         
         function openModal() {
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
+            if (modal) {
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
         }
         
         function closeModalFunc() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            if (modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
         }
         
-        bookNowBtn.addEventListener('click', openModal);
-        bookNowSidebar.addEventListener('click', openModal);
-        closeModal.addEventListener('click', closeModalFunc);
+        if (bookNowBtn) {
+            bookNowBtn.addEventListener('click', openModal);
+        }
+        
+        if (bookNowSidebar) {
+            bookNowSidebar.addEventListener('click', openModal);
+        }
+        
+        if (closeModal) {
+            closeModal.addEventListener('click', closeModalFunc);
+        }
         
         // Close modal when clicking outside of it
         window.addEventListener('click', function(event) {
-            if (event.target == modal) {
+            if (modal && event.target == modal) {
                 closeModalFunc();
             }
         });
@@ -669,6 +686,10 @@
             });
         });
         
+        // Initialize modal display style
+        if (modal) {
+            modal.style.display = 'none';
+        }
     });
 </script>
 </body>
