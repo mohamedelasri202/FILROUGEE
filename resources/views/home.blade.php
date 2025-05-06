@@ -123,8 +123,8 @@
                     <h1 class="text-4xl md:text-5xl font-light text-white mb-4 leading-tight">Quality products for your everyday needs</h1>
                     <p class="text-lg text-white text-opacity-90 mb-8 font-light">Your one-stop supermarket for quality products and convenient services.</p>
                     <div class="flex space-x-4">
-                        <a href="#products" class="px-6 py-2 border border-white text-white hover:bg-white hover:text-gray-900 transition duration-300 text-sm">Shop Products</a>
-                        <a href="#services" class="px-6 py-2 bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition duration-300 text-sm">Our Services</a>
+                        <a href="{{ route('products') }}" class="px-6 py-2 border border-white text-white hover:bg-white hover:text-gray-900 transition duration-300 text-sm">Shop Products</a>
+                        <a href="{{ route('services') }}" class="px-6 py-2 bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition duration-300 text-sm">Our Services</a>
                     </div>
                 </div>
             </div>
@@ -286,78 +286,7 @@
     </section>
 
     <!-- Testimonials -->
-    <section class="py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <h2 class="text-2xl font-light text-center mb-16">What Our Customers Say</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="p-8 border border-gray-100">
-                    <div class="flex items-center mb-6">
-                        <div class="text-yellow-400 flex">
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                        </div>
-                        <span class="ml-2 text-xs text-gray-500">5.0</span>
-                    </div>
-                    <p class="text-gray-600 text-sm italic mb-6">"Supermark has the freshest produce in town. Their delivery service is prompt and the staff is always friendly. My go-to supermarket for all my needs!"</p>
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-gray-200 rounded-full mr-3"></div>
-                        <div>
-                            <h4 class="text-sm font-medium">Robert Johnson</h4>
-                            <p class="text-xs text-gray-500">Regular Customer</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="p-8 border border-gray-100">
-                    <div class="flex items-center mb-6">
-                        <div class="text-yellow-400 flex">
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                        </div>
-                        <span class="ml-2 text-xs text-gray-500">5.0</span>
-                    </div>
-                    <p class="text-gray-600 text-sm italic mb-6">"I used Supermark's home cleaning service and was amazed by the quality. The team was professional, thorough, and finished in record time!"</p>
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-gray-200 rounded-full mr-3"></div>
-                        <div>
-                            <h4 class="text-sm font-medium">Jennifer Smith</h4>
-                            <p class="text-xs text-gray-500">Service Client</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="p-8 border border-gray-100">
-                    <div class="flex items-center mb-6">
-                        <div class="text-yellow-400 flex">
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star text-xs"></i>
-                            <i class="fas fa-star-half-alt text-xs"></i>
-                        </div>
-                        <span class="ml-2 text-xs text-gray-500">4.5</span>
-                    </div>
-                    <p class="text-gray-600 text-sm italic mb-6">"The convenience of shopping for groceries and booking services all in one place is unmatched. Supermark has made my life so much easier!"</p>
-                    <div class="flex items-center">
-                        <div class="w-8 h-8 bg-gray-200 rounded-full mr-3"></div>
-                        <div>
-                            <h4 class="text-sm font-medium">David Wilson</h4>
-                            <p class="text-xs text-gray-500">Products & Services Customer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+   n>
 
     <!-- Call to Action -->
     <section class="py-20 bg-primary bg-opacity-10">
